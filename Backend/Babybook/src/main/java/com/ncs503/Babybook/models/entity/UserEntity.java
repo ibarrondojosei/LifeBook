@@ -1,7 +1,8 @@
 
 package com.ncs503.Babybook.models.entity;
 
-import com.sun.istack.NotNull;
+
+
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,6 +28,7 @@ import org.hibernate.annotations.Where;
  */
 
 @Data @NoArgsConstructor
+@Builder
 @Entity
 @Table ( name = "users")
 @SQLDelete(sql = "UPDATE users SET deleted = true Where id=?")
@@ -31,24 +36,24 @@ import org.hibernate.annotations.Where;
 public class UserEntity {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @NotNull
-    @NotEmpty(message = "The first name can't  be null")
+    @NotNull(message = "The first name can't be null")
+    @NotEmpty(message = "The first name can't  be empty")
     @NotBlank(message = "The first name can't be blank")
     @Column( name = "first_name", nullable = false)
     private String firstName;
     
-    @NotNull
-    @NotEmpty(message = "The last name can't  be null")
+    @NotNull(message = "The last name can't be null")
+    @NotEmpty(message = "The last name can't  be empty")
     @NotBlank(message = "The last name can't be blank")
     @Column( name = "last_name", nullable = false)
     private String lastName;
     
     
-    @NotNull
-    @NotEmpty(message = "The username can't be null")
+    @NotNull(message = "The username can't be null")
+    @NotEmpty(message = "The username can't be empty")
     @NotBlank(message = "The username can't be blank")
     @Column( name = "username", nullable = false)
     private String username;
@@ -56,13 +61,14 @@ public class UserEntity {
     @Column( name = "photo", nullable = true)
     private String photo;
     
-    @NotNull
-    @NotEmpty(message = "The e-mail can't be null")
+    @NotNull(message = "Theemail can't be null")
+    @Email(message ="Please use a valid email")
+    @NotEmpty(message = "The e-mail can't be empty")
     @Column( name = "email", nullable = false)
     private String email;
     
-    @NotNull
-    @NotEmpty(message = "The password can't be null")
+    @NotNull(message = "The password can't be null")
+    @NotEmpty(message = "The password can't be empty")
     @Column( name = "password", nullable = false)
     private String password;
     
@@ -78,8 +84,9 @@ public class UserEntity {
     @UpdateTimestamp
     private Timestamp updateAt;
     
-    private Boolean deleted = Boolean.FALSE;
-    
+    @Builder.Default
+    private Boolean deleted = false;
+
     
     
     

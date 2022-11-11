@@ -1,13 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
+
 package com.ncs503.Babybook.service;
+
+import com.ncs503.Babybook.exception.InvalidUserException;
+import com.ncs503.Babybook.exception.UserNotFoundException;
+import com.ncs503.Babybook.models.request.UserRequest;
+import com.ncs503.Babybook.models.response.UserResponse;
+import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  *
- * @author maybechiapas
+ * @author Leonardo Terlizzi
  */
+@Service
 public interface UserService {
+    
+    public List<UserResponse> getUsers() throws UserNotFoundException;
+    
+    public UserResponse getUser(Long id) throws UserNotFoundException;
+    
+    public void saveUser(UserRequest userReq) throws InvalidUserException;
+    
+    public void deleteUser(Long id) throws UserNotFoundException;
+    
+    public void updateUser(UserRequest userReq, Long id) throws InvalidUserException;
     
 }
