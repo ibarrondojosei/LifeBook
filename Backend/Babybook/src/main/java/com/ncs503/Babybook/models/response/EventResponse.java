@@ -16,7 +16,7 @@ public class EventResponse {
     private LocalDate date;
     private List<String> media;
     private Timestamp timestamp;
-    private Subjectenenene subjectId;
+//    private Subject subjectId;
     private List<TagsEventEnum> eventEnumList;
 
 }

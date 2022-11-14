@@ -22,7 +22,7 @@ public class EventMapper {
                 .date(request.getDate())
                 .media(request.getMedia())
                 .eventEnumList(request.getEventEnumList())
-                .subjectId(request.getSubjectId())
+//                .subjectId(request.getSubjectId())
                 .timestamp(new Timestamp(System.currentTimeMillis()))
                 .sofdelete(false)
                 .build();
@@ -37,7 +37,7 @@ public class EventMapper {
                 .date(entity.getDate())
                 .media(entity.getMedia())
                 .eventEnumList(entity.getEventEnumList())
-                .subjectId(entity.getSubjectId())
+//                .subjectId(entity.getSubjectId())
                 .timestamp(entity.getTimestamp())
                 .build();
     }
@@ -51,7 +51,7 @@ public class EventMapper {
                 .date(request.getDate())
                 .media(request.getMedia())
                 .eventEnumList(request.getEventEnumList())
-                .subjectId(request.getSubjectId())
+//                .subjectId(request.getSubjectId())
                 .timestamp(new Timestamp(System.currentTimeMillis()))
                 .sofdelete(false)
                 .build();

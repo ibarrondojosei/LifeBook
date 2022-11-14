@@ -47,9 +47,9 @@ public class EventEntity implements Serializable {
     @Column(name = "soft_delete")
     private Boolean sofdelete = Boolean.FALSE;
 
-    @ManyToOne
-    @JoinColumn(name = "subject_id")
-    private Subjectenenene subjectId;
+//    @ManyToOne
+//    @JoinColumn(name = "subject_id")
+//    private Subject subjectId;
 
     private List<TagsEventEnum> eventEnumList;
 
