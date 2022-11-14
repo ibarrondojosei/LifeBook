@@ -60,6 +60,7 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<!-- sendGrid-->
 		<dependency>
 			<groupId>com.sendgrid</groupId>
@@ -94,6 +95,7 @@
 			<version>2.0.2</version>
 		</dependency>
 		<!-- end swagger-->
+
 	</dependencies>
 
 	<build>
