@@ -21,28 +21,27 @@ import org.springframework.stereotype.Component;
 public class UserMapper {
     
     public UserEntity toUserEntity(UserRequest userReq) throws InvalidUserException{
-        return UserEntity.builder()
-                .id(userReq.getId())
-                .firstName(userReq.getFirstName())
-                .lastName(userReq.getLastName())
-                .username(userReq.getUsername())
-                .password(userReq.getPassword())
-                .email(userReq.getEmail())
-                .photo(userReq.getPhoto())
-                .build();
-               
+        UserEntity user = new UserEntity();
+        user.setId(userReq.getId());
+        user.setEmail(userReq.getEmail());
+        user.setFirstName(userReq.getFirstName());
+        user.setLastName(userReq.getLastName());
+        user.setPhoto(userReq.getPhoto());
+        user.setUsername(userReq.getUsername());
+       // user.setPassword(userReq.getPassword());
+        return user;
+
     }
     
     public UserResponse toUserResponse(UserEntity user) throws UserNotFoundException {
-        return UserResponse.builder()
-                .id(user.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .username(user.getUsername())  
-         //      .password(user.getPassword()) 
-                .email(user.getEmail())
-                .photo(user.getPhoto())
-                .build();
+        UserResponse userRes = new UserResponse();
+        userRes.setId(user.getId());
+        userRes.setFirstName(user.getFirstName());
+        userRes.setLastName(user.getLastName());
+        userRes.setUsername(user.getUsername());
+        userRes.setPhoto(user.getPhoto());
+        userRes.setEmail(user.getEmail());
+        return userRes;
     }
     
     public List<UserResponse> usersToUserResponseList(List<UserEntity> users) throws UserNotFoundException {

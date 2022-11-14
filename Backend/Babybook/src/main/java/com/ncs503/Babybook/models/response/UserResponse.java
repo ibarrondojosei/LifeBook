@@ -3,13 +3,14 @@ package com.ncs503.Babybook.models.response;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Leonardo Terlizzi
  */
 @Data
-@Builder
+@NoArgsConstructor
 public class UserResponse {
     
     private Long id;

@@ -14,7 +14,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,8 +26,8 @@ import org.hibernate.annotations.Where;
  * @author Leonardo Terlizzi
  */
 
-@Data @NoArgsConstructor
-@Builder
+@Data
+@NoArgsConstructor
 @Entity
 @Table ( name = "users")
 @SQLDelete(sql = "UPDATE users SET deleted = true Where id=?")
@@ -84,7 +83,6 @@ public class UserEntity {
     @UpdateTimestamp
     private Timestamp updateAt;
     
-    @Builder.Default
     private Boolean deleted = false;
 
     
