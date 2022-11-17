@@ -53,6 +53,9 @@ public class SubjectEntity {
     @CreationTimestamp
     private Timestamp timestamp;
 
+    @Column(name = "soft_delete")
+    private boolean deleted = Boolean.FALSE;
+
    /* @JsonIgnore
     @OneToMany(mappedBy = "SubjectEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<EventEntity> events;
