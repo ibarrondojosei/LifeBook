@@ -45,7 +45,7 @@ public class UserEntityController {
             })
     public ResponseEntity<List<UserResponse>> getUsers() throws UserNotFoundException {
         List<UserResponse> users = userServ.getUsers();
-        return new ResponseEntity(users, HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
     
     @GetMapping("/{id}")
@@ -55,7 +55,7 @@ public class UserEntityController {
             @ApiResponse( code = 403, message = "Forbidden action")
     })
     public ResponseEntity<UserResponse> getUser(@PathVariable("id")Long id) throws UserNotFoundException{
-        return new ResponseEntity(userServ.getUser(id), HttpStatus.OK);
+        return new ResponseEntity<>(userServ.getUser(id), HttpStatus.OK);
     }
     
     //new user in register controller
