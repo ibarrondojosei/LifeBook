@@ -1,4 +1,4 @@
-package com.ncs503.Babybook.auth.utility;
+package com.ncs503.Babybook.auth.filter;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
