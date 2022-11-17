@@ -25,6 +25,8 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
+import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -51,8 +53,10 @@ public class SecurityConfig {
 
 
     @Bean
-    public AuthenticationManager authManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsCustomService) throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailsCustomService).passwordEncoder(bCryptPasswordEncoder).and().build();
+    public AuthenticationManager authManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder,
+                                             UserDetailsService userDetailsCustomService) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailsCustomService)
+                .passwordEncoder(bCryptPasswordEncoder).and().build();
     }
 
 
@@ -78,8 +82,11 @@ public class SecurityConfig {
                 )
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .exceptionHandling()
-                .and().build();
+                .exceptionHandling((ex) -> ex
+                        .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
+                )
+                .build();
 
     }
 
@@ -89,7 +96,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "DELETE", "POST", "PATCH", "HEAD", "TRACE"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-        //configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
