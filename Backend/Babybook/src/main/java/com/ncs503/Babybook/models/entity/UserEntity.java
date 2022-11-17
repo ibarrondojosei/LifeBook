@@ -60,9 +60,9 @@ public class UserEntity {
     @Column( name = "photo", nullable = true)
     private String photo;
     
-    @NotNull(message = "Theemail can't be null")
-    @Email(message ="Please use a valid email")
-    @NotEmpty(message = "The e-mail can't be empty")
+    @NotNull(message = "The e-mail address can't be null")
+    @Email(message ="Please use a valid e-mail address")
+    @NotEmpty(message = "The e-mail address can't be empty")
     @Column( name = "email", nullable = false)
     private String email;
     

@@ -19,7 +19,7 @@ public interface UserService {
     
     public UserResponse getUser(Long id) throws UserNotFoundException;
     
-    public void saveUser(UserRequest userReq) throws InvalidUserException;
+    //public void saveUser(UserRequest userReq) throws InvalidUserException;
     
     public void deleteUser(Long id) throws UserNotFoundException;
     

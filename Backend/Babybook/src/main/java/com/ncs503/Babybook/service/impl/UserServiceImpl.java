@@ -37,10 +37,10 @@ public class UserServiceImpl implements UserService {
        return mapper.toUserResponse(userRepo.findById(id).orElse(null));
     }
 
-    @Override
-    public void saveUser(UserRequest userReq) throws InvalidUserException {
-       userRepo.save(mapper.toUserEntity(userReq));
-    }
+//    @Override
+//    public void saveUser(UserRequest userReq) throws InvalidUserException {
+//       userRepo.save(mapper.toUserEntity(userReq));
+//    }
 
     @Override
     public void deleteUser(Long id) throws UserNotFoundException {

@@ -46,8 +46,8 @@ public class UserRequest {
             example = "juanperez84", required = true)
     private String username;
     
-    @NotNull(message = "The e-mail can't be null")
-    @Email(message = "Use a valid e-mail")
+    @NotNull(message = "The e-mail address can't be null")
+    @Email(message = "Use a valid e-mail address")
     @ApiModelProperty(notes = "The user's e-mail address",
             example = "juanperez84@gmail.com", required = true)
     private String email;
