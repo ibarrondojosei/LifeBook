@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(path = "/user")
-@Api(description = "User CRUD" , tags = "Users")
+//@Api(description = "User CRUD" , tags = "Users")
 public class UserEntityController {
     
     @Autowired
@@ -72,11 +72,11 @@ public class UserEntityController {
     }
     
     @DeleteMapping("/su/delete")
-    @ApiOperation(value = "Delete an User(admin)", notes ="Endpoint that allows an admin to delete an user")
-    @ApiResponses(value = {
-            @ApiResponse( code = 201, message = "User deleted"),
-            @ApiResponse( code = 403, message = "Forbbiden action")
-    })
+//    @ApiOperation(value = "Delete an User(admin)", notes ="Endpoint that allows an admin to delete an user")
+//    @ApiResponses(value = {
+//            @ApiResponse( code = 201, message = "User deleted"),
+//            @ApiResponse( code = 403, message = "Forbbiden action")
+//    })
     public ResponseEntity<Void> adminDeleteUser(@RequestParam Long id) throws UserNotFoundException{
         userServ.deleteUser(id);
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -85,11 +85,11 @@ public class UserEntityController {
  
     
     @PatchMapping("/update")
-    @ApiOperation(value = "Update an User", notes ="Endpoint that allows to update user's information")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "User updated"),
-            @ApiResponse(code = 403, message = "Forbbiden action")
-    })
+//    @ApiOperation(value = "Update an User", notes ="Endpoint that allows to update user's information")
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 201, message = "User updated"),
+//            @ApiResponse(code = 403, message = "Forbbiden action")
+//    })
     public ResponseEntity<Void> editUser(@RequestBody UserRequest userReq, @RequestParam Long id) throws InvalidUserException{
         userServ.updateUser(userReq, id);
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -97,11 +97,11 @@ public class UserEntityController {
     }
     
     @PatchMapping("/su/update")
-    @ApiOperation(value = "Update an User(admin)", notes ="Endpoint that allows an admin to update an user's information")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "User updated"),
-            @ApiResponse(code = 403, message = "Forbbiden action")
-    })
+//    @ApiOperation(value = "Update an User(admin)", notes ="Endpoint that allows an admin to update an user's information")
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 201, message = "User updated"),
+//            @ApiResponse(code = 403, message = "Forbbiden action")
+//    })
     public ResponseEntity<Void> adminEditUser(@RequestBody UserRequest userReq, @RequestParam Long id) throws InvalidUserException{
         userServ.updateUser(userReq, id);
         return ResponseEntity.status(HttpStatus.OK).build();
