@@ -3,11 +3,13 @@ package com.ncs503.Babybook.models.mapper;
 import com.ncs503.Babybook.models.entity.MedicalRecordEntity;
 import com.ncs503.Babybook.models.request.MedicalRecordRequest;
 import com.ncs503.Babybook.models.response.MedicalRecordResponse;
+import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class MedicalRecordMapper {
 
     public MedicalRecordEntity Request2Entity (MedicalRecordRequest request)  {
@@ -19,8 +21,8 @@ public class MedicalRecordMapper {
                 .body(request.getBody())
                 .date(request.getDate())
                 .media(request.getMedia())
-                .medicalRecordEnums(request.getMedicalRecordEnumList())
-//                .subjectId(request.getSubjectId())
+                .medicalRecordEnums(request.getMedicalRecordEnum())
+                .subject(request.getSubject())
                 .timestamp(new Timestamp(System.currentTimeMillis()))
                 .sofdelete(false)
                 .build();
@@ -34,7 +36,7 @@ public class MedicalRecordMapper {
                 .body(entity.getBody())
                 .date(entity.getDate())
                 .media(entity.getMedia())
-                .medicalRecordEnumList(entity.getMedicalRecordEnums())
+                .medicalRecordEnum(entity.getMedicalRecordEnums())
 //                .subjectId(entity.getSubjectId())
                 .timestamp(entity.getTimestamp())
                 .build();
@@ -48,7 +50,7 @@ public class MedicalRecordMapper {
                 .body(request.getBody())
                 .date(request.getDate())
                 .media(request.getMedia())
-                .medicalRecordEnums(request.getMedicalRecordEnumList())
+                .medicalRecordEnums(request.getMedicalRecordEnum())
 //                .subjectId(request.getSubjectId())
                 .timestamp(new Timestamp(System.currentTimeMillis()))
                 .sofdelete(false)

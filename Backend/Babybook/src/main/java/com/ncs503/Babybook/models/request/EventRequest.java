@@ -1,5 +1,8 @@
 package com.ncs503.Babybook.models.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ncs503.Babybook.models.entity.SubjectEntity;
+import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.utility.TagsEventEnum;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
@@ -37,10 +40,15 @@ public class EventRequest {
     @Column(name = "soft_delete")
     private Boolean sofdelete = Boolean.FALSE;
 
-//    @ManyToOne
-//    @JoinColumn(name = "subject_id")
-//    private Subject subjectId;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "subject_id")
+    private SubjectEntity subject;
 
-    private List<TagsEventEnum> eventEnumList;
+    private TagsEventEnum eventEnum;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity userId;
 
 }

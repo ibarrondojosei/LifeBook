@@ -48,7 +48,9 @@ public class AwsServiceImpl implements AwsService {
             // aqui le damos un nombre unico al newFileName
             String newFileName = System.currentTimeMillis() + "_" + fileCreated.getName();
 
-            PutObjectRequest objectRequest = new PutObjectRequest(bucketName, newFileName, fileCreated);
+            //aqui le indicamos que guarde la imagen pero con acceso publico de solo lectura
+            PutObjectRequest objectRequest = new PutObjectRequest(bucketName, newFileName, fileCreated)
+                    .withCannedAcl(CannedAccessControlList.PublicRead);
             amazonS3.putObject(objectRequest);
             String fileURL = endPoint + newFileName;
             return fileURL;
@@ -85,4 +87,10 @@ public class AwsServiceImpl implements AwsService {
         S3Object object = amazonS3.getObject(bucketName, key);
         return object.getObjectContent();
     }
+
+//    public String getObjectUrl(String key){
+//        return String.format("https://%s.s3.amazonaws.com/%s" , bucketName, key);
+//    }
+
+
 }

@@ -1,13 +1,21 @@
 package com.ncs503.Babybook.models.response;
 
+import com.ncs503.Babybook.models.entity.SubjectEntity;
+import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.utility.TagsEventEnum;
-import lombok.Builder;
+import lombok.*;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class EventResponse {
 
     private Long id;
@@ -16,7 +24,8 @@ public class EventResponse {
     private LocalDate date;
     private List<String> media;
     private Timestamp timestamp;
-//    private Subject subjectId;
-    private List<TagsEventEnum> eventEnumList;
+    //private SubjectEntity subjectId;
+    private TagsEventEnum eventEnum;
+    private UserEntity userId;
 
 }

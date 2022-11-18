@@ -1,5 +1,6 @@
 package com.ncs503.Babybook.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ncs503.Babybook.models.utility.TagsEventEnum;
 import com.ncs503.Babybook.models.utility.TagsMedicalRecordEnum;
 import lombok.*;
@@ -33,6 +34,7 @@ public class MedicalRecordEntity {
 
     private LocalDate date;
 
+    @ElementCollection
     private List<String> media;
 
     @CreationTimestamp
@@ -41,11 +43,15 @@ public class MedicalRecordEntity {
     @Column(name = "soft_delete")
     private Boolean sofdelete = Boolean.FALSE;
 
-//    @ManyToOne
-//    @JoinColumn(name = "subject_id")
-//    private Subject subjectId;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "subject_id")
+    private SubjectEntity subject;
 
-    private List<TagsMedicalRecordEnum> medicalRecordEnums;
+    private TagsMedicalRecordEnum medicalRecordEnums;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity userId;
 
 }

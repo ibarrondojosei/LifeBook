@@ -13,7 +13,11 @@ import java.util.List;
 public interface MedicalRecordService {
 
     public MedicalRecordResponse create(String token, String title, String body, LocalDate date,
-                                        List<MultipartFile> media, Long subjectId, List<TagsMedicalRecordEnum> medicalRecordEnumList) throws IOException;
-
-
+                                        List<MultipartFile> media, Long subjectId, TagsMedicalRecordEnum medicalRecordEnum) throws IOException;
+    public MedicalRecordResponse update(String token, Long medicalRecordId, String title, String body, LocalDate date,
+              List<MultipartFile> media, Long subjectId, TagsMedicalRecordEnum medicalRecordEnum) throws IOException;
+    public void delete(String token, Long subjectId, Long eventId) throws IOException;
+    public MedicalRecordResponse findById(String token, Long subjectId, Long eventId) throws Exception;
+    public List<MedicalRecordResponse> findAllByDate(String token, Long subjectId, LocalDate date) throws Exception;
+    public List<MedicalRecordResponse> findAllByTags(String token, Long subjectId, TagsMedicalRecordEnum medicalRecordEnum) throws Exception;
 }
