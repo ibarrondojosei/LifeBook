@@ -1,7 +1,7 @@
 package com.ncs503.Babybook.auth.utility;
 
 public enum RoleEnum {
-    USER, GUEST;
+    USER, ADMIN, GUEST;
 
     private static final String PREFIX = "ROLE_";
 

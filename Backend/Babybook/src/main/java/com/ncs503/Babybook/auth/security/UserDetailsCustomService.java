@@ -24,13 +24,13 @@ public class UserDetailsCustomService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserEntity> userDB = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<UserEntity> userDB = userRepository.findByEmail(email);
         if (userDB.isEmpty()){
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException(email);
         }
         UserEntity user = userDB.get();
-        return new User(user.getUsername(), user.getPassword(), mapRoles(user.getRoleId()));
+        return new User(user.getEmail(), user.getPassword(), mapRoles(user.getRoleId()));
     }
 
     private Collection<? extends GrantedAuthority> mapRoles (Set<RoleEntity> roles){
