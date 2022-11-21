@@ -1,5 +1,8 @@
 package com.ncs503.Babybook.models.utility;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel
 public enum BloodTypeEnum {
 
 APOSITIVO ("A+"), ANEGATIVO("A-"),BPOSITIVO("B+"), BNEGATIVO("B-"), ABPOSITIVO("AB+"), ABNEGATIVO("AB-"),

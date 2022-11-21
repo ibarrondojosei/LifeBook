@@ -18,11 +18,13 @@ import com.ncs503.Babybook.utils.PaginationByFiltersUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class SubjectServiceImpl implements SubjectService {
 
     @Autowired
@@ -50,10 +52,10 @@ public class SubjectServiceImpl implements SubjectService {
          String username = jwtUtils.extractUsername(token);
         UserEntity userEntity = userRepository.findByEmail(username).get();
 
-        Optional<SubjectEntity> businessEntity= subjectRepository.findByName(request.getFirstName());
+        Optional<SubjectEntity> subjectEntity= subjectRepository.findByName(request.getFirstName());
 
 
-        if (businessEntity.isPresent()){
+        if (subjectEntity.isPresent()){
 
             throw new RuntimeExceptionCustom("409 ::the subject already exists");
 

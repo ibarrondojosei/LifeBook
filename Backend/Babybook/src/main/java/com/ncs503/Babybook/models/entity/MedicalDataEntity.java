@@ -22,9 +22,11 @@ import java.sql.Timestamp;
 @Table( name= "medicalData")
 public class MedicalDataEntity {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(value = EnumType.STRING)
     private BloodTypeEnum bloodType;
 
     private String alergies;
@@ -48,12 +50,6 @@ public class MedicalDataEntity {
 
 
 
-   /* ID Long
-    BLOODTYPE String
-    ALERGIES String
-    RELEVANTINFO String
-    TIMESTAMP timeStamp
-    SOFTDELETE Boolean
-    MEDICALRECORD List<MedicalRecord>*/
+
 
 }

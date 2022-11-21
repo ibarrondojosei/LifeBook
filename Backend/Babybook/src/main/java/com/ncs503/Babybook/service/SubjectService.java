@@ -3,9 +3,11 @@ package com.ncs503.Babybook.service;
 import com.ncs503.Babybook.models.request.SubjectRequest;
 import com.ncs503.Babybook.models.response.PaginationResponse;
 import com.ncs503.Babybook.models.response.SubjectResponse;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Optional;
+
 
 public interface SubjectService {
 
