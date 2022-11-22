@@ -21,6 +21,7 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
     private  PasswordEncoder passEnc;
 
     @Override
