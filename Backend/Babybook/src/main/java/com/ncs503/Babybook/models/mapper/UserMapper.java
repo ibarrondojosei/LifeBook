@@ -4,11 +4,13 @@ package com.ncs503.Babybook.models.mapper;
 
 import com.ncs503.Babybook.exception.InvalidUserException;
 import com.ncs503.Babybook.exception.UserNotFoundException;
+import com.ncs503.Babybook.models.entity.RoleEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.request.UserRequest;
 import com.ncs503.Babybook.models.response.UserResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Component;
@@ -22,13 +24,32 @@ public class UserMapper {
     
     public UserEntity toUserEntity(UserRequest userReq) throws InvalidUserException{
         UserEntity user = new UserEntity();
-        user.setId(userReq.getId());
+
+       // user.setId(userReq.getId()); TODO BORRAR
+
         user.setEmail(userReq.getEmail());
         user.setFirstName(userReq.getFirstName());
         user.setLastName(userReq.getLastName());
         user.setPhoto(userReq.getPhoto());
         user.setUsername(userReq.getUsername());
-       // user.setPassword(userReq.getPassword());
+        user.setPassword(userReq.getPassword());
+      //  user.setRoleId(roles);
+        return user;
+
+    }
+
+    public UserEntity toUserEntityWithRoles(UserRequest userReq, Set<RoleEntity> roles) throws InvalidUserException{
+        UserEntity user = new UserEntity();
+
+        // user.setId(userReq.getId()); TODO BORRAR
+
+        user.setEmail(userReq.getEmail());
+        user.setFirstName(userReq.getFirstName());
+        user.setLastName(userReq.getLastName());
+        user.setPhoto(userReq.getPhoto());
+        user.setUsername(userReq.getUsername());
+        user.setPassword(userReq.getPassword());
+        user.setRoleId(roles);
         return user;
 
     }

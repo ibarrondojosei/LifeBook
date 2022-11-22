@@ -22,8 +22,8 @@ import lombok.NoArgsConstructor;
 @ApiModel(description = "Class representing an User Request.")
 public class UserRequest {
     
-    @ApiModelProperty(notes = "User's id", example = "1", required = false)
-    private Long id;
+ /*   @ApiModelProperty(notes = "User's id", example = "1", required = false)
+    private Long id;*/
     
     @NotNull(message = "the firstName can't be null")
     @NotEmpty(message = "the firstName can't be empty")

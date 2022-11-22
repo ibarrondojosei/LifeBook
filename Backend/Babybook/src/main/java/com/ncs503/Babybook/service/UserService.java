@@ -6,7 +6,6 @@ import com.ncs503.Babybook.exception.UserNotFoundException;
 import com.ncs503.Babybook.models.request.UserRequest;
 import com.ncs503.Babybook.models.response.UserResponse;
 import java.util.List;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -23,6 +22,6 @@ public interface UserService {
     
     public void deleteUser(Long id) throws UserNotFoundException;
     
-    public void updateUser(UserRequest userReq, Long id) throws InvalidUserException;
+    public UserResponse updateUser(UserRequest userReq, Long id) throws InvalidUserException, UserNotFoundException;
     
 }
