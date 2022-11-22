@@ -8,10 +8,6 @@ import com.ncs503.Babybook.models.response.UserResponse;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author Leonardo Terlizzi
- */
 @Service
 public interface UserService {
     
@@ -19,7 +15,7 @@ public interface UserService {
     
     public UserResponse getUser(Long id) throws UserNotFoundException;
     
-    public void saveUser(UserRequest userReq) throws InvalidUserException;
+    //public void saveUser(UserRequest userReq) throws InvalidUserException;
     
     public void deleteUser(Long id) throws UserNotFoundException;
     
