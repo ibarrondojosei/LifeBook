@@ -3,6 +3,7 @@ package com.ncs503.Babybook.controller;
 
 import com.ncs503.Babybook.exception.InvalidUserException;
 import com.ncs503.Babybook.exception.UserNotFoundException;
+import com.ncs503.Babybook.models.request.UpdateUserRequest;
 import com.ncs503.Babybook.models.request.UserRequest;
 import com.ncs503.Babybook.models.response.UserResponse;
 import com.ncs503.Babybook.service.UserService;
@@ -89,7 +90,7 @@ public class UserEntityController {
 //            @ApiResponse(code = 201, message = "User updated"),
 //            @ApiResponse(code = 403, message = "Forbbiden action")
 //    })
-    public ResponseEntity<UserResponse> editUser(@RequestBody UserRequest userReq, @RequestParam Long id) throws InvalidUserException, UserNotFoundException {
+    public ResponseEntity<UserResponse> editUser(@RequestBody UpdateUserRequest userReq, @RequestParam Long id) throws InvalidUserException, UserNotFoundException {
         userServ.updateUser(userReq, id);
        // return ResponseEntity.status(HttpStatus.OK).build();
         return new ResponseEntity<>(userServ.getUser(id), HttpStatus.OK);
@@ -102,7 +103,7 @@ public class UserEntityController {
 //            @ApiResponse(code = 201, message = "User updated"),
 //            @ApiResponse(code = 403, message = "Forbbiden action")
 //    })
-    public ResponseEntity<UserResponse> adminEditUser(@RequestBody UserRequest userReq, @RequestParam Long id) throws InvalidUserException, UserNotFoundException {
+    public ResponseEntity<UserResponse> adminEditUser(@RequestBody UpdateUserRequest userReq, @RequestParam Long id) throws InvalidUserException, UserNotFoundException {
         userServ.updateUser(userReq, id);
         return new ResponseEntity<>(userServ.getUser(id), HttpStatus.OK);
 

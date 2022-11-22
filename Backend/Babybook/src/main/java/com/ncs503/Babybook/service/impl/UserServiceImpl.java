@@ -5,6 +5,7 @@ import com.ncs503.Babybook.exception.InvalidUserException;
 import com.ncs503.Babybook.exception.UserNotFoundException;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.mapper.UserMapper;
+import com.ncs503.Babybook.models.request.UpdateUserRequest;
 import com.ncs503.Babybook.models.request.UserRequest;
 import com.ncs503.Babybook.models.response.UserResponse;
 import com.ncs503.Babybook.repository.UserRepository;
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse updateUser(UserRequest userReq, Long id) throws InvalidUserException, UserNotFoundException {
+    public UserResponse updateUser(UpdateUserRequest userReq, Long id) throws InvalidUserException, UserNotFoundException {
         UserEntity user = mapper.toUserEntity(userReq);
         user.setId(id);
         userRepo.save(user);
