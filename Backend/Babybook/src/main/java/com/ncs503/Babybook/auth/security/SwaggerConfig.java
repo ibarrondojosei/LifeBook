@@ -35,10 +35,10 @@ public class SwaggerConfig {
                 "LifeBook",
                 "All the memories of your beloved ones securely stored",
                 "0.0.1-SNAPSHOT",
-                "https://github.com/alkemyTech/OT250-server",
-                new Contact("Alkemy", "https://www.alkemy.org/", "somosmasong250@gmail.com"),
+                "https://github.com/No-Country/S5-03-Java-React/",
+                new Contact("NoCountry", "https://www.nocountry.tech/", "somosmasong250@gmail.com"),
                 "License of API",
-                "https://github.com/alkemyTech/OT250-server",
+                "https://github.com/No-Country/S5-03-Java-React/",
                 Collections.emptyList());
         return apiInfo;
     }
