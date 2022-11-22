@@ -49,7 +49,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public SubjectResponse create(SubjectRequest request, String token) throws IOException {
         token = token.substring(7);
-         String username = jwtUtils.extractUsername(token);
+        String username = jwtUtils.extractUsername(token);
         UserEntity userEntity = userRepository.findByEmail(username).get();
 
         Optional<SubjectEntity> subjectEntity= subjectRepository.findByName(request.getFirstName());
