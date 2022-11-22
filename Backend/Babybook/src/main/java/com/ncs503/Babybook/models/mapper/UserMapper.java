@@ -35,19 +35,7 @@ public class UserMapper {
 
     }
 
-    public UserEntity toUserEntityWithRoles(UserRequest userReq, Set<RoleEntity> roles) throws InvalidUserException{
-        UserEntity user = new UserEntity();
-        user.setEmail(userReq.getEmail());
-        user.setFirstName(userReq.getFirstName());
-        user.setLastName(userReq.getLastName());
-        user.setPhoto(userReq.getPhoto());
-        user.setUsername(userReq.getUsername());
-        user.setPassword(userReq.getPassword());
-        user.setRoleId(roles);
-        return user;
-
-    }
-
+    //sobrecarga de método tomando otro tipo de request para las updates de entidades user
     public UserEntity toUserEntity(UpdateUserRequest userReq) throws InvalidUserException{
         UserEntity user = new UserEntity();
 
@@ -67,6 +55,21 @@ public class UserMapper {
         return user;
 
     }
+
+    public UserEntity toUserEntityWithRoles(UserRequest userReq, Set<RoleEntity> roles) throws InvalidUserException{
+        UserEntity user = new UserEntity();
+        user.setEmail(userReq.getEmail());
+        user.setFirstName(userReq.getFirstName());
+        user.setLastName(userReq.getLastName());
+        user.setPhoto(userReq.getPhoto());
+        user.setUsername(userReq.getUsername());
+        user.setPassword(userReq.getPassword());
+        user.setRoleId(roles);
+        return user;
+
+    }
+
+
     
     public UserResponse toUserResponse(UserEntity user) throws UserNotFoundException {
         UserResponse userRes = new UserResponse();
