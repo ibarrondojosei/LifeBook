@@ -25,7 +25,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> registerUser(@RequestBody UserRequest userReq) throws InvalidUserException {
-        //password encrypter missing
         authServ.saveUser(userReq);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

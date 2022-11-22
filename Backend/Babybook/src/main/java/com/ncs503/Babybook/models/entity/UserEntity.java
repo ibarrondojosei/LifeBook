@@ -4,8 +4,10 @@ package com.ncs503.Babybook.models.entity;
 
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
+import javax.security.auth.Subject;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -67,9 +69,17 @@ public class UserEntity {
     @Column( name = "password", nullable = false)
     private String password;
     
-    //NYI
-    //private List<Subject> subjects;
-    //private List<Guest> guests;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "subjects",
+    joinColumns = {@JoinColumn(name ="user_id")},
+    inverseJoinColumns = {@JoinColumn(name = "subject_id")})
+    private List<Subject> subjects;
+
+
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "guests")
+//    private List<Guest> guests;
     
     @CreationTimestamp
     @Column(updatable = false)
