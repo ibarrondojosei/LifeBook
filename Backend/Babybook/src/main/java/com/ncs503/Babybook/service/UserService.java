@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Leonardo Terlizzi
  */
-@Service
+//@Service
 public interface UserService {
     
     public List<UserResponse> getUsers() throws UserNotFoundException;

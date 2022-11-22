@@ -12,13 +12,14 @@ import com.ncs503.Babybook.repository.UserRepository;
 import com.ncs503.Babybook.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 /**
  * @author Leonardo Terlizzi
  */
-
+@Service
 public class AuthServiceImpl implements AuthService {
 
     @Autowired

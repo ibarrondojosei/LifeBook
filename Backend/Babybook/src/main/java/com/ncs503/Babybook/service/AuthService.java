@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
  * @author Leonardo Terlizzi
  */
 
-@Service
+//@Service
 public interface AuthService {
 
     public void saveUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException;

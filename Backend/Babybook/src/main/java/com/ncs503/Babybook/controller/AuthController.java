@@ -1,6 +1,7 @@
 package com.ncs503.Babybook.controller;
 
 import com.ncs503.Babybook.exception.InvalidUserException;
+import com.ncs503.Babybook.exception.UserProfileAlreadyExistsException;
 import com.ncs503.Babybook.models.request.UserRequest;
 import com.ncs503.Babybook.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class AuthController {
     private AuthService authServ;
 
     @PostMapping("/register")
-    public ResponseEntity<Void> registerUser(@RequestBody UserRequest userReq) throws InvalidUserException {
+    public ResponseEntity<Void> registerUser(@RequestBody UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException {
         authServ.saveUser(userReq);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
