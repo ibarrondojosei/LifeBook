@@ -1,0 +1,84 @@
+.bgImg{
+    width: 1440px;
+    height:722px ;
+    overflow: hidden;
+    position: relative;
+    margin: 0px auto; 
+    background-image: url("../../../public/assets/Rectangle\ 40.svg");
+}
+  
+.bgImg h1{
+   font-size: 128px;
+    color: aliceblue;
+    position: absolute;
+    top: 1%;
+    left: 25%;
+    transform: translate(-50%,50%);
+}
+
+.bgImg button{
+    background-color: #2EC5CE;
+    color: black;
+    position: absolute;
+    top: 55%;
+    left: 20%;
+    transform: translate(-50%,50%);
+    border-radius: 10px;
+    padding: 9px 10px 9px 10px;
+    border: none;
+}
+
+.bgImg p{
+   
+    color: aliceblue;
+    position: absolute;
+    top: 80%;
+    left: 16.5%;
+    transform: translate(-50%,50%);
+}
+
+
+@media  (max-width:400px){
+    
+    .divHomeMobile{
+        width: 360px;
+       
+    }
+
+    .divHomeMobile h1{
+        font-size: 80px;
+        color: aliceblue;
+        position: absolute;
+        top: 15%;
+        left: 50%;
+        transform: translate(-50%,50%);
+
+    }
+
+    .divHomeMobile button{
+        background-color: #2EC5CE;
+        color: black;
+        position: absolute;
+        top: 55%;
+        left: 20%;
+        transform: translate(-50%,50%);
+        border-radius: 10px;
+        padding: 9px 10px 9px 10px;
+        border: none;
+        width: 35%;
+    }
+
+
+    .divHomeMobile p{
+        width: 50%;
+        color: aliceblue;
+        position: absolute;
+        top: 40%;
+        left: 30%;
+        transform: translate(-50%,50%);
+    }
+    
+
+    
+   
+}
