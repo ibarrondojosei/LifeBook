@@ -5,8 +5,8 @@ import { RegisterView } from './View/Register/RegisterView';
 function App() {
   return (
     <div className="App">
-      {/* <LoginView/> */}
-      <RegisterView/>
+      <LoginView/>
+      {/* <RegisterView/> */}
   
     </div>
   );
