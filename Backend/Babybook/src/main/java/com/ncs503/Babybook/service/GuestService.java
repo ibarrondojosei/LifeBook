@@ -19,9 +19,9 @@ public interface GuestService {
 
     public GuestResponse getGuest(Long id) throws GuestNotFoundException;
 
-    public void saveGuest(GuestRequest guestReq) throws InvalidGuestException;
+    public GuestResponse saveGuest(GuestRequest guestReq) throws InvalidGuestException, GuestNotFoundException;
 
     public void deleteGuest(Long id) throws GuestNotFoundException;
 
-    public void updateGuest(GuestRequest guestReq, Long id) throws InvalidGuestException, GuestNotFoundException;
+    public GuestResponse updateGuest(GuestRequest guestReq, Long id) throws InvalidGuestException, GuestNotFoundException;
 }

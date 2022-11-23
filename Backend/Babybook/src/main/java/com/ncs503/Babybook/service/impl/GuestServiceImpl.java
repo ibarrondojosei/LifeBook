@@ -37,19 +37,24 @@ public class GuestServiceImpl implements GuestService {
     }
 
     @Override
-    public void saveGuest(GuestRequest guestReq) throws InvalidGuestException {
-        guestRepo.save(guestMapper.toGuestEntity(guestReq));
+    public GuestResponse saveGuest(GuestRequest guestReq) throws InvalidGuestException, GuestNotFoundException {
+        GuestEntity guest = guestMapper.toGuestEntity(guestReq);
+        guestRepo.save(guest);
+        return guestMapper.toGuestResponse(guest);
+
     }
 
     @Override
     public void deleteGuest(Long id) throws GuestNotFoundException {
         guestRepo.deleteById(id);
+
     }
 
     @Override
-    public void updateGuest(GuestRequest guestReq, Long id) throws InvalidGuestException, GuestNotFoundException {
+    public GuestResponse updateGuest(GuestRequest guestReq, Long id) throws InvalidGuestException, GuestNotFoundException {
         GuestEntity guest = guestMapper.toGuestEntity(guestReq);
         guest.setId(id);
         guestRepo.save(guest);
+        return guestMapper.toGuestResponse(guest);
     }
 }
