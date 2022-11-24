@@ -29,12 +29,12 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Autowired
     private SubjectRepository subjectRepository;
-   @Autowired
+    @Autowired
     private SubjectMapper subjectMapper;
 
 
 //    @Autowired
-//    private JwtUtils jwtUtils;
+//    private JwtUtils jwtUtils; TODO Verificar token
 
     @Autowired
     UserRepository userRepository;
@@ -52,10 +52,10 @@ public class SubjectServiceImpl implements SubjectService {
         String username = jwtUtils.extractUsername(token);
         UserEntity userEntity = userRepository.findByEmail(username).get();
 
-        Optional<SubjectEntity> subjectEntity= subjectRepository.findByName(request.getFirstName());
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findByName(request.getFirstName());
 
 
-        if (subjectEntity.isPresent()){
+        if (subjectEntity.isPresent()) {
 
             throw new RuntimeExceptionCustom("409 ::the subject already exists");
 
@@ -117,16 +117,16 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public PaginationResponse getSubjectByName(String name, String order, Optional<Integer> pageNumber, Optional<Integer> size) {
-       SubjectByNameRequest filtersRequest = new SubjectByNameRequest(name, order);
+        SubjectByNameRequest filtersRequest = new SubjectByNameRequest(name, order);
 
 
-        Specification<SubjectEntity> specification= subjectByNameSpecification.getByName(filtersRequest);
+        Specification<SubjectEntity> specification = subjectByNameSpecification.getByName(filtersRequest);
 
         PaginationByFiltersUtil pagination = new PaginationByFiltersUtil(specification, subjectRepository, pageNumber, size,
                 "/business/getByName/page=%d&size=%d");
         Page page = pagination.getPage();
 
-        List<SubjectResponse>responses = page.getContent();
+        List<SubjectResponse> responses = page.getContent();
 
 
         return PaginationResponse.builder()
@@ -138,13 +138,13 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public PaginationResponse getSubjectByUsers(Long id, String order, Optional<Integer> pageNumber, Optional<Integer> size) {
-       SubjectByUserRequest filtersRequest = new SubjectByUserRequest(id, order);
+        SubjectByUserRequest filtersRequest = new SubjectByUserRequest(id, order);
 
 
-        Specification<SubjectEntity> specification= subjectByUserSpecification.getByUsers(filtersRequest);
+        Specification<SubjectEntity> specification = subjectByUserSpecification.getByUsers(filtersRequest);
 
 
-        PaginationByFiltersUtil pagination = new PaginationByFiltersUtil(specification,subjectRepository, pageNumber, size,
+        PaginationByFiltersUtil pagination = new PaginationByFiltersUtil(specification, subjectRepository, pageNumber, size,
                 "/business/getByUser/page=%d&size=%d");
         Page page = pagination.getPage();
 

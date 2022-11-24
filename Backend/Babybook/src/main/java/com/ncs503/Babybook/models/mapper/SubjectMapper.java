@@ -58,7 +58,7 @@ public class SubjectMapper {
 
         entity =SubjectEntity.builder().firstName(request.getFirstName())
                 .lastName(request.getLastName())
-                //   .image(awsService.uploadFileFromBase64(request.getImage()))
+                //   .image(awsService.uploadFileFromBase64(request.getImage())) TODO Ver tratamiento de imagen
                 .birthDate(request.getBirthDate())
                 .dni(request.getDni())
                 .build();

@@ -56,14 +56,15 @@ public class SubjectEntity {
     @Column(name = "soft_delete")
     private boolean deleted = Boolean.FALSE;
 
+    //TODO Ver relaciones con Events
    /* @JsonIgnore
     @OneToMany(mappedBy = "SubjectEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<EventEntity> events;
+    private Set<EventEntity> events;*/
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "medicalData_id")
-    private MedicalDataEntity medicalData;*/
+    private MedicalDataEntity medicalData;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)

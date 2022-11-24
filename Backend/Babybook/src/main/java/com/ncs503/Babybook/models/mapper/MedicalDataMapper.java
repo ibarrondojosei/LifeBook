@@ -15,6 +15,7 @@ import java.util.List;
 @Component
 public class MedicalDataMapper {
 
+    //TODO Ver tratamiento de imagenes
      /*  @Autowired
     AwsService awsService;*/
 
