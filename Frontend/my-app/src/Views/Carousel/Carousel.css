@@ -1,0 +1,14 @@
+.bgImage {
+    background-image: url("../../components/assets/images/bg/bg-image.png");
+    background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+}
+
+.index-0, .index-3 {
+  transform: scale(0.8);
+}
+
+.card {
+  transition: all 0.5s ease-out;
+}
