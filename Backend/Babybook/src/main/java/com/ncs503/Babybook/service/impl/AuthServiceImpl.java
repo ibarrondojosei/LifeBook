@@ -39,6 +39,9 @@ public class AuthServiceImpl implements AuthService {
     public UserResponse saveUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException {  //TODO que devuelva response
         if (userRepo.findByEmail(userReq.getEmail()).isPresent())
             throw new UserProfileAlreadyExistsException("E-mail already used");
+        if(userRepo.findByUsername(userReq.getUsername()).isPresent())
+            throw new UserProfileAlreadyExistsException("Username already taken, choose a new one");
+
         String pass = userReq.getPassword();
         userReq.setPassword(passEnc.encode(pass));
 
