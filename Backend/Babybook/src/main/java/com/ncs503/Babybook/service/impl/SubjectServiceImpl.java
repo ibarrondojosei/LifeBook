@@ -1,5 +1,6 @@
 package com.ncs503.Babybook.service.impl;
 
+import com.ncs503.Babybook.auth.filter.JwtUtils;
 import com.ncs503.Babybook.exception.RuntimeExceptionCustom;
 import com.ncs503.Babybook.models.entity.SubjectEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
@@ -33,8 +34,8 @@ public class SubjectServiceImpl implements SubjectService {
     private SubjectMapper subjectMapper;
 
 
-//    @Autowired
-//    private JwtUtils jwtUtils; TODO Verificar token
+    @Autowired
+    private JwtUtils jwtUtils;// TODO Verificar token
 
     @Autowired
     UserRepository userRepository;
