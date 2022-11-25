@@ -55,6 +55,7 @@ public class AuthServiceImpl implements AuthService {
         UserEntity user = userMapper.toUserEntityWithRoles(userReq, roles);
 
         userRepo.save(user);
-        return userMapper.toUserResponse(user);
+        UserEntity userWithId = userRepo.findByEmail(userReq.getEmail()).orElse(null);
+        return userMapper.toUserResponse(userWithId);
     }
 }

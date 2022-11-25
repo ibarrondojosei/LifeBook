@@ -36,11 +36,8 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<UserResponse> registerUser(@RequestBody UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException {
-        authServ.saveUser(userReq);
-        //return ResponseEntity.status(HttpStatus.OK).build(); VOID RESPONSE
-        UserEntity user = userRepo.findByEmail(userReq.getEmail()).orElse(null);
-        UserResponse userRes = userMapper.toUserResponse(user);
-        return new ResponseEntity<>(userRes, HttpStatus.OK);
+
+        return new ResponseEntity<>(authServ.saveUser(userReq), HttpStatus.OK);
 
     }
 }
