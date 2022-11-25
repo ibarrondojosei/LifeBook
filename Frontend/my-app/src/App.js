@@ -1,11 +1,14 @@
 
 import { LoginView } from './View/Login/LoginView';
-import { RegisterView } from './View/Register/RegisterView';
+import {BrowserRouter as  Routes, Route} from 'react-router-dom';
+import ClinicalHistory from './View/ClinicalHistory/ClinicalHistory';
+import CicloLectivo from './View/CicloLectivo/CicloLectivo';
 
 function App() {
   return (
     <div className="App">
-      <LoginView/>
+      <CicloLectivo/>
+     
       {/* <RegisterView/> */}
   
     </div>
