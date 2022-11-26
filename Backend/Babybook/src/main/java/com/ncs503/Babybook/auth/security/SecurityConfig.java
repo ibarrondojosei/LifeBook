@@ -1,5 +1,6 @@
 package com.ncs503.Babybook.auth.security;
 
+import com.ncs503.Babybook.auth.utility.RoleEnum;
 import com.ncs503.Babybook.auth.utility.UsarNameSubClaimAdapter;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -72,10 +73,20 @@ public class SecurityConfig {
                         //ADMIN
 
                         //Subject
+                        .antMatchers(HttpMethod.GET,"/subjects/getByUser/**").permitAll()//hasAnyAuthority(RoleEnum.USER.getSimpleRoleName())
+                        .antMatchers(HttpMethod.GET,"/subjects/getByName/**").permitAll()//hasAnyAuthority(RoleEnum.USER.getSimpleRoleName())
+                        .antMatchers(HttpMethod.PUT,"/subjects/**").permitAll()//hasAuthority(RoleEnum.USER.getSimpleRoleName())
+                        .antMatchers(HttpMethod.POST,"/subjects").permitAll() //hasAuthority(RoleEnum.USER.getSimpleRoleName())
+                        .antMatchers(HttpMethod.DELETE,"/subjects/**").permitAll() //hasRole(RoleEnum.USER.getSimpleRoleName())
 
                         //Events
 
-                        //Medical
+                        //MedicalData
+                        .antMatchers(HttpMethod.GET,"/medicals/**").permitAll()//hasAnyAuthority(RoleEnum.USER.getSimpleRoleName())
+                        .antMatchers(HttpMethod.PUT,"/medicals/**").permitAll()//hasAuthority(RoleEnum.USER.getSimpleRoleName())
+                        .antMatchers(HttpMethod.POST,"/medicals").permitAll()//hasAuthority(RoleEnum.USER.getSimpleRoleName())
+                        .antMatchers(HttpMethod.DELETE,"/medicals/**").permitAll()//hasAuthority(RoleEnum.USER.getSimpleRoleName())
+
 
                         //Guests
 

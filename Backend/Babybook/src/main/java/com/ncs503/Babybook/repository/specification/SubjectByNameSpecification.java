@@ -2,6 +2,7 @@ package com.ncs503.Babybook.repository.specification;
 
 
 import com.ncs503.Babybook.models.entity.SubjectEntity;
+import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.request.specification.SubjectByNameRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,12 @@ public class SubjectByNameSpecification {
                         "%" + filterRequest.getFirstName().toLowerCase() + "%"
                 ));
 
+            }
+
+            if (filterRequest.getId() != null) {
+                Join< SubjectEntity, UserEntity> join = root.join("users", JoinType.INNER);//nombre del atributo
+                Expression<String> idUser = join.get("id"); //nombre de la columna
+                predicates.add(idUser.in(filterRequest.getId()));
             }
 
 

@@ -62,9 +62,9 @@ public class SubjectEntity {
     private Set<EventEntity> events;*/
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "subject",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "medicalData_id")
-    private MedicalDataEntity medicalData;
+    private MedicalDataEntity medicalDataEntity;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
@@ -72,6 +72,8 @@ public class SubjectEntity {
     private UserEntity users;
 
 
-
+   /* @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "medical_data_entity_id")
+    private MedicalDataEntity medicalDataEntity;*/
 
 }

@@ -10,6 +10,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,7 +18,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Builder
 @Entity
-@SQLDelete(sql = "UPDATE medicalData SET soft_delete = true Where id=?")
+@SQLDelete(sql = "UPDATE medical_Data SET soft_delete = true Where id=?")
 @Where(clause = "soft_delete=false")
 @Table( name= "medicalData")
 public class MedicalDataEntity {
@@ -44,8 +45,7 @@ public class MedicalDataEntity {
     private boolean deleted = Boolean.FALSE;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "subject_id")
+    @OneToOne
     private SubjectEntity subject;
 
 

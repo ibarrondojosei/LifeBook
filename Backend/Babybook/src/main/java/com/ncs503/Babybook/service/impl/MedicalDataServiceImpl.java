@@ -1,13 +1,18 @@
 package com.ncs503.Babybook.service.impl;
 
+import com.ncs503.Babybook.auth.filter.JwtUtils;
 import com.ncs503.Babybook.exception.RuntimeExceptionCustom;
 import com.ncs503.Babybook.models.entity.MedicalDataEntity;
 import com.ncs503.Babybook.models.entity.SubjectEntity;
+import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.mapper.MedicalDataMapper;
 import com.ncs503.Babybook.models.request.MedicalDataRequest;
+import com.ncs503.Babybook.models.request.MedicalDataUpDateRequest;
 import com.ncs503.Babybook.models.response.MedicalDataResponse;
 import com.ncs503.Babybook.models.response.SubjectResponse;
 import com.ncs503.Babybook.repository.MedicalDataRepository;
+import com.ncs503.Babybook.repository.SubjectRepository;
+import com.ncs503.Babybook.repository.UserRepository;
 import com.ncs503.Babybook.service.MedicalDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +30,29 @@ public class MedicalDataServiceImpl implements MedicalDataService {
     @Autowired
     MedicalDataRepository medicalDataRepository;
 
+    @Autowired
+    private JwtUtils jwtUtils;// TODO Verificar token
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    SubjectRepository subjectRepository;
+
     @Override
-    public MedicalDataResponse create(MedicalDataRequest request) throws IOException {
+    public MedicalDataResponse create(MedicalDataRequest request, String token) throws IOException {
+
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+
+        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findById(request.getSubject());
+
+
+       if (!userEntity.getId().equals(subjectEntity.get().getUsers().getId())){
+           throw new RuntimeExceptionCustom("409 ::the subject id does not belong to the user");
+       }
        MedicalDataEntity entity = this.medicalDataMapper.Request2Entity(request);
        MedicalDataEntity entitySave = this.medicalDataRepository.save(entity);
        MedicalDataResponse responseCreated = this.medicalDataMapper.Entity2Response(entitySave);
@@ -35,7 +61,18 @@ public class MedicalDataServiceImpl implements MedicalDataService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id, String token) {
+
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+
+        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findById(id);
+
+        if (!userEntity.getId().equals(subjectEntity.get().getUsers().getId())){
+            throw new RuntimeExceptionCustom("409 ::the subject id does not belong to the user");
+        }
 
         Optional<MedicalDataEntity> entity = this.medicalDataRepository.findBySubjectId(id);
 
@@ -45,11 +82,24 @@ public class MedicalDataServiceImpl implements MedicalDataService {
 
         }
 
-        this.medicalDataRepository.delete(entity.get());
+        this.medicalDataRepository.deleteById(entity.get().getId());
     }
 
     @Override
-    public MedicalDataResponse update(Long id, MedicalDataRequest request) throws IOException {
+    public MedicalDataResponse update(Long id, MedicalDataUpDateRequest request, String token) throws IOException {
+
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+
+        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findById(id);
+
+        if (!userEntity.getId().equals(subjectEntity.get().getUsers().getId())){
+            throw new RuntimeExceptionCustom("409 ::the subject id does not belong to the user");
+        }
+
+
         Optional<MedicalDataEntity> entity = this.medicalDataRepository.findBySubjectId(id);
 
         if (!entity.isPresent()) {
@@ -67,7 +117,20 @@ public class MedicalDataServiceImpl implements MedicalDataService {
     }
 
     @Override
-    public MedicalDataResponse getById(Long id) throws IOException {
+    public MedicalDataResponse getById(Long id,String token) throws IOException {
+
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+
+        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findById(id);
+
+        if (!userEntity.getId().equals(subjectEntity.get().getUsers().getId())){
+            throw new RuntimeExceptionCustom("409 ::the subject id does not belong to the user");
+        }
+
+
         Optional<MedicalDataEntity> entity = this.medicalDataRepository.findBySubjectId(id);
 
         if (!entity.isPresent()) {

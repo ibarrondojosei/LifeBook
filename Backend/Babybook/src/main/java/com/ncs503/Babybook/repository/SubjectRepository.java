@@ -23,9 +23,12 @@ public interface SubjectRepository extends JpaRepository<SubjectEntity,Long>,
     @Override
     Page<SubjectEntity> findAll(@Nullable Specification<SubjectEntity> specification, Pageable var2);
 
-    @Query(value = "SELECT * from subjects WHERE subjects.name LIKE %:name% AND soft_delete = false",
+    @Query(value = "SELECT * from subjects WHERE subjects.first_name LIKE %:name% AND soft_delete = false",
             nativeQuery = true)
     Optional<SubjectEntity> findByName(String name);
 
+    @Query(value = "SELECT * from subjects WHERE subjects.user_id = :id AND soft_delete = false",
+            nativeQuery = true)
+    Optional<SubjectEntity> findByUserId(Long id);
 
 }

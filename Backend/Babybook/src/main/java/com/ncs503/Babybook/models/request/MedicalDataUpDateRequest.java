@@ -1,5 +1,4 @@
 package com.ncs503.Babybook.models.request;
-
 import com.ncs503.Babybook.models.entity.SubjectEntity;
 import com.ncs503.Babybook.models.utility.BloodTypeEnum;
 import io.swagger.annotations.ApiModel;
@@ -14,8 +13,9 @@ import javax.persistence.Enumerated;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel(description = "Class representing an Medical Data Request.")
-public class MedicalDataRequest {
+@ApiModel(description = "Class representing an Medical Data for up date Request.")
+
+public class MedicalDataUpDateRequest {
 
     @ApiModelProperty(notes = "Subject Blood Type",
             example = "CEROPOSITIVO",
@@ -33,8 +33,7 @@ public class MedicalDataRequest {
             required = true)
     private String relevantInfo;
 
-   @ApiModelProperty(notes = "id of the subject to which the medical data belongs", example = "1")
-    private Long subject;
+
 
 
 }

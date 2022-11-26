@@ -51,7 +51,10 @@ public class SubjectServiceImpl implements SubjectService {
     public SubjectResponse create(SubjectRequest request, String token) throws IOException {
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
-        UserEntity userEntity = userRepository.findByEmail(username).get();
+
+
+
+        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
 
         Optional<SubjectEntity> subjectEntity = subjectRepository.findByName(request.getFirstName());
 
@@ -70,35 +73,61 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id, String token) {
+
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
 
         Optional<SubjectEntity> entity = this.subjectRepository.findById(id);
+        SubjectEntity entity1= entity.get();
+
+
 
         if (!entity.isPresent()) {
 
             throw new RuntimeExceptionCustom("404 ::the id  does not belong to a subject");
 
         }
+        if (userEntity.getId().equals(entity1.getUsers().getId())){
 
-        this.subjectRepository.delete(entity.get());
+            this.subjectRepository.delete(entity.get());
+        }else {
+            throw new RuntimeExceptionCustom("404 ::the subject id does not belong to the user");
+        }
+
     }
 
     @Override
-    public SubjectResponse update(Long id, SubjectRequest request) throws IOException {
+    public SubjectResponse update(Long id, SubjectRequest request, String token) throws IOException {
+
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+
+
         Optional<SubjectEntity> entity = this.subjectRepository.findById(id);
+        SubjectEntity entity1= entity.get();
 
         if (!entity.isPresent()) {
 
             throw new RuntimeExceptionCustom("404 ::the id  does not belong to a subject");
         }
 
-        SubjectEntity entityUpdate = this.subjectMapper.EntityRefreshValues(entity.get(), request);
+        if (userEntity.getId().equals(entity1.getUsers().getId())){
 
-        SubjectEntity entitySave = this.subjectRepository.save(entityUpdate);
+            SubjectEntity entityUpdate = this.subjectMapper.EntityRefreshValues(entity.get(), request);
 
-        SubjectResponse response = this.subjectMapper.Entity2Response(entitySave);
+            SubjectEntity entitySave = this.subjectRepository.save(entityUpdate);
 
-        return response;
+            SubjectResponse response = this.subjectMapper.Entity2Response(entitySave);
+
+            return response;
+
+        }else {
+            throw new RuntimeExceptionCustom("404 ::the subject id does not belong to the user");
+        }
+
     }
 
     @Override
@@ -117,29 +146,52 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public PaginationResponse getSubjectByName(String name, String order, Optional<Integer> pageNumber, Optional<Integer> size) {
-        SubjectByNameRequest filtersRequest = new SubjectByNameRequest(name, order);
+    public PaginationResponse getSubjectByName(String name, String order, Optional<Integer> pageNumber, Optional<Integer> size,
+                                               String token) {
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+
+        Long userId = userEntity.getId();
 
 
-        Specification<SubjectEntity> specification = subjectByNameSpecification.getByName(filtersRequest);
+        if (userEntity.getId()!=null){
 
-        PaginationByFiltersUtil pagination = new PaginationByFiltersUtil(specification, subjectRepository, pageNumber, size,
-                "/business/getByName/page=%d&size=%d");
-        Page page = pagination.getPage();
+            SubjectByNameRequest filtersRequest = new SubjectByNameRequest(name, order,userId);
 
-        List<SubjectResponse> responses = page.getContent();
+            Specification<SubjectEntity> specification = subjectByNameSpecification.getByName(filtersRequest);
+
+            PaginationByFiltersUtil pagination = new PaginationByFiltersUtil(specification, subjectRepository, pageNumber, size,
+                    "/business/getByName/page=%d&size=%d");
+            Page page = pagination.getPage();
+
+            List<SubjectResponse> responses = page.getContent();
 
 
-        return PaginationResponse.builder()
-                .entities(responses)
-                .nextPageURI(pagination.getNext())
-                .prevPageURI(pagination.getPrevious())
-                .build();
+            return PaginationResponse.builder()
+                    .entities(responses)
+                    .nextPageURI(pagination.getNext())
+                    .prevPageURI(pagination.getPrevious())
+                    .build();
+
+        }else {
+            throw new RuntimeExceptionCustom("404 ::subject name does not belong to user");
+        }
+
+
+
     }
 
     @Override
-    public PaginationResponse getSubjectByUsers(Long id, String order, Optional<Integer> pageNumber, Optional<Integer> size) {
-        SubjectByUserRequest filtersRequest = new SubjectByUserRequest(id, order);
+    public PaginationResponse getSubjectByUsers(String order, Optional<Integer> pageNumber, Optional<Integer> size, String token) {
+
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+
+
+
+        SubjectByUserRequest filtersRequest = new SubjectByUserRequest(userEntity.getId(), order);
 
 
         Specification<SubjectEntity> specification = subjectByUserSpecification.getByUsers(filtersRequest);

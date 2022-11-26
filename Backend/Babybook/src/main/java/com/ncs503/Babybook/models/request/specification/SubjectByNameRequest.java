@@ -9,9 +9,12 @@ public class SubjectByNameRequest {
     private String firstName;
     private String order;
 
-    public SubjectByNameRequest(String firstName, String order) {
+    private Long id;
+
+    public SubjectByNameRequest(String firstName, String order, Long id) {
        this.firstName=firstName;
         this.order = order;
+        this.id = id;
     }
 
     public boolean isASC(){ return this.order.compareToIgnoreCase("ASC") == 0;}

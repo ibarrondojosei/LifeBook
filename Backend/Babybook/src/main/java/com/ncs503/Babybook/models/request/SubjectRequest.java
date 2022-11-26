@@ -47,7 +47,7 @@ public class SubjectRequest {
     @NotBlank(message = "birth date can not be blank")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     @ApiModelProperty(notes = "Subject birth date",
-            example = "1979/10/11", required = true)
+            example = "1979-10-11", required = true)
     private LocalDate birthDate;
 
     @ApiModelProperty(notes = "Subject DNI",
@@ -55,8 +55,8 @@ public class SubjectRequest {
     @Pattern(regexp = "^\\d*$", message = "The dni has to contain only numbers")
     private String dni;
 
-    @ApiModelProperty(notes = "id of the user corresponding to the Subject", example = "1")
-    private Long idUser;
+//    @ApiModelProperty(notes = "id of the user corresponding to the Subject", example = "1")
+//    private Long idUser;
 
 
 

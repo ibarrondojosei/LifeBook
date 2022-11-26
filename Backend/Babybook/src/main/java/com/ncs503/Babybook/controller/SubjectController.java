@@ -26,7 +26,7 @@ public class SubjectController {
     private SubjectService subjectService;
 
 
-    @PostMapping
+    @PostMapping //FUNCIONA
     @ApiOperation(value = "Create subjects", notes = "Allows User to insert subjects")
     @ApiResponses({@ApiResponse(code = 201, message = "Subject created!")})
     public ResponseEntity<SubjectResponse> createSubject (@Valid @RequestBody SubjectRequest request,
@@ -38,7 +38,7 @@ public class SubjectController {
     }
 
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("{id}")//FUNCIONA
     @ApiOperation(value = "Soft Delete subject By ID", notes = "Allows User to delete subject by ID")
     @ApiResponses({@ApiResponse(code = 204, message = "Subject deleted!"),
             @ApiResponse(code = 404, message = "The inserted ID does not belong to a business")})
@@ -47,15 +47,18 @@ public class SubjectController {
                                                 type = "Long",
                                                 value = "ID of the subject requested",
                                                 example = "1",
-                                                required = true) Long id){
+                                                required = true) Long id,
+                                               @RequestHeader(name="Authorization") String token){
 
-        this.subjectService.delete(id);
+
+
+        this.subjectService.delete(id, token);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 
-    @PutMapping("{id}")
+    @PutMapping("{id}")//FUNCIONA
     @ApiOperation(value = "Update Subject By ID", notes = "Allows User to update an existing Subject by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Subject updated!"),
@@ -69,38 +72,36 @@ public class SubjectController {
                                                             @Valid @RequestBody @ApiParam(
                                                                     name = "New Business",
                                                                     value = "Business to save",
-                                                                    required = true) SubjectRequest request) throws IOException {
+                                                                    required = true) SubjectRequest request,
+                                                            @RequestHeader(name="Authorization") String token) throws IOException {
 
-        SubjectResponse response = this.subjectService.update(id, request);
+        SubjectResponse response = this.subjectService.update(id, request, token);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
 
-    @GetMapping("/getByUser")
+    @GetMapping("/getByUser")//FUNCIONA
     @ApiOperation(value = "Get Subject By User ID", notes = "Returns all the subject according to the User")
     @ApiResponses({@ApiResponse(code = 200, message = "Return the requested subjects"),
             @ApiResponse(code = 404, message = "The inserted ID does not belong to a user")})
-    public ResponseEntity<?> getByUser(@RequestParam (required = true)  @ApiParam(
-            name = "userID",
-            type = "Long",
-            value = "ID of the user requested",
-            example = "1",
-            required = true) Long userID,  @RequestParam (required = false, defaultValue = "ASC") String order,  @RequestParam(value = "page", required = false) Optional<Integer> page,
-                                       @RequestParam(value = "size", required = false) Optional<Integer> size) {
+    public ResponseEntity<?> getByUser( @RequestParam (required = false, defaultValue = "ASC") String order,
+                                        @RequestParam(value = "page", required = false) Optional<Integer> page,
+                                        @RequestParam(value = "size", required = false) Optional<Integer> size,
+                                        @RequestHeader(name="Authorization") String token) {
 
-        return new ResponseEntity<>(subjectService.getSubjectByUsers(userID,order,page, size), HttpStatus.OK);
+        return new ResponseEntity<>(subjectService.getSubjectByUsers(order,page, size, token), HttpStatus.OK);
     }
 
 
-    @GetMapping("/getByName")
+    @GetMapping("/getByName/{firstName}")//FUNCIONA
     @ApiOperation(value = "Get Subject By name", notes = "Returns all the subject according to the name")
     @ApiResponses({@ApiResponse(code = 200, message = "Return the requested subjects"),
             @ApiResponse(code = 404, message = "The inserted NAME does not belong to a user")})
-    public ResponseEntity <PaginationResponse> getByFilters (@RequestParam (required = false) @ApiParam(name = "firstName",
+    public ResponseEntity <PaginationResponse> getByFilters (@PathVariable("firstName") @Valid @NotNull @NotBlank @ApiParam(name = "firstName",
                                                             type = "String",
                                                             value = "name of the Subject",
-                                                            example = "Pepito") String name,
+                                                            example = "Pepito") String firstName,
                                                              @RequestParam (required = false, defaultValue = "ASC") String order,
                                                              @RequestParam(value = "page", required = false)@ApiParam(
                                                                      name = "page",
@@ -111,9 +112,10 @@ public class SubjectController {
                                                                      name = "size",
                                                                      type = "Integer",
                                                                      value = "number of items per page",
-                                                                     example = "3") Optional<Integer> size) {
+                                                                     example = "3") Optional<Integer> size,
+                                                             @RequestHeader(name="Authorization") String token) {
 
-        return new ResponseEntity<>(subjectService.getSubjectByName(name, order, page, size),
+        return new ResponseEntity<>(subjectService.getSubjectByName(firstName, order, page, size, token),
                 HttpStatus.OK);
 
     }

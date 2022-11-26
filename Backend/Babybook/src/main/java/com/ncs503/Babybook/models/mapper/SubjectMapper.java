@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Component
 public class SubjectMapper {
@@ -56,21 +58,42 @@ public class SubjectMapper {
 
     public SubjectEntity EntityRefreshValues (SubjectEntity entity, SubjectRequest request) throws IOException {
 
-        entity =SubjectEntity.builder().firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                //   .image(awsService.uploadFileFromBase64(request.getImage())) TODO Ver tratamiento de imagen
-                .birthDate(request.getBirthDate())
-                .dni(request.getDni())
-                .build();
-
+        entity.setFirstName(request.getFirstName());
+        entity.setLastName(request.getLastName());
+        //entity.setImage(awsService.uploadFileFromBase64(request.getImage()));TODO Ver tratamiento de imagen
+        entity.setBirthDate(request.getBirthDate());
+        entity.setDni(request.getDni());
+        entity.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
         return entity;
+    }
+
+ /*   public  Set<SubjectEntity> subjectRequestToEntitySet(Long id){
+
+        Set<SubjectEntity> entitylist = new HashSet<>();
+
+        Optional<SubjectEntity> entity = this.subjectRepository.findById(id);
+
+        entitylist.add(entity.get());
+
+
+
+        return entitylist;
+    }
+
+    public SubjectResponse subjectEntitySetToResponse(Set<SubjectEntity> entities) throws IOException {
+        SubjectResponse response= new SubjectResponse();
+
+
+        for (SubjectEntity entity : entities) {
+
+            response = this.Entity2Response(entity);
+
+        }
+        return response;*/
     }
 
 
 
 
 
-
-
-}
