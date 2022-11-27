@@ -52,6 +52,5 @@ public class AuthController {
         UserResponse userRes = userMapper.toUserResponse(user);
         return new ResponseEntity<>(userRes, HttpStatus.OK);
 
-
     }
 }

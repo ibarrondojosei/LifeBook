@@ -1,6 +1,6 @@
 package com.ncs503.Babybook.auth.security;
 
-import com.ncs503.Babybook.auth.utility.UsarNameSubClaimAdapter;
+import com.ncs503.Babybook.auth.utility.RoleEnum;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -22,7 +22,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.web.SecurityFilterChain;
@@ -31,7 +34,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -67,6 +69,7 @@ public class SecurityConfig {
 
                         // Auth
                         .antMatchers(HttpMethod.POST, "/auth/register", "/auth/login").permitAll()
+                        .antMatchers(HttpMethod.POST, "/auth/testing").hasAuthority(RoleEnum.USER.getFullRoleName())
                         //Users
 
                         //ADMIN
@@ -81,8 +84,9 @@ public class SecurityConfig {
 
                         .anyRequest().authenticated()
                 )
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+               .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .httpBasic(withDefaults())
                 .exceptionHandling((ex) -> ex
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
@@ -106,7 +110,6 @@ public class SecurityConfig {
     @Bean
     JwtDecoder jwtDecoder() {
         NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withPublicKey(rsaKeys.publicKey()).build();
-        jwtDecoder.setClaimSetConverter(new UsarNameSubClaimAdapter());
         return jwtDecoder;
     }
 
@@ -129,6 +132,5 @@ public class SecurityConfig {
                 "/swagger-resources/**", "/swagger-ui/**", "/v2/api-docs", "/v3/api-docs", "/api/docs", "/api/docs/**",
                 "/api/docs/swagger-ui", "/swagger-ui.html", "/**/swagger-ui/**", "/swagger-ui");
     }
-
 
 }
