@@ -2,6 +2,7 @@ package com.ncs503.Babybook.controller;
 
 import com.ncs503.Babybook.exception.GuestNotFoundException;
 import com.ncs503.Babybook.exception.InvalidGuestException;
+import com.ncs503.Babybook.exception.InvalidUserException;
 import com.ncs503.Babybook.models.entity.GuestEntity;
 import com.ncs503.Babybook.models.mapper.GuestMapper;
 import com.ncs503.Babybook.models.request.GuestRequest;
@@ -53,8 +54,10 @@ public class GuestEntityController {
             @ApiResponse(code= 201, message = "Guest response"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
-    public ResponseEntity<GuestResponse> getGuest(Long id) throws GuestNotFoundException {
-        return new ResponseEntity<>(guestServ.getGuest(id), HttpStatus.OK);
+    public ResponseEntity<GuestResponse> getGuest(@PathVariable("id") Long id,
+                                                    @RequestHeader(name="Authorization") String token)
+            throws GuestNotFoundException, InvalidUserException {
+        return new ResponseEntity<>(guestServ.getGuest(id, token), HttpStatus.OK);
     }
 
     @PostMapping("/new")
@@ -63,11 +66,11 @@ public class GuestEntityController {
             @ApiResponse(code= 201, message = "Guest created!"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
-    public ResponseEntity<GuestResponse> saveGuest(@RequestBody GuestRequest guestReq) throws InvalidGuestException, GuestNotFoundException {
-        guestServ.saveGuest(guestReq);
-        GuestEntity guest = guestRepo.findByEmail(guestReq.getEmail()).orElse(null);
-        GuestResponse guestRes = guestMapper.toGuestResponse(guest);
-        return new ResponseEntity<>(guestRes, HttpStatus.OK);
+    public ResponseEntity<GuestResponse> saveGuest(@RequestBody GuestRequest guestReq,
+                                                   @RequestHeader(name="Authorization")String token) throws InvalidGuestException, GuestNotFoundException, InvalidUserException {
+
+
+        return new ResponseEntity<>(guestServ.saveGuest(guestReq, token), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")
@@ -76,8 +79,9 @@ public class GuestEntityController {
             @ApiResponse(code= 201, message = "Guest deleted!"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
-    public ResponseEntity<Void> deleteGuest(@RequestParam Long id) throws GuestNotFoundException {
-        guestServ.deleteGuest(id);
+    public ResponseEntity<Void> deleteGuest(@RequestParam Long id,
+                                            @RequestHeader(name="Authorization")String token) throws GuestNotFoundException, InvalidUserException {
+        guestServ.deleteGuest(id, token);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -87,8 +91,9 @@ public class GuestEntityController {
             @ApiResponse(code= 201, message = "Guest deleted!"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
-    public ResponseEntity<Void> adminDeleteGuest(@RequestParam Long id) throws GuestNotFoundException {
-        guestServ.deleteGuest(id);
+    public ResponseEntity<Void> adminDeleteGuest(@RequestParam Long id,
+                                                 @RequestHeader(name="Authorization")String token) throws GuestNotFoundException, InvalidUserException {
+        guestServ.deleteGuest(id, token);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -98,11 +103,11 @@ public class GuestEntityController {
             @ApiResponse(code= 201, message = "Guest updated!"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
-    public ResponseEntity<GuestResponse> updateGuest(@RequestBody GuestRequest guestReq, @RequestParam Long id) throws InvalidGuestException, GuestNotFoundException{
-        guestServ.updateGuest(guestReq, id);
-        GuestEntity guest = guestRepo.findByEmail(guestReq.getEmail()).orElse(null);
-        GuestResponse guestRes = guestMapper.toGuestResponse(guest);
-        return new ResponseEntity<>(guestRes, HttpStatus.OK);
+    public ResponseEntity<GuestResponse> updateGuest(@RequestBody GuestRequest guestReq,
+                                                     @RequestParam Long id,
+                                                     @RequestHeader(name="Authorization")String token) throws InvalidGuestException, GuestNotFoundException, InvalidUserException {
+
+        return new ResponseEntity<>(guestServ.updateGuest(guestReq, id, token), HttpStatus.OK);
     }
 
     @PatchMapping("/su/update")
@@ -111,10 +116,10 @@ public class GuestEntityController {
             @ApiResponse(code= 201, message = "Guest updated!"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
-    public ResponseEntity<GuestResponse> adminUpdateGuest(@RequestBody GuestRequest guestReq, @RequestParam Long id) throws InvalidGuestException, GuestNotFoundException{
-        guestServ.updateGuest(guestReq, id);
-        GuestEntity guest = guestRepo.findByEmail(guestReq.getEmail()).orElse(null);
-        GuestResponse guestRes = guestMapper.toGuestResponse(guest);
-        return new ResponseEntity<>(guestRes, HttpStatus.OK);
+    public ResponseEntity<GuestResponse> adminUpdateGuest(@RequestBody GuestRequest guestReq,
+                                                          @RequestParam Long id,
+                                                          @RequestHeader(name="Authorization")String token) throws InvalidGuestException, GuestNotFoundException, InvalidUserException {
+
+        return new ResponseEntity<>(guestServ.updateGuest(guestReq, id, token), HttpStatus.OK);
     }
 }

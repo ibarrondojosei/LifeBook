@@ -59,6 +59,9 @@ public class AuthServiceImpl implements AuthService {
     public UserResponse saveUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException {
         if (userRepo.findByEmail(userReq.getEmail()).isPresent())
             throw new UserProfileAlreadyExistsException("E-mail already used");
+        if(userRepo.findByUsername(userReq.getUsername()).isPresent())
+            throw new UserProfileAlreadyExistsException("Username already taken, choose a new one");
+
         String pass = userReq.getPassword();
         userReq.setPassword(passEnc.encode(pass));
 
@@ -72,6 +75,7 @@ public class AuthServiceImpl implements AuthService {
         UserEntity user = userMapper.toUserEntityWithRoles(userReq, roles);
 
         userRepo.save(user);
-        return userMapper.toUserResponse(user);
+        UserEntity userWithId = userRepo.findByEmail(userReq.getEmail()).orElse(null);
+        return userMapper.toUserResponse(userWithId);
     }
 }

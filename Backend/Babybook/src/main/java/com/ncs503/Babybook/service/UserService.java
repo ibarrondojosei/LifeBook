@@ -11,10 +11,10 @@ public interface UserService {
     
     public List<UserResponse> getUsers() throws UserNotFoundException;
     
-    public UserResponse getUser(Long id) throws UserNotFoundException;
+    public UserResponse getUser(String token) throws UserNotFoundException, InvalidUserException;
 
-    public void deleteUser(Long id) throws UserNotFoundException;
+    public void deleteUser(Long id, String token) throws UserNotFoundException, InvalidUserException;
     
-    public UserResponse updateUser(UpdateUserRequest userReq, Long id) throws InvalidUserException, UserNotFoundException;
+    public UserResponse updateUser(UpdateUserRequest userReq, Long id, String token) throws InvalidUserException, UserNotFoundException;
     
 }
