@@ -6,9 +6,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Getter
@@ -17,10 +14,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @Entity
-@SQLDelete(sql = "UPDATE subjects SET soft_delete = true Where id=?")
+@SQLDelete(sql = "UPDATE medicalDatas SET soft_delete = true Where id=?")
 @Where(clause = "soft_delete = false")
-@Table( name= "subjects")
-public class SubjectEntity implements Serializable {
+@Table( name= "medicalDatas")
+public class MedicalDataEntity implements Serializable {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,5 +33,4 @@ public class SubjectEntity implements Serializable {
     @OneToOne
     @JoinColumn(name = "user_id")
     private UserEntity userId;
-
 }
