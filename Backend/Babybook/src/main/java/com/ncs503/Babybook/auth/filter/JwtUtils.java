@@ -32,7 +32,7 @@ public class JwtUtils {
 
 
 
-    public String generateToken(Authentication authentication){
+    public String generateToken(Authentication authentication, String email){
         Instant now = Instant.now();
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -41,15 +41,15 @@ public class JwtUtils {
                 .issuer("self")
                 .issuedAt(now)
                 .expiresAt(now.plus(1, ChronoUnit.HOURS))
-                .subject(authentication.getName())
+                .subject(email)
                 .claim("scope",scope)
                 .build();
         return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
     public String extractUsername(String token) {
-        return jwtDecoder.decode(token).getClaimAsString("UserName");
+//        System.out.println("\n extractUserName - token : " + token);
+        return jwtDecoder.decode(token).getClaim("sub");
     }
-
 
 }

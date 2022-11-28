@@ -51,6 +51,7 @@ public class AwsServiceImpl implements AwsService {
             //aqui le indicamos que guarde la imagen pero con acceso publico de solo lectura
             PutObjectRequest objectRequest = new PutObjectRequest(bucketName, newFileName, fileCreated)
                     .withCannedAcl(CannedAccessControlList.PublicRead);
+
             amazonS3.putObject(objectRequest);
             String fileURL = endPoint + newFileName;
             return fileURL;

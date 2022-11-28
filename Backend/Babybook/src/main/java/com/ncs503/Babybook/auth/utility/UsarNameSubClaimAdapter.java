@@ -14,10 +14,10 @@ public class UsarNameSubClaimAdapter implements Converter<Map<String, Object>, M
     @Override
     public Map<String, Object> convert(Map<String, Object> claims) {
         Map<String, Object> convertedClaims = this.delegate.convert(claims);
-        String userName = convertedClaims.get("userName") != null ?
-                (String) convertedClaims.get("userName") : "unknown";
+        String userName = convertedClaims.get("UserName") != null ?
+                (String) convertedClaims.get("UserName") : "unknown";
 
-        convertedClaims.put("userName", userName);
+        convertedClaims.put("UserName", userName);
 
         return convertedClaims;
     }

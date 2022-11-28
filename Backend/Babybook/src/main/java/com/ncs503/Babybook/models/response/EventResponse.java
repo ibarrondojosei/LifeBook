@@ -24,7 +24,7 @@ public class EventResponse {
     private LocalDate date;
     private List<String> media;
     private Timestamp timestamp;
-    //private SubjectEntity subjectId;
+    private SubjectEntity subjectId;
     private TagsEventEnum eventEnum;
     private UserEntity userId;
 

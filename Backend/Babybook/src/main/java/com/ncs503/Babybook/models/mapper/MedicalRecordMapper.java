@@ -22,7 +22,7 @@ public class MedicalRecordMapper {
                 .date(request.getDate())
                 .media(request.getMedia())
                 .medicalRecordEnums(request.getMedicalRecordEnum())
-                .subject(request.getSubject())
+//                .subject(request.getSubject())
                 .timestamp(new Timestamp(System.currentTimeMillis()))
                 .sofdelete(false)
                 .build();

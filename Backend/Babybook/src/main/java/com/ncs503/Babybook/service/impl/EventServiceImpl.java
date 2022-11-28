@@ -1,6 +1,8 @@
 package com.ncs503.Babybook.service.impl;
 
+import com.ncs503.Babybook.auth.filter.JwtUtils;
 import com.ncs503.Babybook.models.entity.EventEntity;
+import com.ncs503.Babybook.models.entity.RoleEntity;
 import com.ncs503.Babybook.models.entity.SubjectEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.mapper.EventMapper;
@@ -12,6 +14,7 @@ import com.ncs503.Babybook.repository.SubjectRepository;
 import com.ncs503.Babybook.repository.UserRepository;
 import com.ncs503.Babybook.service.AwsService;
 import com.ncs503.Babybook.service.EventService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,8 +27,8 @@ import java.util.List;
 @Service
 public class EventServiceImpl implements EventService {
 
-//    @Autowired
-//    private JwtUtils jwtUtils;
+    @Autowired
+    private JwtUtils jwtUtils;
     @Autowired
     private EventRepository eventRepository;
     @Autowired
@@ -39,23 +42,25 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventResponse create(String token, String title, String body, LocalDate date,
-                                List<MultipartFile> media, Long subjectId, TagsEventEnum eventEnum) throws IOException {
+                                List<MultipartFile> media, Long subjectId, TagsEventEnum eventEnum) throws Exception {
 
-//        token = token.substring(7);
-//        String username = jwtUtils.extractUsername(token);
-//        UserEntity userEntity = userRepository.findByEmail(username).get();
-//        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
-//        EventEntity event = eventRepository.getById(id)
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+//        System.out.println("username : " + username);
 
+        UserEntity userEntity = userRepository.findByEmail(username).get();
+        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
+        SubjectEntity subjectEntity = subjectRepository.findById(subjectId).orElse(null);
 
-//        System.out.println("\nid del user token : " + userEntity.getId());
-//        System.out.println("roleEntity del token : " + roleEntity.getName());
-//        System.out.println("user event.getId() : " + event.getUsers().getId());
-//
-//        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == event.getUsers().getId()) {
+        System.out.println("\nId del User: " + userEntity.getId());
+        System.out.println("rol del User : " + roleEntity.getName());
+        System.out.println("ID de User del subject : " + subjectEntity.getUserId().getId());
+        System.out.println("media : " + media);
+
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUserId().getId()) {
 
             EventRequest request = new EventRequest();
-//            request.setUserId(userEntity.getId());
+            request.setUserId(userEntity);
             request.setBody(body);
             request.setDate(date);
             request.setEventEnum(eventEnum);
@@ -78,131 +83,194 @@ public class EventServiceImpl implements EventService {
 
             return response;
 
-//        }
-
+        }
+        throw new Exception("el Token del USER no coincide con el token del User del Subject ");
 
     }
 
     @Override
     public EventResponse update(String token, Long eventId, String title, String body, LocalDate date,
-                                List<MultipartFile> media, Long subjectId, TagsEventEnum eventEnum) throws IOException {
+                                List<MultipartFile> media, Long subjectId, TagsEventEnum eventEnum) throws Exception {
 
-//        token = token.substring(7);
-//        String username = jwtUtils.extractUsername(token);
-//        UserEntity userEntity = userRepository.findByEmail(username).get();
-//        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
-//        EventEntity event = eventRepository.getById(eventId)
-//
-//
-//        System.out.println("\nid del user token : " + userEntity.getId());
-//        System.out.println("roleEntity del token : " + roleEntity.getName());
-//        System.out.println("user event.getId() : " + event.getUsers().getId());
-//
-//        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == event.getUsers().getId()) {
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+//        System.out.println("username : " + username);
 
-        EventEntity eventEntity = eventRepository.getById(eventId);
-        EventRequest request = new EventRequest();
-//        request.setUserId(userEntity.getId());
+        UserEntity userEntity = userRepository.findByEmail(username).get();
+        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
+        SubjectEntity subjectEntity = subjectRepository.findById(subjectId).orElse(null);
 
-        String bodyAux = (body == null) ? eventEntity.getBody() :  body;
-        request.setBody(bodyAux);
-        LocalDate dateAux = (date == null) ? eventEntity.getDate() : date;
-        request.setDate(dateAux);
-        String titleAux = (title == null) ? eventEntity.getTitle() :  title;
-        request.setTitle(titleAux);
-        TagsEventEnum eventAux = ( eventEnum == null) ? eventEntity.getEventEnum() : eventEnum;
-        request.setEventEnum(eventAux);
+//        System.out.println("\nId del User: " + userEntity.getId());
+//        System.out.println("rol del User : " + roleEntity.getName());
+//        System.out.println("ID de User del subject : " + subject.getUserId().getId());
+//        System.out.println("media : " + media);
 
-        if(media != null ) {
-            List<String> mediasAux = new ArrayList<>();
-            for (MultipartFile aux : media) {
-                String file = awsService.uploadFile(aux);
-                mediasAux.add(file);
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUserId().getId()) {
+
+            EventEntity eventEntity = eventRepository.getById(eventId);
+
+            if (eventEntity.getUserId().getId() == userEntity.getId()) {
+
+                EventRequest request = new EventRequest();
+                request.setUserId(userEntity);
+
+                String bodyAux = (body == null) ? eventEntity.getBody() : body;
+                request.setBody(bodyAux);
+                LocalDate dateAux = (date == null) ? eventEntity.getDate() : date;
+                request.setDate(dateAux);
+                String titleAux = (title == null) ? eventEntity.getTitle() : title;
+                request.setTitle(titleAux);
+                TagsEventEnum eventAux = (eventEnum == null) ? eventEntity.getEventEnum() : eventEnum;
+                request.setEventEnum(eventAux);
+
+                if (media != null) {
+                    List<String> mediasAux = new ArrayList<>();
+                    for (MultipartFile aux : media) {
+                        String file = awsService.uploadFile(aux);
+                        mediasAux.add(file);
+                    }
+                    mediasAux = (media == null) ? eventEntity.getMedia() : mediasAux;
+                    request.setMedia(mediasAux);
+                } else {
+                    request.setMedia(eventEntity.getMedia());
+                }
+
+                request.setSubject(subjectRepository.getById(subjectId));
+
+                EventEntity entity = eventMapper.EntityUpdate(eventEntity, request);
+                entity.setId(eventId);
+                EventEntity eventLoad = eventRepository.save(entity);
+                EventResponse response = eventMapper.Entity2Response(eventLoad);
+
+                return response;
             }
-            mediasAux = (media == null) ? eventEntity.getMedia() : mediasAux;
-            request.setMedia(mediasAux);
-        }else{
-            request.setMedia(eventEntity.getMedia());
+
+            throw new Exception("el Evento no pertenece a este Uuario ");
+
         }
 
-        request.setSubject(subjectRepository.getById(subjectId));
-
-        EventEntity entity = eventMapper.EntityUpdate(eventEntity, request);
-        entity.setId(eventId);
-        EventEntity eventLoad = eventRepository.save(entity);
-        EventResponse response = eventMapper.Entity2Response(eventLoad);
-
-        return response;
-
-//        }
+        throw new Exception("el Token del USER no coincide con el token del User del Subject ");
 
     }
 
     @Override
-    public void delete(String token, Long subjectId, Long eventId) throws IOException {
+    public void delete(String token, Long subjectId, Long eventId) throws Exception {
 
-//        token = token.substring(7);
-//        String username = jwtUtils.extractUsername(token);
-//        UserEntity userEntity = userRepository.findByEmail(username).get();
-//        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
-//        EventEntity event = eventRepository.getById(eventId)
-//
-//
-//        System.out.println("\nid del user token : " + userEntity.getId());
-//        System.out.println("roleEntity del token : " + roleEntity.getName());
-//        System.out.println("user event.getId() : " + event.getUsers().getId());
-//
-//        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == event.getUsers().getId()) {
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+//        System.out.println("username : " + username);
 
-            EventEntity eventEntity = eventRepository.findById(eventId).orElse(null);
-            eventRepository.delete(eventEntity);
+        UserEntity userEntity = userRepository.findByEmail(username).get();
+        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
+        SubjectEntity subjectEntity = subjectRepository.findById(subjectId).orElse(null);
 
-//        }
+//        System.out.println("\nId del User: " + userEntity.getId());
+//        System.out.println("rol del User : " + roleEntity.getName());
+//        System.out.println("ID de User del subject : " + subject.getUserId().getId());
+//        System.out.println("media : " + media);
 
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUserId().getId()) {
+
+            EventEntity eventEntity = eventRepository.getById(eventId);
+
+            System.out.println("\n id user : " + userEntity.getId());
+            System.out.println("id user de events : " + eventEntity.getUserId().getId());
+
+            if (eventEntity.getUserId().getId() == userEntity.getId()) {
+
+                eventRepository.delete(eventEntity);
+
+            }else {
+                throw new Exception("el Evento No se puede Eliminar porque NO pertenece a este Uuario ");
+            }
+
+        }else {
+            throw new Exception("el Token del USER no coincide con el token del User del Subject ");
+        }
     }
 
     @Override
     public EventResponse findById(String token, Long subjectId, Long eventId) throws Exception {
 
-//        token = token.substring(7);
-//        String username = jwtUtils.extractUsername(token);
-//        UserEntity userEntity = userRepository.findByEmail(username).get();
-//        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
-//        EventEntity event = eventRepository.getById(eventId)
-//
-//
-//        System.out.println("\nid del user token : " + userEntity.getId());
-//        System.out.println("roleEntity del token : " + roleEntity.getName());
-//        System.out.println("user event.getId() : " + event.getUsers().getId());
-//
-//        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == event.getUsers().getId()) {
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+//        System.out.println("username : " + username);
+
+        UserEntity userEntity = userRepository.findByEmail(username).get();
+        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
+        SubjectEntity subjectEntity = subjectRepository.findById(subjectId).orElse(null);
+
+//        System.out.println("\nId del User: " + userEntity.getId());
+//        System.out.println("rol del User : " + roleEntity.getName());
+//        System.out.println("ID de User del subject : " + subject.getUserId().getId());
+//        System.out.println("media : " + media);
+
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUserId().getId()) {
 
             EventEntity eventEntity = eventRepository.findById(eventId).orElse(null);
+
             if(subjectId == eventEntity.getSubject().getId()) {
                 EventResponse response = eventMapper.Entity2Response(eventEntity);
                 return response;
             }
+
             throw new Exception("No coinciden el sujeto ingresado con el sujeto del evento : " + subjectId);
 
-//        }
+        }
+
+        throw new Exception("el Token del USER no coincide con el token del User del Subject ");
+
+    }
+
+    @Override
+    public List<EventResponse> findByIdSubject(String token, Long subjectId) throws Exception {
+
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+//        System.out.println("username : " + username);
+
+        UserEntity userEntity = userRepository.findByEmail(username).get();
+        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
+        SubjectEntity subjectEntity = subjectRepository.findById(subjectId).orElse(null);
+
+//        System.out.println("\nId del User: " + userEntity.getId());
+//        System.out.println("rol del User : " + roleEntity.getName());
+//        System.out.println("ID de User del subject : " + subject.getUserId().getId());
+//        System.out.println("media : " + media);
+
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUserId().getId()) {
+
+            List<EventEntity> eventEntities = eventRepository.findAllBySubject(subjectId);
+            List<EventResponse> responses = eventMapper.EntityList2ResponsePage(eventEntities);
+
+            if(responses.isEmpty()){
+                throw new Exception("No Existen Eventos para " + subjectEntity.getTitleee());
+            }
+            return responses;
+
+        }
+
+        throw new Exception("No Existen Eventos para " + subjectEntity.getTitleee());
 
     }
 
     @Override
     public List<EventResponse> findAllByDate(String token, Long subjectId, LocalDate date) throws Exception {
 
-//        token = token.substring(7);
-//        String username = jwtUtils.extractUsername(token);
-//        UserEntity userEntity = userRepository.findByEmail(username).get();
-//        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
-//        EventEntity event = eventRepository.getById(eventId)
-//
-//
-//        System.out.println("\nid del user token : " + userEntity.getId());
-//        System.out.println("roleEntity del token : " + roleEntity.getName());
-//        System.out.println("user event.getId() : " + event.getUsers().getId());
-//
-//        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == event.getUsers().getId()) {
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+//        System.out.println("username : " + username);
+
+        UserEntity userEntity = userRepository.findByEmail(username).get();
+        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
+        SubjectEntity subjectEntity = subjectRepository.findById(subjectId).orElse(null);
+
+//        System.out.println("\nId del User: " + userEntity.getId());
+//        System.out.println("rol del User : " + roleEntity.getName());
+//        System.out.println("ID de User del subject : " + subject.getUserId().getId());
+//        System.out.println("media : " + media);
+
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUserId().getId()) {
 
             System.out.println("\nsubject_id : " + subjectId);
             System.out.println("date : " + date);
@@ -214,28 +282,33 @@ public class EventServiceImpl implements EventService {
                 List<EventResponse> response = eventMapper.EntityList2ResponsePage(eventEntityList);
                 return response;
             }
-            SubjectEntity subjectEntity = subjectRepository.findById(subjectId).orElse(null);
-            throw new Exception("No Existen Eventos en la fecha : " + date +  " para " + subjectEntity.getTitleee());
 
-//        }
+            SubjectEntity subjectEntity1 = subjectRepository.findById(subjectId).orElse(null);
+            throw new Exception("No Existen Eventos en la fecha : " + date +  " para " + subjectEntity1.getTitleee());
+
+        }
+
+        throw new Exception("No Existen Eventos para " + subjectEntity.getTitleee());
 
     }
 
     @Override
     public List<EventResponse> findAllByTags(String token, Long subjectId, TagsEventEnum eventEnum) throws Exception {
 
-//        token = token.substring(7);
-//        String username = jwtUtils.extractUsername(token);
-//        UserEntity userEntity = userRepository.findByEmail(username).get();
-//        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
-//        EventEntity event = eventRepository.getById(eventId)
-//
-//
-//        System.out.println("\nid del user token : " + userEntity.getId());
-//        System.out.println("roleEntity del token : " + roleEntity.getName());
-//        System.out.println("user event.getId() : " + event.getUsers().getId());
-//
-//        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == event.getUsers().getId()) {
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+//        System.out.println("username : " + username);
+
+        UserEntity userEntity = userRepository.findByEmail(username).get();
+        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
+        SubjectEntity subjectEntity = subjectRepository.findById(subjectId).orElse(null);
+
+//        System.out.println("\nId del User: " + userEntity.getId());
+//        System.out.println("rol del User : " + roleEntity.getName());
+//        System.out.println("ID de User del subject : " + subject.getUserId().getId());
+//        System.out.println("media : " + media);
+
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUserId().getId()) {
 
             System.out.println("\nsubject_id : " + subjectId);
             System.out.println("eventEnum : " + eventEnum.ordinal());
@@ -247,10 +320,13 @@ public class EventServiceImpl implements EventService {
                 List<EventResponse> response = eventMapper.EntityList2ResponsePage(eventEntityList);
                 return response;
             }
-        SubjectEntity subjectEntity = subjectRepository.findById(subjectId).orElse(null);
-        throw new Exception("No Existen Eventos de tipo " + eventEnum +  " para " + subjectEntity.getTitleee());
 
-//        }
+            SubjectEntity subjectEntity1 = subjectRepository.findById(subjectId).orElse(null);
+            throw new Exception("No Existen Eventos de tipo " + eventEnum +  " para " + subjectEntity1.getTitleee());
+
+        }
+
+        throw new Exception("No Existen Eventos para " + subjectEntity.getTitleee());
 
     }
 

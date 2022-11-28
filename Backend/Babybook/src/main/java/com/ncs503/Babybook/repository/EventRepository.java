@@ -13,5 +13,6 @@ public interface EventRepository extends JpaRepository<EventEntity, Long> {
     List<EventEntity> findAllByDate(Long subject_id, LocalDate date);
     @Query(value =  "SELECT * FROM events e WHERE e.subject_id = ? AND e.event_enum = ?", nativeQuery = true)
     List<EventEntity> findAllByTags(Long subject_id, int eventEnum);
-
+    @Query(value =  "SELECT * FROM events e WHERE e.subject_id = ? ", nativeQuery = true)
+    List<EventEntity> findAllBySubject(Long subject_id);
 }

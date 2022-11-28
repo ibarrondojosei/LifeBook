@@ -37,7 +37,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 
     @Override
     public MedicalRecordResponse create(String token, String title, String body, LocalDate date,
-                                List<MultipartFile> media, Long subjectId, TagsMedicalRecordEnum medicalRecordEnum) throws IOException {
+                                List<MultipartFile> media, Long medicalDataId, TagsMedicalRecordEnum medicalRecordEnum) throws IOException {
 
 //        token = token.substring(7);
 //        String username = jwtUtils.extractUsername(token);
@@ -66,7 +66,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
         request.setMedicalRecordEnum(medicalRecordEnum);
         request.setTitle(title);
 
-        request.setSubject(subjectRepository.getById(subjectId));
+//        request.setSubject(subjectRepository.getById(subjectId));
 
         MedicalRecordEntity entity = medicalRecordMapper.Request2Entity(request);
         MedicalRecordEntity eventLoad = medicalRecordRepository.save(entity);
@@ -173,10 +173,10 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 //        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == event.getUsers().getId()) {
 
         MedicalRecordEntity medicalRecordEntity = medicalRecordRepository.findById(eventId).orElse(null);
-        if(subjectId == medicalRecordEntity.getSubject().getId()) {
-            MedicalRecordResponse response = medicalRecordMapper.Entity2Response(medicalRecordEntity);
-            return response;
-        }
+//        if(subjectId == medicalRecordEntity.getSubject().getId()) {
+//            MedicalRecordResponse response = medicalRecordMapper.Entity2Response(medicalRecordEntity);
+//            return response;
+//        }
         throw new Exception("No coinciden el sujeto ingresado con el sujeto del evento : " + subjectId);
 
 //        }

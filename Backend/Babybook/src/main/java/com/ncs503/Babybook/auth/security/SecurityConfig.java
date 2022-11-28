@@ -1,5 +1,6 @@
 package com.ncs503.Babybook.auth.security;
 
+import com.ncs503.Babybook.auth.utility.RoleEnum;
 import com.ncs503.Babybook.auth.utility.UsarNameSubClaimAdapter;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -74,6 +75,9 @@ public class SecurityConfig {
                         //Subject
 
                         //Events
+                        .antMatchers(HttpMethod.POST, "/events/create").permitAll()
+                        .antMatchers(HttpMethod.PUT, "/events/update/").hasAuthority(RoleEnum.USER.getSimpleRoleName())
+                        .antMatchers(HttpMethod.DELETE, "/events/delete/").hasAuthority(RoleEnum.USER.getSimpleRoleName())
 
                         //Medical
 

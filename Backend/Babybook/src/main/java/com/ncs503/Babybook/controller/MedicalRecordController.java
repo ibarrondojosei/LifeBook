@@ -40,8 +40,8 @@ public class MedicalRecordController {
                                                         @ApiParam( name = "date", type = "String",
                                                         example = "2022-10-23" ) @RequestParam (required = false) String date,
                                                         @RequestPart (required = false) List<MultipartFile> media,
-                                                        @ApiParam( name = "subjectId", type = "Long",
-                                                        example = "1" ) @RequestParam Long subjectId,
+                                                        @ApiParam( name = "medicalDataId", type = "Long",
+                                                        example = "1" ) @RequestParam Long medicalDataId,
                                                         @ApiParam( name = "MedicalRecordEnum", type = "TagsMedicalRecordEnum",
                                                         example = "ESTUDIOS MEDICOS" ) @RequestParam (required = false) TagsMedicalRecordEnum MedicalRecordEnum
                                                                                                 )  throws IOException {
@@ -49,7 +49,7 @@ public class MedicalRecordController {
         String token = "aaa";
       
         LocalDate date1 = LocalDate.parse(date);
-        MedicalRecordResponse response = this.medicalRecordService.create(token, title, bodie, date1, media, subjectId, MedicalRecordEnum);
+        MedicalRecordResponse response = this.medicalRecordService.create(token, title, bodie, date1, media, medicalDataId, MedicalRecordEnum);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -69,16 +69,16 @@ public class MedicalRecordController {
                                                         @ApiParam( name = "date", type = "String",
                                                                 example = "2022-10-23" ) @RequestParam (required = false) String date,
                                                         @RequestPart (required = false) List<MultipartFile> media,
-                                                        @ApiParam( name = "subjectId", type = "Long",
-                                                                example = "1" ) @RequestParam Long subjectId,
+                                                        @ApiParam( name = "medicalDataId", type = "Long",
+                                                                example = "1" ) @RequestParam Long medicalDataId,
                                                         @ApiParam( name = "MedicalRecordEnum", type = "TagsMedicalRecordEnum",
                                                                 example = "ESTUDIOS MEDICOS" ) @RequestParam (required = false) TagsMedicalRecordEnum MedicalRecordEnum
                                                                                             )  throws IOException {
 
         String token = "aaa";
-       
+        System.out.println("\n media-controller : " + media.toString());
         LocalDate date1 = LocalDate.parse(date);
-        MedicalRecordResponse response = this.medicalRecordService.update(token, medicalRecordId, title, bodie, date1, media, subjectId, MedicalRecordEnum);
+        MedicalRecordResponse response = this.medicalRecordService.update(token, medicalRecordId, title, bodie, date1, media, medicalDataId, MedicalRecordEnum);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -89,14 +89,14 @@ public class MedicalRecordController {
     @ApiResponses({@ApiResponse(code = 202, message = "medicalRecords deleted!")})
     public ResponseEntity<MedicalRecordResponse> delete(@Valid
 //                                                @RequestHeader(name="Authorization") String token,
-                                                @ApiParam( name = "subjectId", type = "Long",
-                                                        example = "1" ) @RequestParam (required = false) Long subjectId,
+                                                @ApiParam( name = "medicalDataId", type = "Long",
+                                                        example = "1" ) @RequestParam (required = false) Long medicalDataId,
                                                 @ApiParam( name = "medicalRecordId", type = "Long",
                                                         example = "1" ) @RequestParam (required = false) Long medicalRecordId
     )  throws IOException {
         String token = "aaa";
 
-        medicalRecordService.delete(token, subjectId, medicalRecordId);
+        medicalRecordService.delete(token, medicalDataId, medicalRecordId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
@@ -106,14 +106,14 @@ public class MedicalRecordController {
     @ApiResponses({@ApiResponse(code = 200, message = "medicalRecords modificated!")})
     public ResponseEntity<MedicalRecordResponse> findById(@Valid
 //                                                @RequestHeader(name="Authorization") String token,
-                                                  @ApiParam( name = "subjectId", type = "Long",
-                                                          example = "1" ) @RequestParam (required = false) Long subjectId,
+                                                  @ApiParam( name = "medicalDataId", type = "Long",
+                                                          example = "1" ) @RequestParam (required = false) Long medicalDataId,
                                                   @ApiParam( name = "medicalRecordId", type = "Long",
                                                           example = "1" ) @RequestParam (required = false) Long medicalRecordId
     ) throws Exception {
         String token = "aaa";
 
-        MedicalRecordResponse response = medicalRecordService.findById(token, subjectId, medicalRecordId);
+        MedicalRecordResponse response = medicalRecordService.findById(token, medicalDataId, medicalRecordId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }
@@ -123,15 +123,15 @@ public class MedicalRecordController {
     @ApiResponses({@ApiResponse(code = 200, message = "medicalRecords modificated!")})
     public ResponseEntity<List<MedicalRecordResponse>> findAllByDate(@Valid
 //                                                @RequestHeader(name="Authorization") String token,
-                                                          @ApiParam( name = "subjectId", type = "Long",
-                                                                  example = "1" ) @RequestParam (required = false) Long subjectId,
+                                                          @ApiParam( name = "medicalDataId", type = "Long",
+                                                                  example = "1" ) @RequestParam (required = false) Long medicalDataId,
                                                           @ApiParam( name = "date", type = "String",
                                                                   example = "2022-10-23" ) @RequestParam (required = false) String date
     ) throws Exception {
 
         String token = "aaa";
         LocalDate date1 = LocalDate.parse(date);
-        List<MedicalRecordResponse> response = medicalRecordService.findAllByDate(token, subjectId, date1);
+        List<MedicalRecordResponse> response = medicalRecordService.findAllByDate(token, medicalDataId, date1);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }
@@ -140,15 +140,15 @@ public class MedicalRecordController {
     @ApiResponses({@ApiResponse(code = 200, message = "medicalRecords modificated!")})
     public ResponseEntity<List<MedicalRecordResponse>> findAllByTags(@Valid
 //                                                  @RequestHeader(name="Authorization") String token,
-                                                             @ApiParam( name = "subjectId", type = "Long",
-                                                                     example = "1" ) @RequestParam Long subjectId,
+                                                             @ApiParam( name = "medicalDataId", type = "Long",
+                                                                     example = "1" ) @RequestParam Long medicalDataId,
                                                              @ApiParam( name = "medicalRecordEnum", type = "TagsMedicalRecordEnum",
                                                                      example = "CRECIMIENTO" ) @RequestParam (required = false) TagsMedicalRecordEnum medicalRecordEnum
     ) throws Exception {
 
         String token = "aaa";
 
-        List<MedicalRecordResponse> response = medicalRecordService.findAllByTags(token, subjectId, medicalRecordEnum);
+        List<MedicalRecordResponse> response = medicalRecordService.findAllByTags(token, medicalDataId, medicalRecordEnum);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }

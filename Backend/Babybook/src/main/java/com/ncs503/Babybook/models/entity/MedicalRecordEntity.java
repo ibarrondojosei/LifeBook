@@ -43,10 +43,10 @@ public class MedicalRecordEntity {
     @Column(name = "soft_delete")
     private Boolean sofdelete = Boolean.FALSE;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "subject_id")
-    private SubjectEntity subject;
+//    @JsonIgnore
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "medical_id")
+//    private MedicalDataEntity medicalDataEntity;
 
     private TagsMedicalRecordEnum medicalRecordEnums;
 
