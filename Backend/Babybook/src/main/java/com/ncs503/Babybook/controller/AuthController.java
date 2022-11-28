@@ -5,10 +5,14 @@ import com.ncs503.Babybook.exception.UserNotFoundException;
 import com.ncs503.Babybook.exception.UserProfileAlreadyExistsException;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.mapper.UserMapper;
+import com.ncs503.Babybook.models.request.LoginRequest;
 import com.ncs503.Babybook.models.request.UserRequest;
+import com.ncs503.Babybook.models.response.LoginResponse;
 import com.ncs503.Babybook.models.response.UserResponse;
 import com.ncs503.Babybook.repository.UserRepository;
 import com.ncs503.Babybook.service.AuthService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,16 +21,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author Leonardo Terlizzi
- */
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(path = "/auth")
-
 public class AuthController {
 
     @Autowired
-    private AuthService authServ;
+    AuthService authServ;
+
+    @PostMapping("/login")
+    @ApiOperation(value = "Login a user",
+            response = LoginResponse.class)
+    @ApiResponse(code = 200, message = "OK")
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authServ.login(request));
+    }
 
     @Autowired
     private UserRepository userRepo;
