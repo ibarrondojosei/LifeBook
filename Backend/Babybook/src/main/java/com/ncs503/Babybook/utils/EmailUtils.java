@@ -1,7 +1,7 @@
 package com.ncs503.Babybook.utils;
 
 public class EmailUtils {
-
+    //TODO Ver mail automático enviado
     public static String content(String tittle, String msg) {
         return "<!doctype html>\n" +
                 "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\"\n" +
@@ -303,9 +303,9 @@ public class EmailUtils {
                 "                      <div\n" +
                 "                        style=\"font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:11px;line-height:1.5;text-align:left;color:#000000;\">\n" +
                 "                        <p style=\"text-align: center;\"><span\n" +
-                "                            style=\"font-size: 24px;\"><strong>"+tittle+"</strong></span></p>\n" +
+                "                            style=\"font-size: 24px;\"><strong>" + tittle + "</strong></span></p>\n" +
                 "                        <p style=\"text-align: center;\">&nbsp;</p>\n" +
-                "                        <p style=\"text-align: center;\"><span style=\"font-size: 16px;\">"+msg+"</span></p>\n" +
+                "                        <p style=\"text-align: center;\"><span style=\"font-size: 16px;\">" + msg + "</span></p>\n" +
                 "                      </div>\n" +
                 "\n" +
                 "                    </td>\n" +
