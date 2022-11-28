@@ -19,9 +19,7 @@ import java.util.Set;
 @Component
 public class MedicalDataMapper {
 
-    //TODO Ver tratamiento de imagenes
-     /*  @Autowired
-    AwsService awsService;*/
+   
 
     @Autowired
     SubjectRepository subjectRepository;
@@ -30,21 +28,6 @@ public class MedicalDataMapper {
     SubjectMapper subjectMapper;
 
     public MedicalDataEntity Request2Entity (MedicalDataRequest request) throws IOException {
-
-       /* MedicalDataEntity entity = new MedicalDataEntity();
-
-        entity.setBloodType(request.getBloodType());
-        entity.setAlergies(request.getAlergies());
-        entity.setRelevantInfo(request.getRelevantInfo());
-
-        if (request.getSubject()!=null) {
-            Set<SubjectEntity>subjectEntitySet;
-            subjectEntitySet = this.subjectMapper.subjectRequestToEntitySet(request.getSubject());
-            entity.setSubject(subjectEntitySet);
-
-        }*/
-
-
 
 
         MedicalDataEntity entity = MedicalDataEntity.builder().bloodType(request.getBloodType())
@@ -60,15 +43,7 @@ public class MedicalDataMapper {
 
     public MedicalDataResponse Entity2Response (MedicalDataEntity entity) throws IOException {
 
-       /* MedicalDataResponse response = new MedicalDataResponse();
-                            response.setBloodType(entity.getBloodType());
-                            response.setAlergies(entity.getAlergies());
-                            response.setRelevantInfo(entity.getRelevantInfo());
-                            response.setCreateDate(entity.getTimestamp());
 
-       SubjectResponse subjectResponse = this.subjectMapper.subjectEntitySetToResponse(entity.getSubject());
-
-                            response.setSubject(subjectResponse.getId());*/
 
         MedicalDataResponse response = MedicalDataResponse.builder().bloodType(entity.getBloodType())
                 .id(entity.getId())

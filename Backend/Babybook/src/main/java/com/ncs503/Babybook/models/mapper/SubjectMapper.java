@@ -19,7 +19,7 @@ public class SubjectMapper {
     UserRepository userRepository;
 
   /*  @Autowired
-    AwsService awsService;*/
+    AwsService awsService;*/ //TODO
 
     @Autowired
     SubjectRepository subjectRepository;
@@ -29,7 +29,7 @@ public class SubjectMapper {
 
         SubjectEntity entity = SubjectEntity.builder().firstName(request.getFirstName())
                 .lastName(request.getLastName())
-             //   .image(awsService.uploadFileFromBase64(request.getImage()))
+             //   .image(awsService.uploadFileFromBase64(request.getImage()))TODO
                 .birthDate(request.getBirthDate())
                 .dni(request.getDni())
                 .users(userRepository.findById(userID).get())
@@ -44,7 +44,7 @@ public class SubjectMapper {
 
         SubjectResponse response = SubjectResponse.builder().firstName(entity.getFirstName())
                 .id(entity.getId())
-               // .image(awsService.uploadFileFromBase64(entity.getImage()))
+               // .image(awsService.uploadFileFromBase64(entity.getImage()))TODO VER TRATAMIENTO IMAGEN
                 .lastName(entity.getLastName())
                 .dni(entity.getDni())
                 .birthDate(entity.getBirthDate())
@@ -68,29 +68,7 @@ public class SubjectMapper {
         return entity;
     }
 
- /*   public  Set<SubjectEntity> subjectRequestToEntitySet(Long id){
 
-        Set<SubjectEntity> entitylist = new HashSet<>();
-
-        Optional<SubjectEntity> entity = this.subjectRepository.findById(id);
-
-        entitylist.add(entity.get());
-
-
-
-        return entitylist;
-    }
-
-    public SubjectResponse subjectEntitySetToResponse(Set<SubjectEntity> entities) throws IOException {
-        SubjectResponse response= new SubjectResponse();
-
-
-        for (SubjectEntity entity : entities) {
-
-            response = this.Entity2Response(entity);
-
-        }
-        return response;*/
     }
 
 

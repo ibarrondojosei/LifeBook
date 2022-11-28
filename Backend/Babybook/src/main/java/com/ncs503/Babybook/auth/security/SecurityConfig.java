@@ -76,19 +76,19 @@ public class SecurityConfig {
                         //ADMIN
 
                         //Subject
-                        .antMatchers(HttpMethod.GET,"/subjects/getByUser/**").permitAll()//hasAnyAuthority(RoleEnum.USER.getSimpleRoleName())
-                        .antMatchers(HttpMethod.GET,"/subjects/getByName/**").permitAll()//hasAnyAuthority(RoleEnum.USER.getSimpleRoleName())
-                        .antMatchers(HttpMethod.PUT,"/subjects/**").permitAll()//hasAuthority(RoleEnum.USER.getSimpleRoleName())
-                        .antMatchers(HttpMethod.POST,"/subjects").permitAll() //hasAuthority(RoleEnum.USER.getSimpleRoleName())
-                        .antMatchers(HttpMethod.DELETE,"/subjects/**").permitAll() //hasRole(RoleEnum.USER.getSimpleRoleName())
+                        .antMatchers(HttpMethod.GET,"/subjects/getByUser/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.GET,"/subjects/getByName/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.PUT,"/subjects/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.POST,"/subjects").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.DELETE,"/subjects/**").hasAuthority(RoleEnum.USER.getFullRoleName())
 
                         //Events
 
                         //MedicalData
-                        .antMatchers(HttpMethod.GET,"/medicals/**").permitAll()//hasAnyAuthority(RoleEnum.USER.getSimpleRoleName())
-                        .antMatchers(HttpMethod.PUT,"/medicals/**").permitAll()//hasAuthority(RoleEnum.USER.getSimpleRoleName())
-                        .antMatchers(HttpMethod.POST,"/medicals").permitAll()//hasAuthority(RoleEnum.USER.getSimpleRoleName())
-                        .antMatchers(HttpMethod.DELETE,"/medicals/**").permitAll()//hasAuthority(RoleEnum.USER.getSimpleRoleName())
+                        .antMatchers(HttpMethod.GET,"/medicals/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.PUT,"/medicals/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.POST,"/medicals").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.DELETE,"/medicals/**").hasAuthority(RoleEnum.USER.getFullRoleName())
 
 
                         //Guests

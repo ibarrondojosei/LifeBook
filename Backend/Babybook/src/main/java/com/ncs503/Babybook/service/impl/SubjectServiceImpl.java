@@ -54,7 +54,7 @@ public class SubjectServiceImpl implements SubjectService {
 
 
 
-        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+        UserEntity userEntity = userRepository.findByEmail(username).get();
 
         Optional<SubjectEntity> subjectEntity = subjectRepository.findByName(request.getFirstName());
 
@@ -77,7 +77,7 @@ public class SubjectServiceImpl implements SubjectService {
 
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
-        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+        UserEntity userEntity = userRepository.findByEmail(username).get();
 
         Optional<SubjectEntity> entity = this.subjectRepository.findById(id);
         SubjectEntity entity1= entity.get();
@@ -103,7 +103,7 @@ public class SubjectServiceImpl implements SubjectService {
 
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
-        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+        UserEntity userEntity = userRepository.findByEmail(username).get();
 
 
         Optional<SubjectEntity> entity = this.subjectRepository.findById(id);
@@ -150,7 +150,7 @@ public class SubjectServiceImpl implements SubjectService {
                                                String token) {
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
-        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+        UserEntity userEntity = userRepository.findByEmail(username).get();
 
         Long userId = userEntity.getId();
 
@@ -187,7 +187,7 @@ public class SubjectServiceImpl implements SubjectService {
 
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
-        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+        UserEntity userEntity = userRepository.findByEmail(username).get();
 
 
 

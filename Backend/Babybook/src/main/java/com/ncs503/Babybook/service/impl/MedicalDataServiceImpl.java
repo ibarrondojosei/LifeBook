@@ -31,7 +31,7 @@ public class MedicalDataServiceImpl implements MedicalDataService {
     MedicalDataRepository medicalDataRepository;
 
     @Autowired
-    private JwtUtils jwtUtils;// TODO Verificar token
+    private JwtUtils jwtUtils;
 
     @Autowired
     UserRepository userRepository;
@@ -45,7 +45,7 @@ public class MedicalDataServiceImpl implements MedicalDataService {
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
 
-        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+        UserEntity userEntity = userRepository.findByEmail(username).get();
 
         Optional<SubjectEntity> subjectEntity = subjectRepository.findById(request.getSubject());
 
@@ -66,7 +66,7 @@ public class MedicalDataServiceImpl implements MedicalDataService {
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
 
-        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+        UserEntity userEntity = userRepository.findByEmail(username).get();
 
         Optional<SubjectEntity> subjectEntity = subjectRepository.findById(id);
 
@@ -91,7 +91,7 @@ public class MedicalDataServiceImpl implements MedicalDataService {
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
 
-        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+        UserEntity userEntity = userRepository.findByEmail(username).get();
 
         Optional<SubjectEntity> subjectEntity = subjectRepository.findById(id);
 
@@ -122,7 +122,7 @@ public class MedicalDataServiceImpl implements MedicalDataService {
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
 
-        UserEntity userEntity = userRepository.findByEmail("ibarrondojosei@gmail.com").get();//(username).get();TODO Ver token
+        UserEntity userEntity = userRepository.findByEmail(username).get();
 
         Optional<SubjectEntity> subjectEntity = subjectRepository.findById(id);
 
