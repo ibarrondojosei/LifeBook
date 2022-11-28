@@ -6,8 +6,6 @@ import lombok.Builder;
 
 import lombok.*;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
@@ -25,7 +23,7 @@ public class MedicalRecordResponse {
     private LocalDate date;
     private List<String> media;
     private Timestamp timestamp;
-//    private Subjectenenene subjectId;
+    private MedicalDataEntity medicalDataEntity;
     private TagsMedicalRecordEnum medicalRecordEnum;
     private UserEntity userId;
 

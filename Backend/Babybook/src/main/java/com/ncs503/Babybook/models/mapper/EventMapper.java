@@ -1,10 +1,8 @@
 package com.ncs503.Babybook.models.mapper;
 
 import com.ncs503.Babybook.models.entity.EventEntity;
-import com.ncs503.Babybook.models.entity.SubjectEntity;
 import com.ncs503.Babybook.models.request.EventRequest;
 import com.ncs503.Babybook.models.response.EventResponse;
-import com.ncs503.Babybook.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

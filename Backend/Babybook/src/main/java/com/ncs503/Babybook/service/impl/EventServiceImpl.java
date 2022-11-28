@@ -3,14 +3,12 @@ package com.ncs503.Babybook.service.impl;
 import com.ncs503.Babybook.auth.filter.JwtUtils;
 import com.ncs503.Babybook.models.entity.EventEntity;
 import com.ncs503.Babybook.models.entity.RoleEntity;
-import com.ncs503.Babybook.models.entity.SubjectEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.mapper.EventMapper;
 import com.ncs503.Babybook.models.request.EventRequest;
 import com.ncs503.Babybook.models.response.EventResponse;
 import com.ncs503.Babybook.models.utility.TagsEventEnum;
 import com.ncs503.Babybook.repository.EventRepository;
-import com.ncs503.Babybook.repository.SubjectRepository;
 import com.ncs503.Babybook.repository.UserRepository;
 import com.ncs503.Babybook.service.AwsService;
 import com.ncs503.Babybook.service.EventService;
@@ -19,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +81,7 @@ public class EventServiceImpl implements EventService {
             return response;
 
         }
+
         throw new Exception("el Token del USER no coincide con el token del User del Subject ");
 
     }

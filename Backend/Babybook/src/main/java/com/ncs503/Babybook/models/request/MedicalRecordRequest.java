@@ -1,7 +1,6 @@
 package com.ncs503.Babybook.models.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ncs503.Babybook.models.entity.SubjectEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.utility.TagsMedicalRecordEnum;
 import io.swagger.annotations.ApiModel;
@@ -42,8 +41,8 @@ public class MedicalRecordRequest {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "subject_id")
-    private SubjectEntity subject;
+    @JoinColumn(name = "medicalData_Id")
+    private MedicalDataEntity medicalData;
 
     private TagsMedicalRecordEnum medicalRecordEnum;
 

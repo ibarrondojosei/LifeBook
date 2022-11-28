@@ -22,7 +22,7 @@ public class MedicalRecordMapper {
                 .date(request.getDate())
                 .media(request.getMedia())
                 .medicalRecordEnums(request.getMedicalRecordEnum())
-//                .subject(request.getSubject())
+                .medicalDataEntity(request.getMedicalData())
                 .timestamp(new Timestamp(System.currentTimeMillis()))
                 .sofdelete(false)
                 .build();
@@ -37,7 +37,7 @@ public class MedicalRecordMapper {
                 .date(entity.getDate())
                 .media(entity.getMedia())
                 .medicalRecordEnum(entity.getMedicalRecordEnums())
-//                .subjectId(entity.getSubjectId())
+                .medicalDataEntity(entity.getMedicalDataEntity())
                 .timestamp(entity.getTimestamp())
                 .build();
     }
@@ -51,7 +51,7 @@ public class MedicalRecordMapper {
                 .date(request.getDate())
                 .media(request.getMedia())
                 .medicalRecordEnums(request.getMedicalRecordEnum())
-//                .subjectId(request.getSubjectId())
+                .medicalDataEntity(request.getMedicalData())
                 .timestamp(new Timestamp(System.currentTimeMillis()))
                 .sofdelete(false)
                 .build();
@@ -68,4 +68,5 @@ public class MedicalRecordMapper {
 
         return responses;
     }
+
 }

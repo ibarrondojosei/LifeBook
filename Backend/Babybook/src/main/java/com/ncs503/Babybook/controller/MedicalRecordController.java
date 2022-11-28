@@ -44,10 +44,11 @@ public class MedicalRecordController {
                                                         example = "1" ) @RequestParam Long medicalDataId,
                                                         @ApiParam( name = "MedicalRecordEnum", type = "TagsMedicalRecordEnum",
                                                         example = "ESTUDIOS MEDICOS" ) @RequestParam (required = false) TagsMedicalRecordEnum MedicalRecordEnum
-                                                                                                )  throws IOException {
+                                                                                                ) throws Exception {
 
         String token = "aaa";
-      
+        System.out.println("\nmedia controller : " + media);
+
         LocalDate date1 = LocalDate.parse(date);
         MedicalRecordResponse response = this.medicalRecordService.create(token, title, bodie, date1, media, medicalDataId, MedicalRecordEnum);
 
@@ -73,10 +74,10 @@ public class MedicalRecordController {
                                                                 example = "1" ) @RequestParam Long medicalDataId,
                                                         @ApiParam( name = "MedicalRecordEnum", type = "TagsMedicalRecordEnum",
                                                                 example = "ESTUDIOS MEDICOS" ) @RequestParam (required = false) TagsMedicalRecordEnum MedicalRecordEnum
-                                                                                            )  throws IOException {
+                                                                                            ) throws Exception {
 
         String token = "aaa";
-        System.out.println("\n media-controller : " + media.toString());
+
         LocalDate date1 = LocalDate.parse(date);
         MedicalRecordResponse response = this.medicalRecordService.update(token, medicalRecordId, title, bodie, date1, media, medicalDataId, MedicalRecordEnum);
 
