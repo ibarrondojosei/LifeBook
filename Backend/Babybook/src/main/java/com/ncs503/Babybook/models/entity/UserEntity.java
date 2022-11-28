@@ -4,6 +4,7 @@ package com.ncs503.Babybook.models.entity;
 
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
@@ -78,9 +79,9 @@ public class UserEntity {
     private List<Subject> subjects;*/
 
 
-//    @OneToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "guests")
-//    private List<Guest> guests;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "guests")
+    private List<GuestEntity> guests = new ArrayList<>();
     
     @CreationTimestamp
     @Column(updatable = false)

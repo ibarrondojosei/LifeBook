@@ -1,9 +1,14 @@
 
 package com.ncs503.Babybook.models.response;
 
+import com.ncs503.Babybook.models.entity.GuestEntity;
+import com.ncs503.Babybook.models.entity.RoleEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -20,9 +25,9 @@ public class UserResponse {
     private String email;
     private String photo;
 
-    //NYI
-    //private Set<Rol> rol_id;
+
+    private Set<RoleEntity> rol_id;
     //private List<Subject> subjects;
-    //private List<Guest> guests;
+    private List<GuestEntity> guests;
     
 }

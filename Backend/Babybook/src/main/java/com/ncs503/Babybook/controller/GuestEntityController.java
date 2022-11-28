@@ -3,6 +3,7 @@ package com.ncs503.Babybook.controller;
 import com.ncs503.Babybook.exception.GuestNotFoundException;
 import com.ncs503.Babybook.exception.InvalidGuestException;
 import com.ncs503.Babybook.exception.InvalidUserException;
+import com.ncs503.Babybook.exception.UserNotFoundException;
 import com.ncs503.Babybook.models.entity.GuestEntity;
 import com.ncs503.Babybook.models.mapper.GuestMapper;
 import com.ncs503.Babybook.models.request.GuestRequest;
@@ -56,7 +57,7 @@ public class GuestEntityController {
     })
     public ResponseEntity<GuestResponse> getGuest(@PathVariable("id") Long id,
                                                     @RequestHeader(name="Authorization") String token)
-            throws GuestNotFoundException, InvalidUserException {
+            throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
         return new ResponseEntity<>(guestServ.getGuest(id, token), HttpStatus.OK);
     }
 
@@ -67,7 +68,7 @@ public class GuestEntityController {
             @ApiResponse(code=403, message = "Forbidden action")
     })
     public ResponseEntity<GuestResponse> saveGuest(@RequestBody GuestRequest guestReq,
-                                                   @RequestHeader(name="Authorization")String token) throws InvalidGuestException, GuestNotFoundException, InvalidUserException {
+                                                   @RequestHeader(name="Authorization")String token) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
 
 
         return new ResponseEntity<>(guestServ.saveGuest(guestReq, token), HttpStatus.OK);
@@ -80,7 +81,7 @@ public class GuestEntityController {
             @ApiResponse(code=403, message = "Forbidden action")
     })
     public ResponseEntity<Void> deleteGuest(@RequestParam Long id,
-                                            @RequestHeader(name="Authorization")String token) throws GuestNotFoundException, InvalidUserException {
+                                            @RequestHeader(name="Authorization")String token) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
         guestServ.deleteGuest(id, token);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -92,7 +93,7 @@ public class GuestEntityController {
             @ApiResponse(code=403, message = "Forbidden action")
     })
     public ResponseEntity<Void> adminDeleteGuest(@RequestParam Long id,
-                                                 @RequestHeader(name="Authorization")String token) throws GuestNotFoundException, InvalidUserException {
+                                                 @RequestHeader(name="Authorization")String token) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
         guestServ.deleteGuest(id, token);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -105,7 +106,7 @@ public class GuestEntityController {
     })
     public ResponseEntity<GuestResponse> updateGuest(@RequestBody GuestRequest guestReq,
                                                      @RequestParam Long id,
-                                                     @RequestHeader(name="Authorization")String token) throws InvalidGuestException, GuestNotFoundException, InvalidUserException {
+                                                     @RequestHeader(name="Authorization")String token) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
 
         return new ResponseEntity<>(guestServ.updateGuest(guestReq, id, token), HttpStatus.OK);
     }
@@ -118,7 +119,7 @@ public class GuestEntityController {
     })
     public ResponseEntity<GuestResponse> adminUpdateGuest(@RequestBody GuestRequest guestReq,
                                                           @RequestParam Long id,
-                                                          @RequestHeader(name="Authorization")String token) throws InvalidGuestException, GuestNotFoundException, InvalidUserException {
+                                                          @RequestHeader(name="Authorization")String token) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
 
         return new ResponseEntity<>(guestServ.updateGuest(guestReq, id, token), HttpStatus.OK);
     }

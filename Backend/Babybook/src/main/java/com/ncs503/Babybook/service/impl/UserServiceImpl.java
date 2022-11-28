@@ -4,6 +4,7 @@ package com.ncs503.Babybook.service.impl;
 import com.ncs503.Babybook.auth.filter.JwtUtils;
 import com.ncs503.Babybook.exception.InvalidUserException;
 import com.ncs503.Babybook.exception.UserNotFoundException;
+import com.ncs503.Babybook.models.entity.GuestEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.mapper.UserMapper;
 import com.ncs503.Babybook.models.request.UpdateUserRequest;
@@ -63,11 +64,13 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public String getToken(String token){
-        String [] part = token.split(" ");
+
+
+    public String getToken(String token) {
+        String[] part = token.split(" ");
         String tokenWithoutBearer = part[1];
         return tokenWithoutBearer;
-
+    }
 
 
     }

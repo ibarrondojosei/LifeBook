@@ -4,12 +4,15 @@ import com.ncs503.Babybook.auth.filter.JwtUtils;
 import com.ncs503.Babybook.exception.GuestNotFoundException;
 import com.ncs503.Babybook.exception.InvalidGuestException;
 import com.ncs503.Babybook.exception.InvalidUserException;
+import com.ncs503.Babybook.exception.UserNotFoundException;
 import com.ncs503.Babybook.models.entity.GuestEntity;
 import com.ncs503.Babybook.models.mapper.GuestMapper;
 import com.ncs503.Babybook.models.request.GuestRequest;
 import com.ncs503.Babybook.models.response.GuestResponse;
+import com.ncs503.Babybook.models.response.UserResponse;
 import com.ncs503.Babybook.repository.GuestRepository;
 import com.ncs503.Babybook.service.GuestService;
+import com.ncs503.Babybook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +32,11 @@ public class GuestServiceImpl implements GuestService {
     private GuestMapper guestMapper;
 
     @Autowired
+    private UserService userServ;
+
+    @Autowired
     private JwtUtils jwtUtils;
+
 
     @Override
     public List<GuestResponse> getGuests() throws GuestNotFoundException {
@@ -37,14 +44,19 @@ public class GuestServiceImpl implements GuestService {
     }
 
     @Override
-    public GuestResponse getGuest(Long id, String token) throws GuestNotFoundException, InvalidUserException {
-        String userToken = getToken(token);
+    public GuestResponse getGuest(Long id, String token) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
+        UserResponse user = userServ.getUser(token);
+        GuestEntity guest = guestRepo.findById(id).orElse(null);
+        List<GuestEntity> guests = user.getGuests();
+        if (guests.contains(guest)) {
+            return guestMapper.toGuestResponse(guest);
+        } else throw new InvalidUserException("Invalid User");
 
-        return guestMapper.toGuestResponse(guestRepo.findById(id).orElse(null));
     }
 
     @Override
-    public GuestResponse saveGuest(GuestRequest guestReq, String token) throws InvalidGuestException, GuestNotFoundException {
+    public GuestResponse saveGuest(GuestRequest guestReq, String token) throws InvalidGuestException, GuestNotFoundException, UserNotFoundException, InvalidUserException {
+        UserResponse user = userServ.getUser(token);
         GuestEntity guest = guestMapper.toGuestEntity(guestReq);
         guestRepo.save(guest);
         return guestMapper.toGuestResponse(guest);
@@ -52,25 +64,32 @@ public class GuestServiceImpl implements GuestService {
     }
 
     @Override
-    public void deleteGuest(Long id, String token) throws GuestNotFoundException {
-        String userToken = getToken(token);
-
-        guestRepo.deleteById(id);
+    public void deleteGuest(Long id, String token) throws GuestNotFoundException, UserNotFoundException, InvalidUserException {
+        UserResponse user = userServ.getUser(token);
+        GuestEntity guest = guestRepo.findById(id).orElse(null);
+        List<GuestEntity> guests = user.getGuests();
+        if (guests.contains(guest)) {
+            guestRepo.deleteById(id);
+        } else throw new InvalidUserException("Invalid User");
     }
 
     @Override
-    public GuestResponse updateGuest(GuestRequest guestReq, Long id, String token) throws InvalidGuestException, GuestNotFoundException, InvalidUserException {
-        String userToken = getToken(token);
-
+    public GuestResponse updateGuest(GuestRequest guestReq, Long id, String token) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
+        UserResponse userRes = userServ.getUser(token);
         GuestEntity guest = guestMapper.toGuestEntity(guestReq);
-        guest.setId(id);
-        guestRepo.save(guest);
-        return guestMapper.toGuestResponse(guest);
+        List<GuestEntity> guests = userRes.getGuests();
+        if (guests.contains(guest)) {
+            guest.setId(id);
+            guestRepo.save(guest);
+            return guestMapper.toGuestResponse(guest);
+        } else throw new InvalidUserException("Invalid User");
     }
 
-    public String getToken(String token){
-        String [] part = token.split(" ");
+    public String getToken(String token) {
+        String[] part = token.split(" ");
         String tokenWithoutBearer = part[1];
         return tokenWithoutBearer;
 
     }
+
+}
