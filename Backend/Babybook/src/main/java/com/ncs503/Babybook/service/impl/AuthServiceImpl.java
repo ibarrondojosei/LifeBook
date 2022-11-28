@@ -43,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
 
     public LoginResponse login (LoginRequest request){
         try{
-            String token = jwtUtils.generateToken(authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())));
+            String token = jwtUtils.generateToken(authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())), request.getEmail());
             return LoginResponse.builder()
                     .email(request.getEmail())
                     .token(token)
