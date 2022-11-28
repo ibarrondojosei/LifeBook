@@ -75,6 +75,11 @@ public class SecurityConfig {
                         //ADMIN
 
                         //Subject
+                        .antMatchers(HttpMethod.GET,"/subjects/getByUser/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.GET,"/subjects/getByName/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.PUT,"/subjects/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.POST,"/subjects").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.DELETE,"/subjects/**").hasAuthority(RoleEnum.USER.getFullRoleName())
 
                         //Events
 //                        .antMatchers(HttpMethod.POST, "/events/create").hasAuthority(RoleEnum.USER.getFullRoleName())
@@ -85,7 +90,12 @@ public class SecurityConfig {
 //                        .antMatchers(HttpMethod.GET, "/events/findAllByDate/").hasAuthority(RoleEnum.USER.getFullRoleName())
 //                        .antMatchers(HttpMethod.GET, "/events/findAllByTags/").hasAuthority(RoleEnum.USER.getFullRoleName())
 
-                        //Medical
+                        //MedicalData
+                        .antMatchers(HttpMethod.GET,"/medicals/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.PUT,"/medicals/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.POST,"/medicals").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.DELETE,"/medicals/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+
 
                         //Guests
 

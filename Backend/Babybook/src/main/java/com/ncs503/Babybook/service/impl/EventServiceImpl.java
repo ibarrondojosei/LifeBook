@@ -3,12 +3,14 @@ package com.ncs503.Babybook.service.impl;
 import com.ncs503.Babybook.auth.filter.JwtUtils;
 import com.ncs503.Babybook.models.entity.EventEntity;
 import com.ncs503.Babybook.models.entity.RoleEntity;
+import com.ncs503.Babybook.models.entity.SubjectEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.mapper.EventMapper;
 import com.ncs503.Babybook.models.request.EventRequest;
 import com.ncs503.Babybook.models.response.EventResponse;
 import com.ncs503.Babybook.models.utility.TagsEventEnum;
 import com.ncs503.Babybook.repository.EventRepository;
+import com.ncs503.Babybook.repository.SubjectRepository;
 import com.ncs503.Babybook.repository.UserRepository;
 import com.ncs503.Babybook.service.AwsService;
 import com.ncs503.Babybook.service.EventService;
@@ -51,10 +53,10 @@ public class EventServiceImpl implements EventService {
 
         System.out.println("\nId del User: " + userEntity.getId());
         System.out.println("rol del User : " + roleEntity.getName());
-        System.out.println("ID de User del subject : " + subjectEntity.getUserId().getId());
+        System.out.println("ID de User del subject : " + subjectEntity.getId());
         System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUserId().getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getId()) {
 
             EventRequest request = new EventRequest();
             request.setUserId(userEntity);
@@ -103,7 +105,7 @@ public class EventServiceImpl implements EventService {
 //        System.out.println("ID de User del subject : " + subject.getUserId().getId());
 //        System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUserId().getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getId()) {
 
             EventEntity eventEntity = eventRepository.getById(eventId);
 
@@ -167,7 +169,7 @@ public class EventServiceImpl implements EventService {
 //        System.out.println("ID de User del subject : " + subject.getUserId().getId());
 //        System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUserId().getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getId()) {
 
             EventEntity eventEntity = eventRepository.getById(eventId);
 
@@ -203,11 +205,11 @@ public class EventServiceImpl implements EventService {
 //        System.out.println("ID de User del subject : " + subject.getUserId().getId());
 //        System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUserId().getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getId()) {
 
             EventEntity eventEntity = eventRepository.findById(eventId).orElse(null);
 
-            if(subjectId == eventEntity.getSubject().getId()) {
+            if(subjectId == eventEntity.getSubjectEntity().getId()) {
                 EventResponse response = eventMapper.Entity2Response(eventEntity);
                 return response;
             }
@@ -236,19 +238,19 @@ public class EventServiceImpl implements EventService {
 //        System.out.println("ID de User del subject : " + subject.getUserId().getId());
 //        System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUserId().getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getId()) {
 
             List<EventEntity> eventEntities = eventRepository.findAllBySubject(subjectId);
             List<EventResponse> responses = eventMapper.EntityList2ResponsePage(eventEntities);
 
             if(responses.isEmpty()){
-                throw new Exception("No Existen Eventos para " + subjectEntity.getTitleee());
+                throw new Exception("No Existen Eventos para " + subjectEntity.getFirstName() + " " + subjectEntity.getLastName());
             }
             return responses;
 
         }
 
-        throw new Exception("No Existen Eventos para " + subjectEntity.getTitleee());
+        throw new Exception("No Existen Eventos para " +  subjectEntity.getFirstName() + " " + subjectEntity.getLastName());
 
     }
 
@@ -268,7 +270,7 @@ public class EventServiceImpl implements EventService {
 //        System.out.println("ID de User del subject : " + subject.getUserId().getId());
 //        System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUserId().getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getId()) {
 
             System.out.println("\nsubject_id : " + subjectId);
             System.out.println("date : " + date);
@@ -282,11 +284,11 @@ public class EventServiceImpl implements EventService {
             }
 
             SubjectEntity subjectEntity1 = subjectRepository.findById(subjectId).orElse(null);
-            throw new Exception("No Existen Eventos en la fecha : " + date +  " para " + subjectEntity1.getTitleee());
+            throw new Exception("No Existen Eventos en la fecha : " + date +  " para " + subjectEntity1);
 
         }
 
-        throw new Exception("No Existen Eventos para " + subjectEntity.getTitleee());
+        throw new Exception("No Existen Eventos para " + subjectEntity.getFirstName() + " " + subjectEntity.getLastName());
 
     }
 
@@ -306,7 +308,7 @@ public class EventServiceImpl implements EventService {
 //        System.out.println("ID de User del subject : " + subject.getUserId().getId());
 //        System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUserId().getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getId()) {
 
             System.out.println("\nsubject_id : " + subjectId);
             System.out.println("eventEnum : " + eventEnum.ordinal());
@@ -320,11 +322,11 @@ public class EventServiceImpl implements EventService {
             }
 
             SubjectEntity subjectEntity1 = subjectRepository.findById(subjectId).orElse(null);
-            throw new Exception("No Existen Eventos de tipo " + eventEnum +  " para " + subjectEntity1.getTitleee());
+            throw new Exception("No Existen Eventos de tipo " + eventEnum +  " para " + subjectEntity.getFirstName() + " " + subjectEntity.getLastName());
 
         }
 
-        throw new Exception("No Existen Eventos para " + subjectEntity.getTitleee());
+        throw new Exception("No Existen Eventos para " + subjectEntity.getFirstName() + " " + subjectEntity.getLastName());
 
     }
 

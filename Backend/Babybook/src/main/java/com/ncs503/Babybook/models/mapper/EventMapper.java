@@ -3,6 +3,7 @@ package com.ncs503.Babybook.models.mapper;
 import com.ncs503.Babybook.models.entity.EventEntity;
 import com.ncs503.Babybook.models.request.EventRequest;
 import com.ncs503.Babybook.models.response.EventResponse;
+import com.ncs503.Babybook.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,7 @@ public class EventMapper {
                 .date(request.getDate())
                 .media(request.getMedia())
                 .eventEnum(request.getEventEnum())
-                .subject((request.getSubject()))
+                .subjectEntity((request.getSubject()))
                 .userId(request.getUserId())
                 .timestamp(new Timestamp(System.currentTimeMillis()))
                 .sofdelete(false)
@@ -42,7 +43,7 @@ public class EventMapper {
                 .date(entity.getDate())
                 .media(entity.getMedia())
                 .eventEnum(entity.getEventEnum())
-                .subjectId(entity.getSubject())
+                .subjectId(entity.getSubjectEntity())
                 .userId(entity.getUserId())
                 .timestamp(entity.getTimestamp())
                 .build();
@@ -57,7 +58,7 @@ public class EventMapper {
                 .date(request.getDate())
                 .media(request.getMedia())
                 .eventEnum(request.getEventEnum())
-                .subject(request.getSubject())
+                .subjectEntity(request.getSubject())
                 .userId(request.getUserId())
                 .timestamp(new Timestamp(System.currentTimeMillis()))
                 .sofdelete(false)

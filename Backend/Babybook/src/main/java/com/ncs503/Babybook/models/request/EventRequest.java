@@ -1,6 +1,7 @@
 package com.ncs503.Babybook.models.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ncs503.Babybook.models.entity.SubjectEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.utility.TagsEventEnum;
 import io.swagger.annotations.ApiModel;

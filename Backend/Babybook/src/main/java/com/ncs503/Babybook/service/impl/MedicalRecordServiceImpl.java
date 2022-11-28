@@ -6,6 +6,7 @@ import com.ncs503.Babybook.models.mapper.MedicalRecordMapper;
 import com.ncs503.Babybook.models.request.MedicalRecordRequest;
 import com.ncs503.Babybook.models.response.MedicalRecordResponse;
 import com.ncs503.Babybook.models.utility.TagsMedicalRecordEnum;
+import com.ncs503.Babybook.repository.MedicalDataRepository;
 import com.ncs503.Babybook.repository.MedicalRecordRepository;
 import com.ncs503.Babybook.repository.UserRepository;
 import com.ncs503.Babybook.service.AwsService;
@@ -49,7 +50,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 
         System.out.println("\nId del User: " + userEntity.getId());
         System.out.println("rol del User : " + roleEntity.getName());
-        System.out.println("ID de User del subject : " + medicalDataEntity.getUserId().getId());
+        System.out.println("ID de User del subject : " + medicalDataEntity.getId());
         System.out.println("media : " + media);
 
         if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getId()) {
@@ -97,7 +98,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 
         System.out.println("\nId del User: " + userEntity.getId());
         System.out.println("rol del User : " + roleEntity.getName());
-        System.out.println("ID de User del subject : " + medicalDataEntity.getUserId().getId());
+        System.out.println("ID de User del subject : " + medicalDataEntity.getId());
         System.out.println("media : " + media);
 
         if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getId()) {
@@ -154,7 +155,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 
         System.out.println("\nId del User: " + userEntity.getId());
         System.out.println("rol del User : " + roleEntity.getName());
-        System.out.println("ID de User del subject : " + medicalDataEntity.getUserId().getId());
+        System.out.println("ID de User del subject : " + medicalDataEntity.getId());
 
 
         if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getId()) {
@@ -178,7 +179,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 
         System.out.println("\nId del User: " + userEntity.getId());
         System.out.println("rol del User : " + roleEntity.getName());
-        System.out.println("ID de User del subject : " + medicalDataEntity.getUserId().getId());
+        System.out.println("ID de User del subject : " + medicalDataEntity.getId());
 
         if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getId()) {
 

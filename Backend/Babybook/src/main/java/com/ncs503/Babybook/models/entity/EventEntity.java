@@ -52,7 +52,7 @@ public class EventEntity implements Serializable {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject_id")
-    private SubjectEntity subject;
+    private SubjectEntity subjectEntity;
 
     private TagsEventEnum eventEnum;
 

@@ -9,6 +9,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
 @SQLDelete(sql = "UPDATE medicalrecords SET soft_delete = true Where id=?")
 @Where(clause = "soft_delete = false")
 @Table( name= "medicalrecords")
-public class MedicalRecordEntity {
+public class MedicalRecordEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +46,7 @@ public class MedicalRecordEntity {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "medical_id")
+    @JoinColumn(name = "medical_data_id")
     private MedicalDataEntity medicalDataEntity;
 
     private TagsMedicalRecordEnum medicalRecordEnums;

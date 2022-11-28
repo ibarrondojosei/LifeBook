@@ -1,5 +1,6 @@
 package com.ncs503.Babybook.models.response;
 
+import com.ncs503.Babybook.models.entity.MedicalDataEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.utility.TagsMedicalRecordEnum;
 import lombok.Builder;
