@@ -1,6 +1,7 @@
 package com.ncs503.Babybook.auth.security;
 
 import com.ncs503.Babybook.auth.utility.RoleEnum;
+
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -75,10 +76,20 @@ public class SecurityConfig {
                         //ADMIN
 
                         //Subject
+                        .antMatchers(HttpMethod.GET,"/subjects/getByUser/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.GET,"/subjects/getByName/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.PUT,"/subjects/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.POST,"/subjects").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.DELETE,"/subjects/**").hasAuthority(RoleEnum.USER.getFullRoleName())
 
                         //Events
 
-                        //Medical
+                        //MedicalData
+                        .antMatchers(HttpMethod.GET,"/medicals/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.PUT,"/medicals/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.POST,"/medicals").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.DELETE,"/medicals/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+
 
                         //Guests
 
