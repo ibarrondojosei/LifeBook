@@ -45,12 +45,13 @@ public class UserEntityController {
     @GetMapping("/get")
     @ApiOperation(value = "Get an user", notes = "Endpoint that return an user by the info inside the token")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "User information"),
+            @ApiResponse(code = 200, message = "User information"),
             @ApiResponse(code = 403, message = "Forbidden action")
     })
-    public ResponseEntity<UserResponse> getUser(@RequestHeader(name="Authorization") String token
+    public ResponseEntity<UserResponse> getUser(@RequestHeader(name="Authorization") String token,
+                                                @RequestParam Long id
                                                 ) throws UserNotFoundException, InvalidUserException {
-        return new ResponseEntity<>(userServ.getUser(token), HttpStatus.OK);
+        return new ResponseEntity<>(userServ.getUser(token, id), HttpStatus.OK);
 
     }
 
@@ -60,7 +61,7 @@ public class UserEntityController {
     @DeleteMapping("/delete")
     @ApiOperation(value = "Delete an User", notes = "Endpoint that allows an user to delete himself/herself")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "User deleted"),
+            @ApiResponse(code = 200, message = "User deleted"),
             @ApiResponse(code = 403, message = "Forbbiden action")
     })
     public ResponseEntity<Void> deleteUser(@RequestParam Long id,
@@ -73,7 +74,7 @@ public class UserEntityController {
     @DeleteMapping("/su/delete")
     @ApiOperation(value = "Delete an User(admin)", notes ="Endpoint that allows an admin to delete an user")
     @ApiResponses(value = {
-            @ApiResponse( code = 201, message = "User deleted"),
+            @ApiResponse( code = 200, message = "User deleted"),
             @ApiResponse( code = 403, message = "Forbbiden action")
     })
     public ResponseEntity<Void> adminDeleteUser(@RequestHeader(name="Authorizaation") String token,
@@ -87,30 +88,29 @@ public class UserEntityController {
     @PatchMapping("/update")
     @ApiOperation(value = "Update an User", notes ="Endpoint that allows to update user's information")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "User updated"),
+            @ApiResponse(code = 200, message = "User updated"),
             @ApiResponse(code = 403, message = "Forbbiden action")
     })
     public ResponseEntity<UserResponse> editUser(@RequestHeader(name="Authorization") String token,
                                                     @RequestBody UpdateUserRequest userReq,
                                                     @RequestParam Long id)
                                         throws InvalidUserException, UserNotFoundException {
-        userServ.updateUser(userReq, id, token);
-        return new ResponseEntity<>(userServ.getUser(token), HttpStatus.OK);
+
+        return new ResponseEntity<>(userServ.updateUser(userReq, id, token), HttpStatus.OK);
 
     }
 
     @PatchMapping("/su/update")
     @ApiOperation(value = "Update an User(admin)", notes ="Endpoint that allows an admin to update an user's information")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "User updated"),
-            @ApiResponse(code = 403, message = "Forbbiden action")
+            @ApiResponse(code = 200, message = "User updated"),
+            @ApiResponse(code = 403, message = "Forbidden action")
     })
     public ResponseEntity<UserResponse> adminEditUser(@RequestBody UpdateUserRequest userReq,
                                                       @RequestHeader(name="Authorization") String token,
                                                       @RequestParam Long id)
                                         throws InvalidUserException, UserNotFoundException {
-        userServ.updateUser(userReq, id, token);
-        return new ResponseEntity<>(userServ.getUser(token), HttpStatus.OK);
+        return new ResponseEntity<>(userServ.updateUser(userReq, id, token), HttpStatus.OK);
 
     }
 

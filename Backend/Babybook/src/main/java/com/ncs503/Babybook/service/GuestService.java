@@ -19,11 +19,15 @@ public interface GuestService {
 
     public List<GuestResponse> getGuests() throws GuestNotFoundException;
 
-    public GuestResponse getGuest(Long id, String token) throws GuestNotFoundException, InvalidUserException, UserNotFoundException;
+    public List<GuestResponse> getGuestsByUser(String token, Long user_id) throws GuestNotFoundException, InvalidUserException, UserNotFoundException;
 
-    public GuestResponse saveGuest(GuestRequest guestReq, String token) throws InvalidUserException, InvalidGuestException, GuestNotFoundException, UserNotFoundException;
+    public GuestResponse getGuest(Long id, String token, Long user_id) throws GuestNotFoundException, InvalidUserException, UserNotFoundException, InvalidGuestException;
 
-    public void deleteGuest(Long id, String token) throws GuestNotFoundException, InvalidUserException, UserNotFoundException;
+    public GuestResponse saveGuest(GuestRequest guestReq, String token, Long user_id) throws InvalidUserException, InvalidGuestException, GuestNotFoundException, UserNotFoundException;
 
-    public GuestResponse updateGuest(GuestRequest guestReq, Long id, String token) throws InvalidUserException, InvalidGuestException, GuestNotFoundException, UserNotFoundException;
+    public void deleteGuest(Long id, String token, Long user_id) throws GuestNotFoundException, InvalidUserException, UserNotFoundException;
+
+    public void adminDeleteGuest(Long id, String token) throws GuestNotFoundException, InvalidUserException;
+
+    public GuestResponse updateGuest(GuestRequest guestReq, Long id, String token, Long user_id) throws InvalidUserException, InvalidGuestException, GuestNotFoundException, UserNotFoundException;
 }

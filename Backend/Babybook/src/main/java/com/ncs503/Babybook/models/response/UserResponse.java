@@ -3,6 +3,7 @@ package com.ncs503.Babybook.models.response;
 
 import com.ncs503.Babybook.models.entity.GuestEntity;
 import com.ncs503.Babybook.models.entity.RoleEntity;
+import com.ncs503.Babybook.models.entity.SubjectEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,7 @@ public class UserResponse {
 
 
     private Set<RoleEntity> rol_id;
-    //private List<Subject> subjects;
+    private List<SubjectEntity> subjects;
     private List<GuestEntity> guests;
     
 }

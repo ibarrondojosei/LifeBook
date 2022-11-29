@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
-import javax.security.auth.Subject;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -72,16 +71,16 @@ public class UserEntity {
     private String password;
     
 
-/*    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "subjects",
     joinColumns = {@JoinColumn(name ="user_id")},
     inverseJoinColumns = {@JoinColumn(name = "subject_id")})
-    private List<Subject> subjects;*/
+    private List<SubjectEntity> subjects;
 
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "guests")
-    private List<GuestEntity> guests = new ArrayList<>();
+    private List<GuestEntity> guests;
     
     @CreationTimestamp
     @Column(updatable = false)

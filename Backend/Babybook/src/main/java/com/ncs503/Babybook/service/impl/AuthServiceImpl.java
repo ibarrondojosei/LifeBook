@@ -78,4 +78,52 @@ public class AuthServiceImpl implements AuthService {
         UserEntity userWithId = userRepo.findByEmail(userReq.getEmail()).orElse(null);
         return userMapper.toUserResponse(userWithId);
     }
+
+    @Override
+    public UserResponse saveAdminUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException {
+        if (userRepo.findByEmail(userReq.getEmail()).isPresent())
+            throw new UserProfileAlreadyExistsException("E-mail already used");
+        if(userRepo.findByUsername(userReq.getUsername()).isPresent())
+            throw new UserProfileAlreadyExistsException("Username already taken, choose a new one");
+
+        String pass = userReq.getPassword();
+        userReq.setPassword(passEnc.encode(pass));
+
+        Set<RoleEntity> roles = roleRepo.findByName(RoleEnum.USER.getSimpleRoleName());
+        if (roles.isEmpty()) {
+            RoleEntity rol = new RoleEntity();
+            rol.setName(RoleEnum.ADMIN.getSimpleRoleName());
+            rol = roleRepo.save(rol);
+            roles.add(rol);
+        }
+        UserEntity user = userMapper.toUserEntityWithRoles(userReq, roles);
+
+        userRepo.save(user);
+        UserEntity userWithId = userRepo.findByEmail(userReq.getEmail()).orElse(null);
+        return userMapper.toUserResponse(userWithId);
+    }
+
+    @Override
+    public UserResponse saveGuestUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException {
+        if (userRepo.findByEmail(userReq.getEmail()).isPresent())
+            throw new UserProfileAlreadyExistsException("E-mail already used");
+        if(userRepo.findByUsername(userReq.getUsername()).isPresent())
+            throw new UserProfileAlreadyExistsException("Username already taken, choose a new one");
+
+        String pass = userReq.getPassword();
+        userReq.setPassword(passEnc.encode(pass));
+
+        Set<RoleEntity> roles = roleRepo.findByName(RoleEnum.GUEST.getSimpleRoleName());
+        if (roles.isEmpty()) {
+            RoleEntity rol = new RoleEntity();
+            rol.setName(RoleEnum.ADMIN.getSimpleRoleName());
+            rol = roleRepo.save(rol);
+            roles.add(rol);
+        }
+        UserEntity user = userMapper.toUserEntityWithRoles(userReq, roles);
+
+        userRepo.save(user);
+        UserEntity userWithId = userRepo.findByEmail(userReq.getEmail()).orElse(null);
+        return userMapper.toUserResponse(userWithId);
+    }
 }

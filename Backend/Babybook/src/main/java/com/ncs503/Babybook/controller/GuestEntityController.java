@@ -41,7 +41,7 @@ public class GuestEntityController {
     @GetMapping("/all")
     @ApiOperation(value="List all the guests", notes = "Endpoint that return a list of all the guests")
     @ApiResponses(value= {
-            @ApiResponse(code= 201, message = "Guest's List"),
+            @ApiResponse(code= 200, message = "Guest's List"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
     public ResponseEntity<List<GuestResponse>> getGuests() throws GuestNotFoundException{
@@ -49,78 +49,94 @@ public class GuestEntityController {
         return new ResponseEntity<>(guests, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    @ApiOperation(value="Guest", notes = "Endpoint that return a guest by its id")
+    @GetMapping("/byUser")
+    @ApiOperation(value="List the user's guests list", notes = "Endpoint that return the list of user's guests")
     @ApiResponses(value= {
-            @ApiResponse(code= 201, message = "Guest response"),
+            @ApiResponse(code= 200, message = "User's guests list"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
-    public ResponseEntity<GuestResponse> getGuest(@PathVariable("id") Long id,
-                                                    @RequestHeader(name="Authorization") String token)
-            throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
-        return new ResponseEntity<>(guestServ.getGuest(id, token), HttpStatus.OK);
+    public ResponseEntity<List<GuestResponse>> getGuestsByUser(@RequestHeader(name="Authorization") String token,
+                                                               @RequestParam Long user_id) throws UserNotFoundException, InvalidUserException, GuestNotFoundException {
+        return new ResponseEntity<>(guestServ.getGuestsByUser(token, user_id), HttpStatus.OK);
+    }
+
+    @GetMapping("/byId")
+    @ApiOperation(value="Guest", notes = "Endpoint that return a guest by its id")
+    @ApiResponses(value= {
+            @ApiResponse(code= 200, message = "Guest response"),
+            @ApiResponse(code=403, message = "Forbidden action")
+    })
+    public ResponseEntity<GuestResponse> getGuest(@RequestParam Long id,
+                                                    @RequestHeader(name="Authorization") String token,
+                                                  @RequestParam Long user_id)
+            throws GuestNotFoundException, InvalidUserException, UserNotFoundException, InvalidGuestException {
+        return new ResponseEntity<>(guestServ.getGuest(id, token,user_id), HttpStatus.OK);
     }
 
     @PostMapping("/new")
     @ApiOperation(value="Create new guest", notes = "Endpoint that create a new guest")
     @ApiResponses(value= {
-            @ApiResponse(code= 201, message = "Guest created!"),
+            @ApiResponse(code= 200, message = "Guest created!"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
     public ResponseEntity<GuestResponse> saveGuest(@RequestBody GuestRequest guestReq,
-                                                   @RequestHeader(name="Authorization")String token) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
+                                                   @RequestHeader(name="Authorization")String token,
+                                                   @RequestParam Long user_id) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
 
 
-        return new ResponseEntity<>(guestServ.saveGuest(guestReq, token), HttpStatus.OK);
+        return new ResponseEntity<>(guestServ.saveGuest(guestReq, token, user_id), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")
     @ApiOperation(value="Delete a guest", notes = "Endpoint that allow an user to delete a guest")
     @ApiResponses(value= {
-            @ApiResponse(code= 201, message = "Guest deleted!"),
+            @ApiResponse(code= 200, message = "Guest deleted!"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
     public ResponseEntity<Void> deleteGuest(@RequestParam Long id,
-                                            @RequestHeader(name="Authorization")String token) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
-        guestServ.deleteGuest(id, token);
+                                            @RequestHeader(name="Authorization")String token,
+                                            @RequestParam Long user_id) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
+        guestServ.deleteGuest(id, token, user_id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/su/delete")
     @ApiOperation(value="Delete a guest(admin)", notes = "Endpoint that allow an admin to delete a guest")
     @ApiResponses(value= {
-            @ApiResponse(code= 201, message = "Guest deleted!"),
+            @ApiResponse(code= 200, message = "Guest deleted!"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
     public ResponseEntity<Void> adminDeleteGuest(@RequestParam Long id,
                                                  @RequestHeader(name="Authorization")String token) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
-        guestServ.deleteGuest(id, token);
+        guestServ.adminDeleteGuest(id, token);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PatchMapping("/update")
     @ApiOperation(value="Update a guest", notes = "Endpoint that allow an user to update a guest")
     @ApiResponses(value= {
-            @ApiResponse(code= 201, message = "Guest updated!"),
+            @ApiResponse(code= 200, message = "Guest updated!"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
     public ResponseEntity<GuestResponse> updateGuest(@RequestBody GuestRequest guestReq,
-                                                     @RequestParam Long id,
-                                                     @RequestHeader(name="Authorization")String token) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
+                                                     @RequestParam Long guest_id,
+                                                     @RequestHeader(name="Authorization")String token,
+                                                     @RequestParam Long user_id) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
 
-        return new ResponseEntity<>(guestServ.updateGuest(guestReq, id, token), HttpStatus.OK);
+        return new ResponseEntity<>(guestServ.updateGuest(guestReq, guest_id, token, user_id), HttpStatus.OK);
     }
 
     @PatchMapping("/su/update")
     @ApiOperation(value="Update a guest(admin)", notes = "Endpoint that allow an admin to update a guest")
     @ApiResponses(value= {
-            @ApiResponse(code= 201, message = "Guest updated!"),
+            @ApiResponse(code= 200, message = "Guest updated!"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
     public ResponseEntity<GuestResponse> adminUpdateGuest(@RequestBody GuestRequest guestReq,
                                                           @RequestParam Long id,
-                                                          @RequestHeader(name="Authorization")String token) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
+                                                          @RequestHeader(name="Authorization")String token,
+                                                          @RequestParam Long user_id) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
 
-        return new ResponseEntity<>(guestServ.updateGuest(guestReq, id, token), HttpStatus.OK);
+        return new ResponseEntity<>(guestServ.updateGuest(guestReq, id, token, user_id), HttpStatus.OK);
     }
 }

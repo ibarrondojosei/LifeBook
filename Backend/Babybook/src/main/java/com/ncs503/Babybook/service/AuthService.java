@@ -16,6 +16,10 @@ public interface AuthService {
 
     LoginResponse login(LoginRequest request);
     public UserResponse saveUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException;
+
+    public UserResponse saveAdminUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException;
+
+    public UserResponse saveGuestUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException;
 }
 
 

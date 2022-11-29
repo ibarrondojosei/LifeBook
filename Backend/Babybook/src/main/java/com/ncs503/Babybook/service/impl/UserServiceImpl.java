@@ -40,28 +40,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse getUser(String token) throws UserNotFoundException, InvalidUserException {
-        String userToken = getToken(token);
-        UserEntity user = userRepo.findByEmail(jwtUtils.extractUsername(userToken)).get();
-        return mapper.toUserResponse(user);
+    public UserResponse getUser(String token, Long id) throws UserNotFoundException, InvalidUserException {
+        String userToken = this.getToken(token);
+        UserEntity user = this.getUserByToken(token);
+        if(user.getId().equals(id)){
+            return mapper.toUserResponse(user);
+        }
+        else throw new InvalidUserException("Invalid user");
     }
 
     @Override
-    public void deleteUser(Long id, String token) throws UserNotFoundException {
-        userRepo.deleteById(id);
+    public void deleteUser(Long id, String token) throws UserNotFoundException, InvalidUserException {
+        UserEntity user = this.getUserByToken(token);
+        if(user.getId().equals(id)){
+            userRepo.deleteById(id);
+        }
+        else throw new InvalidUserException("Invalid user, action forbidden");
+
     }
 
     @Override
     public UserResponse updateUser(UpdateUserRequest userReq, Long id, String token) throws InvalidUserException, UserNotFoundException {
-        String tokenUsername = jwtUtils.extractUsername(getToken(token));
-        if(!Objects.equals(tokenUsername, userReq.getEmail())){
-            throw new InvalidUserException("Invalid user");
+        UserEntity user = this.getUserByToken(token);
+        if(user.getId().equals(id)){
+            UserEntity userEdited = mapper.toUserEntity(userReq);
+            userEdited.setId(id);
+            userRepo.save(userEdited);
+            return mapper.toUserResponse(userEdited);
         }
-        UserEntity user = mapper.toUserEntity(userReq);
-        user.setId(id);
-        userRepo.save(user);
-        return mapper.toUserResponse(user);
-
+        else throw new InvalidUserException("Invalid user");
     }
 
 
@@ -70,6 +77,11 @@ public class UserServiceImpl implements UserService {
         String[] part = token.split(" ");
         String tokenWithoutBearer = part[1];
         return tokenWithoutBearer;
+    }
+
+    public UserEntity getUserByToken(String token){
+        String token2 = this.getToken(token);
+        return userRepo.findByEmail(jwtUtils.extractUsername(token2)).orElse(null);
     }
 
 

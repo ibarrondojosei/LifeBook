@@ -11,7 +11,7 @@ public interface UserService {
     
     public List<UserResponse> getUsers() throws UserNotFoundException;
     
-    public UserResponse getUser(String token) throws UserNotFoundException, InvalidUserException;
+    public UserResponse getUser(String token, Long id) throws UserNotFoundException, InvalidUserException;
 
     public void deleteUser(Long id, String token) throws UserNotFoundException, InvalidUserException;
     
