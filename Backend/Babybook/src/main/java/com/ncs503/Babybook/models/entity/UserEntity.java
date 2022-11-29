@@ -28,8 +28,8 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @Entity
 @Table ( name = "users")
-@SQLDelete(sql = "UPDATE users SET deleted = true Where id=?")
-@Where(clause="deleted=false")
+@SQLDelete(sql = "UPDATE users SET soft_deleted = true Where id=?")
+@Where(clause="soft_delete=false")
 public class UserEntity {
     
     @Id
@@ -78,8 +78,10 @@ public class UserEntity {
     private List<SubjectEntity> subjects;
 
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "guests")
+    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL, orphanRemoval = true)
+  //  @JoinTable(name = "guests")
+    //joinColumns = {@JoinColumn(name = "user_id")})
+//    inverseJoinColumns = {@JoinColumn(name = "guest_id")})
     private List<GuestEntity> guests;
     
     @CreationTimestamp
@@ -88,8 +90,9 @@ public class UserEntity {
     
     @UpdateTimestamp
     private Timestamp updateAt;
-    
-    private Boolean deleted = false;
+
+    @Column(name = "soft_delete")
+    private Boolean soft_delete = Boolean.FALSE;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "user_role",

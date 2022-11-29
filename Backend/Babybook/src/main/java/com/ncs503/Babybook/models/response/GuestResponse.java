@@ -17,4 +17,6 @@ public class GuestResponse {
     private String lastName;
 
     private String email;
+
+    private Long user_id;
 }

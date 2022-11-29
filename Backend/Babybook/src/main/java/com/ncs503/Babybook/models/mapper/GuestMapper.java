@@ -3,8 +3,12 @@ package com.ncs503.Babybook.models.mapper;
 import com.ncs503.Babybook.exception.GuestNotFoundException;
 import com.ncs503.Babybook.exception.InvalidGuestException;
 import com.ncs503.Babybook.models.entity.GuestEntity;
+import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.request.GuestRequest;
 import com.ncs503.Babybook.models.response.GuestResponse;
+import com.ncs503.Babybook.repository.GuestRepository;
+import com.ncs503.Babybook.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,12 +21,17 @@ import java.util.List;
 @Component
 public class GuestMapper {
 
+    @Autowired
+    private UserRepository userRepo;
+
     public GuestEntity toGuestEntity(GuestRequest guestRes) throws InvalidGuestException {
         GuestEntity guest = new GuestEntity();
         guest.setId(guestRes.getId());
-        guest.setFirstName(guest.getFirstName());
-        guest.setLastName(guest.getLastName());
-        guest.setEmail(guest.getEmail());
+        guest.setFirstName(guestRes.getFirstName());
+        guest.setLastName(guestRes.getLastName());
+        guest.setEmail(guestRes.getEmail());
+        UserEntity user = userRepo.findById(guestRes.getUser_id()).orElse(null);
+        guest.setUser_id(user);
         return guest;
     }
 
@@ -32,6 +41,7 @@ public class GuestMapper {
         guestRes.setFirstName(guest.getFirstName());
         guestRes.setLastName(guest.getLastName());
         guestRes.setEmail(guest.getEmail());
+        guestRes.setUser_id(guest.getUser_id().getId());
         return guestRes;
     }
 
@@ -46,4 +56,17 @@ public class GuestMapper {
         });
         return guestResList;
     }
+
+    public List<GuestEntity> guestRequestToGuestEntityList(List<GuestRequest> guests) throws GuestNotFoundException{
+        List<GuestEntity> guestEntityList = new ArrayList<>();
+        guests.forEach(guest -> {
+            try{
+                guestEntityList.add(toGuestEntity(guest));
+            } catch (InvalidGuestException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return guestEntityList;
+    }
+
 }

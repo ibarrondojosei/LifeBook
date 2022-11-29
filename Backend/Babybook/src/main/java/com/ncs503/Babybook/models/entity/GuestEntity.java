@@ -1,7 +1,7 @@
 package com.ncs503.Babybook.models.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,16 +19,18 @@ import java.sql.Timestamp;
  * @author Leonardo Terlizzi
  */
 
+
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "guests")
-@SQLDelete(sql = "UPDATE guests SET softDelete = true Where id=?")
-@Where(clause = "softDelete=false")
+@SQLDelete(sql = "UPDATE guests SET soft_delete = true Where guests_id=?")
+@Where(clause = "soft_delete=false")
 public class GuestEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "guests_id")
     private Long id;
 
     @NotNull(message = "The first name can't be null")
@@ -49,7 +51,13 @@ public class GuestEntity {
     @Column(name = "email", nullable = false)
     private String email;
 
-    private Boolean softDelete;
+    @Column(name = "soft_delete")
+    private Boolean soft_delete = Boolean.FALSE;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private UserEntity user_id;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -57,6 +65,7 @@ public class GuestEntity {
 
     @UpdateTimestamp
     private Timestamp updatedAt;
+
 
 
 }

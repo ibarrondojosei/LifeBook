@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface GuestRepository extends JpaRepository<GuestEntity, Long> {
 
-    @Query(value = "SELECT * from guests WHERE guests.email LIKE %:email% AND softDelete = false", nativeQuery = true)
+//    @Query(value = "SELECT * from guests WHERE guests.email LIKE %:email% AND softDelete = false", nativeQuery = true)
     Optional<GuestEntity> findByEmail(String email);
 
    // Optional<List<GuestResponse>> findByUser(UserEntity user);

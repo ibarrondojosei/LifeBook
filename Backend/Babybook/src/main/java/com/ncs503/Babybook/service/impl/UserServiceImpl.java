@@ -2,6 +2,7 @@
 package com.ncs503.Babybook.service.impl;
 
 import com.ncs503.Babybook.auth.filter.JwtUtils;
+import com.ncs503.Babybook.exception.GuestNotFoundException;
 import com.ncs503.Babybook.exception.InvalidUserException;
 import com.ncs503.Babybook.exception.UserNotFoundException;
 import com.ncs503.Babybook.models.entity.GuestEntity;
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse getUser(String token, Long id) throws UserNotFoundException, InvalidUserException {
+    public UserResponse getUser(String token, Long id) throws UserNotFoundException, InvalidUserException, GuestNotFoundException {
         String userToken = this.getToken(token);
         UserEntity user = this.getUserByToken(token);
         if(user.getId().equals(id)){
@@ -60,7 +61,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse updateUser(UpdateUserRequest userReq, Long id, String token) throws InvalidUserException, UserNotFoundException {
+    public UserResponse updateUser(UpdateUserRequest userReq, Long id, String token) throws InvalidUserException, UserNotFoundException, GuestNotFoundException {
         UserEntity user = this.getUserByToken(token);
         if(user.getId().equals(id)){
             UserEntity userEdited = mapper.toUserEntity(userReq);

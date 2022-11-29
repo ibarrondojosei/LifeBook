@@ -1,6 +1,7 @@
 
 package com.ncs503.Babybook.controller;
 
+import com.ncs503.Babybook.exception.GuestNotFoundException;
 import com.ncs503.Babybook.exception.InvalidUserException;
 import com.ncs503.Babybook.exception.UserNotFoundException;
 import com.ncs503.Babybook.models.request.UpdateUserRequest;
@@ -42,7 +43,7 @@ public class UserEntityController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/get")
+    @GetMapping("/getById")
     @ApiOperation(value = "Get an user", notes = "Endpoint that return an user by the info inside the token")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "User information"),
@@ -50,7 +51,7 @@ public class UserEntityController {
     })
     public ResponseEntity<UserResponse> getUser(@RequestHeader(name="Authorization") String token,
                                                 @RequestParam Long id
-                                                ) throws UserNotFoundException, InvalidUserException {
+                                                ) throws UserNotFoundException, InvalidUserException, GuestNotFoundException {
         return new ResponseEntity<>(userServ.getUser(token, id), HttpStatus.OK);
 
     }
@@ -94,7 +95,7 @@ public class UserEntityController {
     public ResponseEntity<UserResponse> editUser(@RequestHeader(name="Authorization") String token,
                                                     @RequestBody UpdateUserRequest userReq,
                                                     @RequestParam Long id)
-                                        throws InvalidUserException, UserNotFoundException {
+            throws InvalidUserException, UserNotFoundException, GuestNotFoundException {
 
         return new ResponseEntity<>(userServ.updateUser(userReq, id, token), HttpStatus.OK);
 
@@ -109,7 +110,7 @@ public class UserEntityController {
     public ResponseEntity<UserResponse> adminEditUser(@RequestBody UpdateUserRequest userReq,
                                                       @RequestHeader(name="Authorization") String token,
                                                       @RequestParam Long id)
-                                        throws InvalidUserException, UserNotFoundException {
+            throws InvalidUserException, UserNotFoundException, GuestNotFoundException {
         return new ResponseEntity<>(userServ.updateUser(userReq, id, token), HttpStatus.OK);
 
     }

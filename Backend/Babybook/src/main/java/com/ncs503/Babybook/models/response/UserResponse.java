@@ -29,6 +29,6 @@ public class UserResponse {
 
     private Set<RoleEntity> rol_id;
     private List<SubjectEntity> subjects;
-    private List<GuestEntity> guests;
+    private List<GuestResponse> guests;
     
 }

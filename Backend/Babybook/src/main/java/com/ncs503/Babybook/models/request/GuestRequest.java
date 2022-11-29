@@ -41,5 +41,10 @@ public class GuestRequest {
     @ApiModelProperty(notes = "Guest's e-mail address", example = "joselopez123@yahoo.com", required = true)
     private String email;
 
+    @NotNull(message = "The user's id can't be null")
+    @NotEmpty(message = "The user's id can't be empty")
+    @ApiModelProperty(notes = "Guest's associated user's id", example = "1", required = true)
+    private Long user_id;
+
 
 }

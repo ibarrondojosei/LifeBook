@@ -27,7 +27,9 @@ public interface GuestService {
 
     public void deleteGuest(Long id, String token, Long user_id) throws GuestNotFoundException, InvalidUserException, UserNotFoundException;
 
-    public void adminDeleteGuest(Long id, String token) throws GuestNotFoundException, InvalidUserException;
+    public void adminDeleteGuest(Long id) throws GuestNotFoundException, InvalidUserException;
 
     public GuestResponse updateGuest(GuestRequest guestReq, Long id, String token, Long user_id) throws InvalidUserException, InvalidGuestException, GuestNotFoundException, UserNotFoundException;
+
+    public GuestResponse adminUpdateGuest(GuestRequest guestReq, Long id) throws InvalidGuestException, GuestNotFoundException;
 }

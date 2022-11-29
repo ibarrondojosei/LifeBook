@@ -2,9 +2,12 @@
 package com.ncs503.Babybook.models.mapper;
 
 
+import com.ncs503.Babybook.exception.GuestNotFoundException;
 import com.ncs503.Babybook.exception.InvalidUserException;
 import com.ncs503.Babybook.exception.UserNotFoundException;
+import com.ncs503.Babybook.models.entity.GuestEntity;
 import com.ncs503.Babybook.models.entity.RoleEntity;
+import com.ncs503.Babybook.models.entity.SubjectEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.request.UpdateUserRequest;
 import com.ncs503.Babybook.models.request.UserRequest;
@@ -14,6 +17,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,21 +27,28 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class UserMapper {
+
+    @Autowired
+    private GuestMapper guestMapper;
+
     
-    public UserEntity toUserEntity(UserRequest userReq) throws InvalidUserException{
+    public UserEntity toUserEntity(UserRequest userReq) throws InvalidUserException, GuestNotFoundException {
         UserEntity user = new UserEntity();
+        List<GuestEntity> guests = new ArrayList<>();
         user.setEmail(userReq.getEmail());
         user.setFirstName(userReq.getFirstName());
         user.setLastName(userReq.getLastName());
         user.setPhoto(userReq.getPhoto());
         user.setUsername(userReq.getUsername());
         user.setPassword(userReq.getPassword());
+        user.setGuests(guestMapper.guestRequestToGuestEntityList(userReq.getGuests()));
+        user.setSubjects(userReq.getSubjects());
         return user;
 
     }
 
     //sobrecarga de método tomando otro tipo de request para las updates de entidades user
-    public UserEntity toUserEntity(UpdateUserRequest userReq) throws InvalidUserException{
+    public UserEntity toUserEntity(UpdateUserRequest userReq) throws InvalidUserException, GuestNotFoundException {
         UserEntity user = new UserEntity();
 
         if(userReq.getEmail() != null & !userReq.getEmail().isEmpty() & !userReq.getEmail().isBlank())
@@ -52,11 +64,14 @@ public class UserMapper {
         if(userReq.getPassword() != null & !userReq.getPassword().isEmpty() & !userReq.getPassword().isBlank())
             user.setPassword(userReq.getPassword());
         //user.setRoleId(roles);
+        if(userReq.getGuests() != null){
+            user.setGuests(guestMapper.guestRequestToGuestEntityList(userReq.getGuests()));
+        }
         return user;
 
     }
 
-    public UserEntity toUserEntityWithRoles(UserRequest userReq, Set<RoleEntity> roles) throws InvalidUserException{
+    public UserEntity toUserEntityWithRoles(UserRequest userReq, Set<RoleEntity> roles) throws InvalidUserException, GuestNotFoundException {
         UserEntity user = new UserEntity();
         user.setEmail(userReq.getEmail());
         user.setFirstName(userReq.getFirstName());
@@ -65,13 +80,16 @@ public class UserMapper {
         user.setUsername(userReq.getUsername());
         user.setPassword(userReq.getPassword());
         user.setRoleId(roles);
+        user.setGuests(guestMapper.guestRequestToGuestEntityList(userReq.getGuests()));
+        user.setSubjects(userReq.getSubjects());
+
         return user;
 
     }
 
 
     
-    public UserResponse toUserResponse(UserEntity user) throws UserNotFoundException {
+    public UserResponse toUserResponse(UserEntity user) throws UserNotFoundException, GuestNotFoundException {
         UserResponse userRes = new UserResponse();
         userRes.setId(user.getId());
         userRes.setFirstName(user.getFirstName());
@@ -79,6 +97,8 @@ public class UserMapper {
         userRes.setUsername(user.getUsername());
         userRes.setPhoto(user.getPhoto());
         userRes.setEmail(user.getEmail());
+        userRes.setGuests(guestMapper.guestsToGuestResponseList(user.getGuests()));
+        userRes.setSubjects(user.getSubjects());
         return userRes;
     }
     
@@ -89,11 +109,11 @@ public class UserMapper {
          
             try {
                 usersRes.add(toUserResponse(user));
-            } catch (UserNotFoundException ex) {
-                Logger.getLogger(UserMapper.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UserNotFoundException | GuestNotFoundException ex) {
+                throw new RuntimeException(ex);
             }
-           
-           
+
+
         });
         return usersRes;
     }

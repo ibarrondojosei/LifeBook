@@ -49,7 +49,7 @@ public class GuestEntityController {
         return new ResponseEntity<>(guests, HttpStatus.OK);
     }
 
-    @GetMapping("/byUser")
+    @GetMapping("/getByUser")
     @ApiOperation(value="List the user's guests list", notes = "Endpoint that return the list of user's guests")
     @ApiResponses(value= {
             @ApiResponse(code= 200, message = "User's guests list"),
@@ -60,7 +60,7 @@ public class GuestEntityController {
         return new ResponseEntity<>(guestServ.getGuestsByUser(token, user_id), HttpStatus.OK);
     }
 
-    @GetMapping("/byId")
+    @GetMapping("/getById")
     @ApiOperation(value="Guest", notes = "Endpoint that return a guest by its id")
     @ApiResponses(value= {
             @ApiResponse(code= 200, message = "Guest response"),
@@ -81,7 +81,8 @@ public class GuestEntityController {
     })
     public ResponseEntity<GuestResponse> saveGuest(@RequestBody GuestRequest guestReq,
                                                    @RequestHeader(name="Authorization")String token,
-                                                   @RequestParam Long user_id) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
+                                                   @RequestParam Long user_id
+                                                ) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
 
 
         return new ResponseEntity<>(guestServ.saveGuest(guestReq, token, user_id), HttpStatus.OK);
@@ -98,6 +99,7 @@ public class GuestEntityController {
                                             @RequestParam Long user_id) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
         guestServ.deleteGuest(id, token, user_id);
         return ResponseEntity.status(HttpStatus.OK).build();
+
     }
 
     @DeleteMapping("/su/delete")
@@ -108,7 +110,7 @@ public class GuestEntityController {
     })
     public ResponseEntity<Void> adminDeleteGuest(@RequestParam Long id,
                                                  @RequestHeader(name="Authorization")String token) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
-        guestServ.adminDeleteGuest(id, token);
+        guestServ.adminDeleteGuest(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -137,6 +139,6 @@ public class GuestEntityController {
                                                           @RequestHeader(name="Authorization")String token,
                                                           @RequestParam Long user_id) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
 
-        return new ResponseEntity<>(guestServ.updateGuest(guestReq, id, token, user_id), HttpStatus.OK);
+        return new ResponseEntity<>(guestServ.adminUpdateGuest(guestReq, id), HttpStatus.OK);
     }
 }

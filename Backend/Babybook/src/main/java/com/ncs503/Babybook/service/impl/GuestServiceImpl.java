@@ -36,9 +36,6 @@ public class GuestServiceImpl implements GuestService {
     private GuestMapper guestMapper;
 
     @Autowired
-    private UserService userServ;
-
-    @Autowired
     private UserRepository userRepo;
 
     @Autowired
@@ -85,6 +82,7 @@ public class GuestServiceImpl implements GuestService {
         assert user != null;
         if(user.getId().equals(user_id)){
             GuestEntity guest = guestMapper.toGuestEntity(guestReq);
+            guest.setUser_id(user);
             guestRepo.save(guest);
             return guestMapper.toGuestResponse(guest);
         }
@@ -101,6 +99,7 @@ public class GuestServiceImpl implements GuestService {
             GuestEntity guest = guestRepo.findById(id).orElse(null);
             List<GuestEntity> guests = user.getGuests();
             if (guests.contains(guest)) {
+//                System.out.println("borrando guests");
                 guestRepo.deleteById(id);
             } else throw new GuestNotFoundException("Guest not found");
         }
@@ -109,11 +108,8 @@ public class GuestServiceImpl implements GuestService {
     }
 
     @Override
-    public void adminDeleteGuest(Long id, String token) throws GuestNotFoundException, InvalidUserException {
-        UserEntity user = this.getUserByToken(token);
-        if(user.getRoleId().contains(RoleEnum.ADMIN)){
-
-        }
+    public void adminDeleteGuest(Long id) throws GuestNotFoundException, InvalidUserException {
+       guestRepo.deleteById(id);
     }
 
 
@@ -123,16 +119,27 @@ public class GuestServiceImpl implements GuestService {
         UserEntity user = this.getUserByToken(token);
         assert user != null;
         if(user.getId().equals(user_id)){
-            GuestEntity guest = guestMapper.toGuestEntity(guestReq);
+            GuestEntity updatedGuest = guestMapper.toGuestEntity(guestReq);
+            GuestEntity updatableGuest = guestRepo.findById(id).orElse(null);
             List<GuestEntity> guests = user.getGuests();
-            if (guests.contains(guest)) {
-                guest.setId(id);
-                guestRepo.save(guest);
-                return guestMapper.toGuestResponse(guest);
+            if (guests.contains(updatableGuest)) {
+                updatedGuest.setId(id);
+                UserEntity user2 = userRepo.getById(user_id);
+                updatedGuest.setUser_id(user2);
+                guestRepo.save(updatedGuest);
+                return guestMapper.toGuestResponse(updatedGuest);
             } else throw new GuestNotFoundException("Guest not found");
         }
         else throw new InvalidUserException("Invalid User");
 
+    }
+
+    @Override
+    public GuestResponse adminUpdateGuest(GuestRequest guestReq, Long id) throws InvalidGuestException, GuestNotFoundException {
+       GuestEntity guest = guestMapper.toGuestEntity(guestReq);
+       guest.setId(id);
+       guestRepo.save(guest);
+       return guestMapper.toGuestResponse(guest);
     }
 
     public String getToken(String token) {
