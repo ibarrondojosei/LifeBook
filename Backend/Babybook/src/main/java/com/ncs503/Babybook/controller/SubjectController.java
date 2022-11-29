@@ -6,8 +6,10 @@ import com.ncs503.Babybook.service.SubjectService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -26,7 +28,8 @@ public class SubjectController {
     private SubjectService subjectService;
 
 
-    @PostMapping //FUNCIONA
+//    @PostMapping //FUNCIONA
+    @PostMapping(consumes = {"*/*"})
     @ApiOperation(value = "Create subjects", notes = "Allows User to insert subjects")
     @ApiResponses({@ApiResponse(code = 201, message = "Subject created!")})
     public ResponseEntity<SubjectResponse> createSubject (@Valid @RequestBody SubjectRequest request,

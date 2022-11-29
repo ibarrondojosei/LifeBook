@@ -70,7 +70,6 @@ public class SecurityConfig {
 
                         // Auth
                         .antMatchers(HttpMethod.POST, "/auth/register", "/auth/login").permitAll()
-                        .antMatchers(HttpMethod.POST, "/auth/testing").hasAuthority(RoleEnum.USER.getFullRoleName())
                         //Users
 
                         //ADMIN
@@ -83,6 +82,13 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.DELETE,"/subjects/**").hasAuthority(RoleEnum.USER.getFullRoleName())
 
                         //Events
+//                        .antMatchers(HttpMethod.POST, "/events/create").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.PUT, "/events/update/").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.DELETE, "/events/delete/").hasAuthority(RoleEnum.USER.getFullRoleName())
+//                        .antMatchers(HttpMethod.GET, "/events/findById/").hasAuthority(RoleEnum.USER.getFullRoleName())
+//                        .antMatchers(HttpMethod.GET, "/events/findByIdSubject/").hasAuthority(RoleEnum.USER.getFullRoleName())
+//                        .antMatchers(HttpMethod.GET, "/events/findAllByDate/").hasAuthority(RoleEnum.USER.getFullRoleName())
+//                        .antMatchers(HttpMethod.GET, "/events/findAllByTags/").hasAuthority(RoleEnum.USER.getFullRoleName())
 
                         //MedicalData
                         .antMatchers(HttpMethod.GET,"/medicals/**").hasAuthority(RoleEnum.USER.getFullRoleName())
@@ -95,7 +101,7 @@ public class SecurityConfig {
 
                         .anyRequest().authenticated()
                 )
-               .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(withDefaults())
                 .exceptionHandling((ex) -> ex
