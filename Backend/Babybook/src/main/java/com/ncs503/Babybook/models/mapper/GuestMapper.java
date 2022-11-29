@@ -50,7 +50,6 @@ public class GuestMapper {
         guests.forEach(guest ->{
             try{
                 guestResList.add(toGuestResponse(guest));
-                System.out.println("lalala");
             } catch (GuestNotFoundException e) {
                 throw new RuntimeException(e);
             }
