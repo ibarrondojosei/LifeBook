@@ -41,8 +41,13 @@ public class UserMapper {
         user.setPhoto(userReq.getPhoto());
         user.setUsername(userReq.getUsername());
         user.setPassword(userReq.getPassword());
-        user.setGuests(guestMapper.guestRequestToGuestEntityList(userReq.getGuests()));
-        user.setSubjects(userReq.getSubjects());
+        if(userReq.getGuests() != null) {
+           user.setGuests(guestMapper.guestRequestToGuestEntityList(userReq.getGuests()));
+        }
+        if(userReq.getSubjects() != null){
+            user.setSubjects(userReq.getSubjects());
+
+        }
         return user;
 
     }
@@ -80,8 +85,12 @@ public class UserMapper {
         user.setUsername(userReq.getUsername());
         user.setPassword(userReq.getPassword());
         user.setRoleId(roles);
-        user.setGuests(guestMapper.guestRequestToGuestEntityList(userReq.getGuests()));
-        user.setSubjects(userReq.getSubjects());
+        if(userReq.getGuests() != null){
+            user.setGuests(guestMapper.guestRequestToGuestEntityList(userReq.getGuests()));
+        }
+        if(userReq.getSubjects() != null){
+            user.setSubjects(userReq.getSubjects());
+        }
 
         return user;
 
@@ -97,8 +106,12 @@ public class UserMapper {
         userRes.setUsername(user.getUsername());
         userRes.setPhoto(user.getPhoto());
         userRes.setEmail(user.getEmail());
-        userRes.setGuests(guestMapper.guestsToGuestResponseList(user.getGuests()));
-        userRes.setSubjects(user.getSubjects());
+        if(userRes.getGuests() != null){
+            userRes.setGuests(guestMapper.guestsToGuestResponseList(user.getGuests()));
+        }
+        if(userRes.getSubjects() != null) {
+            userRes.setSubjects(user.getSubjects());
+        }
         return userRes;
     }
     
