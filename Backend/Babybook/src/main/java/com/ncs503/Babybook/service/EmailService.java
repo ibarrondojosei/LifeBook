@@ -1,7 +1,5 @@
 package com.ncs503.Babybook.service;
 
-
-
 import com.sendgrid.Mail;
 
 import java.io.IOException;
