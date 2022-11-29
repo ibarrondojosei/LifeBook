@@ -91,6 +91,11 @@ export const RegisterView = () => {
           </div>
         </form>
       </div>
+      <img
+        className="ml-16 pt-32"
+        src="https://res.cloudinary.com/dytpump6i/image/upload/v1668705729/LifeBook2_2_1_kdgf1m.png"
+        alt=""
+      />
     </div>
   );
 };
