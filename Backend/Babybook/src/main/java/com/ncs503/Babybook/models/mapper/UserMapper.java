@@ -56,17 +56,17 @@ public class UserMapper {
     public UserEntity toUserEntity(UpdateUserRequest userReq) throws InvalidUserException, GuestNotFoundException {
         UserEntity user = new UserEntity();
 
-        if(userReq.getEmail() != null & !userReq.getEmail().isEmpty() & !userReq.getEmail().isBlank())
+        if(userReq.getEmail() != null)
             user.setEmail(userReq.getEmail());
-        if(userReq.getFirstName() != null & !userReq.getFirstName().isEmpty() & !userReq.getFirstName().isBlank())
+        if(userReq.getFirstName() != null)
             user.setFirstName(userReq.getFirstName());
-        if(userReq.getLastName() != null & !userReq.getLastName().isEmpty() & !userReq.getLastName().isBlank())
+        if(userReq.getLastName() != null)
             user.setLastName(userReq.getLastName());
-        if(userReq.getPhoto() != null & !userReq.getPhoto().isEmpty() & !userReq.getPhoto().isBlank())
+        if(userReq.getPhoto() != null)
             user.setPhoto(userReq.getPhoto());
-        if(userReq.getUsername() != null & !userReq.getUsername().isEmpty() & !userReq.getUsername().isBlank())
+        if(userReq.getUsername() != null)
             user.setUsername(userReq.getUsername());
-        if(userReq.getPassword() != null & !userReq.getPassword().isEmpty() & !userReq.getPassword().isBlank())
+        if(userReq.getPassword() != null)
             user.setPassword(userReq.getPassword());
         //user.setRoleId(roles);
         if(userReq.getGuests() != null){
@@ -106,10 +106,10 @@ public class UserMapper {
         userRes.setUsername(user.getUsername());
         userRes.setPhoto(user.getPhoto());
         userRes.setEmail(user.getEmail());
-        if(userRes.getGuests() != null){
+        if(user.getGuests() != null){
             userRes.setGuests(guestMapper.guestsToGuestResponseList(user.getGuests()));
         }
-        if(userRes.getSubjects() != null) {
+        if(user.getSubjects() != null) {
             userRes.setSubjects(user.getSubjects());
         }
         return userRes;

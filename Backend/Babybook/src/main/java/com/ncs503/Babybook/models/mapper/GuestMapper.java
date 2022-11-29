@@ -24,13 +24,13 @@ public class GuestMapper {
     @Autowired
     private UserRepository userRepo;
 
-    public GuestEntity toGuestEntity(GuestRequest guestRes) throws InvalidGuestException {
+    public GuestEntity toGuestEntity(GuestRequest guestReq) throws InvalidGuestException {
         GuestEntity guest = new GuestEntity();
-        guest.setId(guestRes.getId());
-        guest.setFirstName(guestRes.getFirstName());
-        guest.setLastName(guestRes.getLastName());
-        guest.setEmail(guestRes.getEmail());
-        UserEntity user = userRepo.findById(guestRes.getUser_id()).orElse(null);
+        guest.setId(guestReq.getId());
+        guest.setFirstName(guestReq.getFirstName());
+        guest.setLastName(guestReq.getLastName());
+        guest.setEmail(guestReq.getEmail());
+        UserEntity user = userRepo.findById(guestReq.getUser_id()).orElse(null);
         guest.setUser_id(user);
         return guest;
     }
@@ -50,6 +50,7 @@ public class GuestMapper {
         guests.forEach(guest ->{
             try{
                 guestResList.add(toGuestResponse(guest));
+                System.out.println("lalala");
             } catch (GuestNotFoundException e) {
                 throw new RuntimeException(e);
             }

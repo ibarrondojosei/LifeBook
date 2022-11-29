@@ -28,7 +28,7 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @Entity
 @Table ( name = "users")
-@SQLDelete(sql = "UPDATE users SET soft_deleted = true Where id=?")
+@SQLDelete(sql = "UPDATE users SET soft_delete = true Where id=?")
 @Where(clause="soft_delete=false")
 public class UserEntity {
     
@@ -82,7 +82,7 @@ public class UserEntity {
   //  @JoinTable(name = "guests")
     //joinColumns = {@JoinColumn(name = "user_id")})
 //    inverseJoinColumns = {@JoinColumn(name = "guest_id")})
-    private List<GuestEntity> guests;
+    private List<GuestEntity> guests = new ArrayList<>();
     
     @CreationTimestamp
     @Column(updatable = false)
