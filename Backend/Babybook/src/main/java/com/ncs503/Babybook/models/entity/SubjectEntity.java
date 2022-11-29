@@ -22,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@SQLDelete(sql = "UPDATE subjects SET soft_delete = true Where id=?")
+@SQLDelete(sql = "UPDATE subjects SET soft_delete = true Where subject_id=?")
 @Where(clause = "soft_delete=false")
 @Table( name= "subjects")
 
@@ -30,6 +30,7 @@ public class SubjectEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "subject_id")
     private Long id;
 
     private String image;
@@ -57,10 +58,10 @@ public class SubjectEntity {
     private boolean deleted = Boolean.FALSE;
 
     //TODO Ver relaciones con Events
-//    @JsonIgnore
-//    @OneToMany(cascade = CascadeType.ALL)
-//    private List<EventEntity> events;
-
+//     relacion bidireccional
+    @JsonIgnore
+    @OneToMany(mappedBy = "subjectEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<EventEntity> eventEntities;
 
     @JsonIgnore
     @OneToOne(mappedBy = "subject", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

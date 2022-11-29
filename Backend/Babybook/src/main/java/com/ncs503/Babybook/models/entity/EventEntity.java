@@ -22,13 +22,14 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@SQLDelete(sql = "UPDATE events SET soft_delete = true Where id=?")
+@SQLDelete(sql = "UPDATE events SET soft_delete = true Where event_id=?")
 @Where(clause = "soft_delete = false")
 @Table( name= "events")
-public class EventEntity implements Serializable {
+public class EventEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "event_id")
     private Long id;
 
     @NotNull(message = "The name can't be null")
@@ -50,8 +51,9 @@ public class EventEntity implements Serializable {
     private Boolean sofdelete = Boolean.FALSE;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "subject_id")
+    @JoinTable(name = "subject_event")
     private SubjectEntity subjectEntity;
 
     private TagsEventEnum eventEnum;

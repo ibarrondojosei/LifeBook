@@ -53,10 +53,10 @@ public class EventServiceImpl implements EventService {
 
         System.out.println("\nId del User: " + userEntity.getId());
         System.out.println("rol del User : " + roleEntity.getName());
-        System.out.println("ID de User del subject : " + subjectEntity.getId());
+        System.out.println("ID de User del subject : " + subjectEntity.getUsers().getId());
         System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUsers().getId()) {
 
             EventRequest request = new EventRequest();
             request.setUserId(userEntity);
@@ -105,7 +105,7 @@ public class EventServiceImpl implements EventService {
 //        System.out.println("ID de User del subject : " + subject.getUserId().getId());
 //        System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUsers().getId()) {
 
             EventEntity eventEntity = eventRepository.getById(eventId);
 
@@ -169,7 +169,7 @@ public class EventServiceImpl implements EventService {
 //        System.out.println("ID de User del subject : " + subject.getUserId().getId());
 //        System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUsers().getId()) {
 
             EventEntity eventEntity = eventRepository.getById(eventId);
 
@@ -205,11 +205,11 @@ public class EventServiceImpl implements EventService {
 //        System.out.println("ID de User del subject : " + subject.getUserId().getId());
 //        System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUsers().getId()) {
 
             EventEntity eventEntity = eventRepository.findById(eventId).orElse(null);
 
-            if(subjectId == eventEntity.getSubjectEntity().getId()) {
+            if(subjectId == eventEntity.getId()) {
                 EventResponse response = eventMapper.Entity2Response(eventEntity);
                 return response;
             }
@@ -238,7 +238,7 @@ public class EventServiceImpl implements EventService {
 //        System.out.println("ID de User del subject : " + subject.getUserId().getId());
 //        System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUsers().getId()) {
 
             List<EventEntity> eventEntities = eventRepository.findAllBySubject(subjectId);
             List<EventResponse> responses = eventMapper.EntityList2ResponsePage(eventEntities);
@@ -270,7 +270,7 @@ public class EventServiceImpl implements EventService {
 //        System.out.println("ID de User del subject : " + subject.getUserId().getId());
 //        System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUsers().getId()) {
 
             System.out.println("\nsubject_id : " + subjectId);
             System.out.println("date : " + date);
@@ -308,7 +308,7 @@ public class EventServiceImpl implements EventService {
 //        System.out.println("ID de User del subject : " + subject.getUserId().getId());
 //        System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUsers().getId()) {
 
             System.out.println("\nsubject_id : " + subjectId);
             System.out.println("eventEnum : " + eventEnum.ordinal());
