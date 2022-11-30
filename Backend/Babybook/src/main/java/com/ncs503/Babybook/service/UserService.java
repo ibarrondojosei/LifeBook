@@ -1,6 +1,7 @@
 
 package com.ncs503.Babybook.service;
 
+import com.ncs503.Babybook.exception.GuestNotFoundException;
 import com.ncs503.Babybook.exception.InvalidUserException;
 import com.ncs503.Babybook.exception.UserNotFoundException;
 import com.ncs503.Babybook.models.request.UpdateUserRequest;
@@ -11,10 +12,10 @@ public interface UserService {
     
     public List<UserResponse> getUsers() throws UserNotFoundException;
     
-    public UserResponse getUser(Long id) throws UserNotFoundException;
+    public UserResponse getUser(String token, Long id) throws UserNotFoundException, InvalidUserException, GuestNotFoundException;
 
-    public void deleteUser(Long id) throws UserNotFoundException;
+    public void deleteUser(Long id, String token) throws UserNotFoundException, InvalidUserException;
     
-    public UserResponse updateUser(UpdateUserRequest userReq, Long id) throws InvalidUserException, UserNotFoundException;
+    public UserResponse updateUser(UpdateUserRequest userReq, Long id, String token) throws InvalidUserException, UserNotFoundException, GuestNotFoundException;
     
 }
