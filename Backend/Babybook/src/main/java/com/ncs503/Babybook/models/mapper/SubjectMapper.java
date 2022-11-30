@@ -2,6 +2,9 @@ package com.ncs503.Babybook.models.mapper;
 
 import com.ncs503.Babybook.models.entity.SubjectEntity;
 import com.ncs503.Babybook.models.request.SubjectRequest;
+import com.ncs503.Babybook.models.request.SubjectUpDateRequest;
+import com.ncs503.Babybook.models.response.SubjectGuestResponse;
+import com.ncs503.Babybook.models.response.SubjectImageResponse;
 import com.ncs503.Babybook.models.response.SubjectResponse;
 import com.ncs503.Babybook.repository.SubjectRepository;
 import com.ncs503.Babybook.repository.UserRepository;
@@ -31,7 +34,7 @@ public class SubjectMapper {
 
         SubjectEntity entity = SubjectEntity.builder().firstName(request.getFirstName())
                 .lastName(request.getLastName())
-//                .image(awsService.uploadFile(image))
+                .image(awsService.uploadFile(request.getImage()))
                 .birthDate(request.getBirthDate())
                 .dni(request.getDni())
                 .users(userRepository.findById(userID).get())
@@ -46,7 +49,7 @@ public class SubjectMapper {
 
         SubjectResponse response = SubjectResponse.builder().firstName(entity.getFirstName())
                 .id(entity.getId())
-//                .image(entity.getImage())
+                .image(entity.getImage())
                 .lastName(entity.getLastName())
                 .dni(entity.getDni())
                 .birthDate(entity.getBirthDate())
@@ -58,11 +61,10 @@ public class SubjectMapper {
 
     }
 
-    public SubjectEntity EntityRefreshValues (SubjectEntity entity, SubjectRequest request) throws IOException {
+    public SubjectEntity EntityRefreshDataValues (SubjectEntity entity, SubjectUpDateRequest request) throws IOException {
 
         entity.setFirstName(request.getFirstName());
         entity.setLastName(request.getLastName());
-        //entity.setImage(awsService.uploadFileFromBase64(request.getImage()));TODO Ver tratamiento de imagen
         entity.setBirthDate(request.getBirthDate());
         entity.setDni(request.getDni());
         entity.setTimestamp(new Timestamp(System.currentTimeMillis()));
@@ -70,8 +72,46 @@ public class SubjectMapper {
         return entity;
     }
 
+    public SubjectEntity EntityRefreshImageValue(SubjectEntity subjectEntity, MultipartFile image) throws IOException {
+
+        subjectEntity.setImage(awsService.uploadFile(image));
+        subjectEntity.setTimestamp(new Timestamp(System.currentTimeMillis()));
+
+        return subjectEntity;
+    }
+
+    public SubjectImageResponse Entity2ImageResponse(SubjectEntity entitySave) {
+
+        SubjectImageResponse response = SubjectImageResponse.builder().image(entitySave.getImage()).id(entitySave.getId()).build();
+
+        return response;
 
     }
+
+    public List<SubjectGuestResponse> EntityList2Response(List<SubjectEntity> entityList) throws IOException {
+        List<SubjectGuestResponse> responses = new ArrayList<>();
+        for ( SubjectEntity subject: entityList){
+            responses.add(Entity2ResponseGuest(subject));
+        }
+
+        return responses;
+    }
+
+    private SubjectGuestResponse Entity2ResponseGuest(SubjectEntity entity) {
+
+        SubjectGuestResponse response = SubjectGuestResponse.builder().firstName(entity.getFirstName())
+                .id(entity.getId())
+                .image(entity.getImage())
+                .lastName(entity.getLastName())
+                .birthDate(entity.getBirthDate())
+                .idUser(entity.getUsers().getId())
+                .build();
+
+        return response;
+
+    }
+
+}
 
 
 

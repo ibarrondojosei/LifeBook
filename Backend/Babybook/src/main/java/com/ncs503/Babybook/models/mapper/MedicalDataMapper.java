@@ -19,7 +19,7 @@ import java.util.Set;
 @Component
 public class MedicalDataMapper {
 
-   
+
 
     @Autowired
     SubjectRepository subjectRepository;
