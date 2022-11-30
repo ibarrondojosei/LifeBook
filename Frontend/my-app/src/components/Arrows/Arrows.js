@@ -1,8 +1,9 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleArrowRight, faCircleArrowLeft }  from '@fortawesome/free-solid-svg-icons'
+import {  faCircleChevronRight
+  , faCircleChevronLeft }  from '@fortawesome/free-solid-svg-icons'
 
-
+ 
 const Arrow = ({movPrevFn, movNextFn}) => {
     return (
 
@@ -11,7 +12,7 @@ const Arrow = ({movPrevFn, movNextFn}) => {
             <button onClick={movPrevFn}
             //disabled={isDisabled('prev')}
             >
-            <FontAwesomeIcon icon={faCircleArrowLeft} className=" absolute left-0 bg-white rounded-full  " size='3x'/>
+            <FontAwesomeIcon icon={faCircleChevronLeft} className=" absolute left-24 bg-white rounded-full inset-y-1/2	 right-0  " size='3x'/>
             </button>
             <button 
             
@@ -19,7 +20,7 @@ const Arrow = ({movPrevFn, movNextFn}) => {
             //disabled={isDisabled('next')}
            
 >
-              <FontAwesomeIcon icon={faCircleArrowRight} className=" absolute right-0  bg-white rounded-full "  size="3x"/>
+              <FontAwesomeIcon icon={faCircleChevronRight} className=" absolute right-24 inset-y-1/2  bg-white rounded-full "  size="3x"/>
             </button>
             </>
     

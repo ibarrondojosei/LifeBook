@@ -6,9 +6,14 @@
 }
 
 .index-0, .index-3 {
-  transform: scale(0.8);
+  transform: scale(0.85);
 }
-
-.card {
+.index-1, .index-2 {
+  
+}
+.gradient-celeste {
+  background: radial-gradient(90.51% 90.51% at 22.82% 20.63%, #2EC5CE 0%, rgba(46, 197, 206, 0) 100%);
+}
+/*.card {
   transition: all 0.5s ease-out;
-}
+}*/
