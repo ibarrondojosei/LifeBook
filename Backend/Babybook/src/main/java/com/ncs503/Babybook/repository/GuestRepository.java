@@ -20,5 +20,6 @@ public interface GuestRepository extends JpaRepository<GuestEntity, Long> {
 //    @Query(value = "SELECT * from guests WHERE guests.email LIKE %:email% AND softDelete = false", nativeQuery = true)
     Optional<GuestEntity> findByEmail(String email);
 
-   // Optional<List<GuestEntity>> findByUser(UserEntity user);
+    @Query(value = "SELECT * from guests WHERE guests.user_id = :id AND soft_delete = false", nativeQuery = true)
+    Optional<List<GuestEntity>> findByUserId(Long id);
 }

@@ -10,16 +10,21 @@ import com.ncs503.Babybook.models.entity.GuestEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.mapper.GuestMapper;
 import com.ncs503.Babybook.models.request.GuestRequest;
+import com.ncs503.Babybook.models.request.specification.GuestsByUserRequest;
 import com.ncs503.Babybook.models.response.GuestResponse;
 import com.ncs503.Babybook.models.response.PaginationResponse;
 import com.ncs503.Babybook.models.response.UserResponse;
 import com.ncs503.Babybook.repository.GuestRepository;
 import com.ncs503.Babybook.repository.UserRepository;
+import com.ncs503.Babybook.repository.specification.GuestByUserSpecification;
 import com.ncs503.Babybook.service.GuestService;
 import com.ncs503.Babybook.service.UserService;
+import com.ncs503.Babybook.utils.PaginationByFiltersUtil;
 import com.ncs503.Babybook.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,6 +49,9 @@ public class GuestServiceImpl implements GuestService {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    private GuestByUserSpecification guestByUserSpecification;
 
 
     @Override
@@ -77,15 +85,26 @@ public class GuestServiceImpl implements GuestService {
     }
 
     @Override
-    public PaginationResponse getGuestByUserPagination(String token, Long user_id, Optional<Integer> page, Optional<Integer> size) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
-//        UserEntity user = this.getUserByToken(token);
-//        assert  user != null;
-//        if(user.getId().equals(user_id)) {
-//            PaginationUtils pagination = new PaginationUtils(guestRepo.findByUser(user), page, size, "/guest/getPaginationByUser/page%d&size%d");
-//            Page page = pagination.getPage();
-//
-//        }
-        return null;
+    public PaginationResponse getGuestByUserPagination(String order, String token, Long user_id,
+                                                       Optional<Integer> pageNum, Optional<Integer> size) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
+        UserEntity user = this.getUserByToken(token);
+        assert  user != null;
+        if(user.getId().equals(user_id)) {
+            GuestsByUserRequest filterReq = new GuestsByUserRequest(user.getId(), order);
+            Specification<GuestEntity> specification = guestByUserSpecification.getByUsers(filterReq);
+
+            PaginationByFiltersUtil pagination = new PaginationByFiltersUtil(specification, (JpaSpecificationExecutor) guestRepo, pageNum, size,
+                    "/guest/getPaginationByUser/page=%d&size=%d");
+            Page page = pagination.getPage();
+            List<GuestResponse> guests = guestMapper.guestsToGuestResponseList(page.getContent());
+            return PaginationResponse.builder()
+                    .entities(guests)
+                    .nextPageURI(pagination.getNext())
+                    .prevPageURI(pagination.getPrevious())
+                    .build();
+
+        }
+        else throw  new InvalidUserException("Invalid user");
     }
 
     @Override

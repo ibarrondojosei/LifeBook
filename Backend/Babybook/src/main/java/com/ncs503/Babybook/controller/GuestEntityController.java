@@ -8,6 +8,7 @@ import com.ncs503.Babybook.models.entity.GuestEntity;
 import com.ncs503.Babybook.models.mapper.GuestMapper;
 import com.ncs503.Babybook.models.request.GuestRequest;
 import com.ncs503.Babybook.models.response.GuestResponse;
+import com.ncs503.Babybook.models.response.PaginationResponse;
 import com.ncs503.Babybook.repository.GuestRepository;
 import com.ncs503.Babybook.service.GuestService;
 import io.swagger.annotations.*;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -86,6 +88,31 @@ public class GuestEntityController {
                                                     @RequestParam Long user_id)
             throws GuestNotFoundException, InvalidUserException, UserNotFoundException, InvalidGuestException {
         return new ResponseEntity<>(guestServ.getGuest(guest_id, token,user_id), HttpStatus.OK);
+    }
+
+    @GetMapping("/getPaginationByUser")
+    @ApiOperation(value = "User's guests list", notes ="Endpoint that return a guest list by its user")
+    @ApiResponses(value ={
+            @ApiResponse(code=200, message = "Guest's list response"),
+            @ApiResponse(code=403, message = "Forbidden action")
+    })
+    public ResponseEntity<PaginationResponse> getGuestPaginationByUser(
+                                                                @ApiParam(name = "order", type ="string", example = "ASC",
+                                                                value = "asc or desc order")
+                                                                @RequestParam String order,
+                                                                @ApiParam(name = "page", type = "int", example = "1",
+                                                                value = "page number")
+                                                                @RequestParam Optional<Integer> page,
+                                                                @ApiParam(name = "size", type = "int", example = "5",
+                                                                value = "number of items per page")
+                                                                @RequestParam Optional<Integer> size,
+                                                                @ApiParam(name = "user_id", type = "Long", example = "1351",
+                                                                value = "User's id number")
+                                                                @RequestParam Long user_id,
+                                                                @RequestHeader(name = "Authorization") String token
+
+    ) throws UserNotFoundException, InvalidUserException, GuestNotFoundException {
+        return new ResponseEntity<>(guestServ.getGuestByUserPagination(order, token, user_id, page, size), HttpStatus.OK);
     }
 
     @PostMapping("/new")
