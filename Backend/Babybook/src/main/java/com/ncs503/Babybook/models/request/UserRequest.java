@@ -2,9 +2,15 @@
 package com.ncs503.Babybook.models.request;
 
 
+import com.ncs503.Babybook.models.entity.GuestEntity;
+import com.ncs503.Babybook.models.entity.RoleEntity;
+import com.ncs503.Babybook.models.entity.SubjectEntity;
+import com.ncs503.Babybook.models.response.GuestResponse;
+import com.ncs503.Babybook.models.response.SubjectResponse;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
+import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -62,9 +68,9 @@ public class UserRequest {
     @ApiModelProperty(notes = "Base64 encoded profile picture",
             example= "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA")
     private String photo;
-    
-    //NYI
-//    private List<Subject> subjects;
-//    private List<Guest> guests;
+
+    private Set<RoleEntity> rol_id;
+    private List<SubjectEntity> subjects;
+    private List<GuestRequest> guests;
     
 }

@@ -1,5 +1,8 @@
 package com.ncs503.Babybook.models.request;
 
+import com.ncs503.Babybook.models.entity.GuestEntity;
+import com.ncs503.Babybook.models.entity.RoleEntity;
+import com.ncs503.Babybook.models.entity.SubjectEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -9,6 +12,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Leonardo Terlizzi
@@ -45,8 +50,8 @@ public class UpdateUserRequest {
             example= "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA")
     private String photo;
 
-    //NYI
-    //    private List<Subject> subjects;
-    //    private List<Guest> guests;
+    private Set<RoleEntity> rol_id;
+    private List<SubjectEntity> subjects;
+    private List<GuestRequest> guests;
 
 }

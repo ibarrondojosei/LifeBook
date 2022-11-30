@@ -1,7 +1,10 @@
 
 package com.ncs503.Babybook.repository;
 
+import com.ncs503.Babybook.models.entity.GuestEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
+
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

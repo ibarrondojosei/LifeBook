@@ -1,5 +1,6 @@
 package com.ncs503.Babybook.controller;
 
+import com.ncs503.Babybook.exception.GuestNotFoundException;
 import com.ncs503.Babybook.exception.InvalidUserException;
 import com.ncs503.Babybook.exception.UserNotFoundException;
 import com.ncs503.Babybook.exception.UserProfileAlreadyExistsException;
@@ -45,12 +46,18 @@ public class AuthController {
     private UserMapper userMapper;
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> registerUser(@RequestBody UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException {
-        authServ.saveUser(userReq);
-        //return ResponseEntity.status(HttpStatus.OK).build(); VOID RESPONSE
-        UserEntity user = userRepo.findByEmail(userReq.getEmail()).orElse(null);
-        UserResponse userRes = userMapper.toUserResponse(user);
-        return new ResponseEntity<>(userRes, HttpStatus.OK);
+    public ResponseEntity<UserResponse> registerUser(@RequestBody UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException {
+
+        return new ResponseEntity<>(authServ.saveUser(userReq), HttpStatus.OK);
 
     }
+
+    @PostMapping("/su/register")
+    public ResponseEntity<UserResponse> registerAdmin(@RequestBody UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException {
+        return new ResponseEntity<>(authServ.saveAdminUser(userReq), HttpStatus.OK);
+    }
+
+    //TODO registro de guest (que pida mail y boolean si quiere ser un guest
+
+
 }
