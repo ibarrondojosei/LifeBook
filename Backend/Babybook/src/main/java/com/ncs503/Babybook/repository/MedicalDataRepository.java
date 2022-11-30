@@ -13,7 +13,7 @@ public interface MedicalDataRepository extends JpaRepository<MedicalDataEntity, 
 
     @Query(value = "SELECT * " +
             "from medical_Data c " +
-            "WHERE subject_id = :id " +
+            "WHERE subject_subject_id = :id " +
             "AND soft_delete = false", nativeQuery = true)
     Optional<MedicalDataEntity> findBySubjectId(Long id);
 }

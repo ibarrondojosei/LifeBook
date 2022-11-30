@@ -57,11 +57,13 @@ public class SubjectEntity {
     @Column(name = "soft_delete")
     private boolean deleted = Boolean.FALSE;
 
+
     //TODO Ver relaciones con Events
 //     relacion bidireccional
     @JsonIgnore
     @OneToMany(mappedBy = "subjectEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<EventEntity> eventEntities;
+
 
     @JsonIgnore
     @OneToOne(mappedBy = "subject", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -72,6 +74,7 @@ public class SubjectEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private UserEntity users;
+
 
 
 }

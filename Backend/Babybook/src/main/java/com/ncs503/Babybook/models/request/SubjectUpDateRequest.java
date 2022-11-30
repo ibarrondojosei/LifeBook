@@ -1,5 +1,4 @@
 package com.ncs503.Babybook.models.request;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,16 +18,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel(description = "Class representing an Subject Request.")
-
-public class SubjectRequest {
-
-
-
-    @ApiModelProperty(notes = "Subject Profile Image",
-            example = "imagen.jpg",
-            required = true)
-    private MultipartFile image;
+@ApiModel(description = "Class representing an Subject update data  Request.")
+public class SubjectUpDateRequest {
 
     @NonNull
     @NotEmpty(message = "the name can't be null")
@@ -51,19 +42,8 @@ public class SubjectRequest {
 
     @ApiModelProperty(notes = "Subject DNI",
             example = "4555666", required = true)
-  //  @Pattern(regexp = "^\\d*$", message = "The dni has to contain only numbers")
+    //  @Pattern(regexp = "^\\d*$", message = "The dni has to contain only numbers")
     private String dni;
-
-//    @ApiModelProperty(notes = "id of the user corresponding to the Subject", example = "1")
-//    private Long idUser;
-
-
-
-
-
-
-
-
 
 
 }

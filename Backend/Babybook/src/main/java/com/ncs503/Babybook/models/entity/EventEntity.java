@@ -1,7 +1,9 @@
 package com.ncs503.Babybook.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.ncs503.Babybook.models.utility.TagsEventEnum;
+
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
@@ -22,6 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
+
 @SQLDelete(sql = "UPDATE events SET soft_delete = true Where event_id=?")
 @Where(clause = "soft_delete = false")
 @Table( name= "events")
@@ -51,12 +54,14 @@ public class EventEntity  {
     private Boolean sofdelete = Boolean.FALSE;
 
     @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "subject_id")
     @JoinTable(name = "subject_event")
     private SubjectEntity subjectEntity;
 
     private TagsEventEnum eventEnum;
+
 
     @OneToOne
     @JoinColumn(name = "user_id")
