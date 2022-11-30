@@ -18,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@SQLDelete(sql = "UPDATE medical_Data SET soft_delete = true Where id=?")
+@SQLDelete(sql = "UPDATE medicalData SET soft_delete = true Where id=?")
 @Where(clause = "soft_delete=false")
 @Table( name= "medicalData")
 public class MedicalDataEntity {
@@ -46,6 +46,7 @@ public class MedicalDataEntity {
 
     @JsonIgnore
     @OneToOne
+
     private SubjectEntity subject;
 
 

@@ -22,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@SQLDelete(sql = "UPDATE subjects SET soft_delete = true Where id=?")
+@SQLDelete(sql = "UPDATE subjects SET soft_delete = true Where subject_id=?")
 @Where(clause = "soft_delete=false")
 @Table( name= "subjects")
 
@@ -30,6 +30,7 @@ public class SubjectEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "subject_id")
     private Long id;
 
     private String image;
@@ -56,13 +57,16 @@ public class SubjectEntity {
     @Column(name = "soft_delete")
     private boolean deleted = Boolean.FALSE;
 
-  /*  //TODO Ver relaciones con Events
+
+    //TODO Ver relaciones con Events
+//     relacion bidireccional
     @JsonIgnore
-    @OneToMany(mappedBy = "SubjectEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<EventEntity> events;*/
+    @OneToMany(mappedBy = "subjectEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<EventEntity> eventEntities;
+
 
     @JsonIgnore
-    @OneToOne(mappedBy = "subject",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "subject", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "medicalData_id")
     private MedicalDataEntity medicalDataEntity;
 
@@ -70,7 +74,6 @@ public class SubjectEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private UserEntity users;
-
 
 
 

@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -23,13 +24,11 @@ import java.util.Set;
 public class SubjectRequest {
 
 
-    @NonNull
-    @NotEmpty(message = "the image can't be null")
-    @NotBlank(message = "the image can't  be blank")
+
     @ApiModelProperty(notes = "Subject Profile Image",
             example = "imagen.jpg",
             required = true)
-    private String image;
+    private MultipartFile image;
 
     @NonNull
     @NotEmpty(message = "the name can't be null")
@@ -52,7 +51,7 @@ public class SubjectRequest {
 
     @ApiModelProperty(notes = "Subject DNI",
             example = "4555666", required = true)
-    @Pattern(regexp = "^\\d*$", message = "The dni has to contain only numbers")
+  //  @Pattern(regexp = "^\\d*$", message = "The dni has to contain only numbers")
     private String dni;
 
 //    @ApiModelProperty(notes = "id of the user corresponding to the Subject", example = "1")
