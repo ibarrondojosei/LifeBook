@@ -97,6 +97,18 @@ public class SubjectMapper {
         return responses;
     }
 
+    public List<SubjectEntity> subjectRequestList2Entity(List<SubjectRequest> subjectRequestList, Long user_id) throws  IOException {
+        List<SubjectEntity> responses = new ArrayList<>();
+        subjectRequestList.forEach(subReq -> {
+            try {
+                responses.add(Request2Entity(subReq, user_id));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return responses;
+    }
+
     private SubjectGuestResponse Entity2ResponseGuest(SubjectEntity entity) {
 
         SubjectGuestResponse response = SubjectGuestResponse.builder().firstName(entity.getFirstName())

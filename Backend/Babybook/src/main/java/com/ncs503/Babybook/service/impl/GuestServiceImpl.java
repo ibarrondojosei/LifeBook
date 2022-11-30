@@ -11,16 +11,20 @@ import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.mapper.GuestMapper;
 import com.ncs503.Babybook.models.request.GuestRequest;
 import com.ncs503.Babybook.models.response.GuestResponse;
+import com.ncs503.Babybook.models.response.PaginationResponse;
 import com.ncs503.Babybook.models.response.UserResponse;
 import com.ncs503.Babybook.repository.GuestRepository;
 import com.ncs503.Babybook.repository.UserRepository;
 import com.ncs503.Babybook.service.GuestService;
 import com.ncs503.Babybook.service.UserService;
+import com.ncs503.Babybook.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Leonardo Terlizzi
@@ -48,6 +52,18 @@ public class GuestServiceImpl implements GuestService {
     }
 
     @Override
+    public PaginationResponse getAllGuestByPage(Optional<Integer> pageNum, Optional<Integer> size) throws GuestNotFoundException {
+        PaginationUtils pagination = new PaginationUtils(guestRepo, pageNum, size, "/guest/getPagination/page%d&size%d" );
+        Page page =  pagination.getPage();
+        List<GuestResponse> guests = guestMapper.guestsToGuestResponseList(page.getContent());
+        return PaginationResponse.builder()
+                .entities(guests)
+                .nextPageURI(pagination.getNext())
+                .prevPageURI(pagination.getPrevious())
+                .build();
+    }
+
+    @Override
     public List<GuestResponse> getGuestsByUser(String token, Long user_id) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
 
         UserEntity user = this.getUserByToken(token);
@@ -58,6 +74,18 @@ public class GuestServiceImpl implements GuestService {
         }
         else throw new InvalidUserException("Invalid User");
 
+    }
+
+    @Override
+    public PaginationResponse getGuestByUserPagination(String token, Long user_id, Optional<Integer> page, Optional<Integer> size) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
+//        UserEntity user = this.getUserByToken(token);
+//        assert  user != null;
+//        if(user.getId().equals(user_id)) {
+//            PaginationUtils pagination = new PaginationUtils(guestRepo.findByUser(user), page, size, "/guest/getPaginationByUser/page%d&size%d");
+//            Page page = pagination.getPage();
+//
+//        }
+        return null;
     }
 
     @Override

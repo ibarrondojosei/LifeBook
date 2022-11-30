@@ -3,6 +3,7 @@ package com.ncs503.Babybook.models.request;
 import com.ncs503.Babybook.models.entity.GuestEntity;
 import com.ncs503.Babybook.models.entity.RoleEntity;
 import com.ncs503.Babybook.models.entity.SubjectEntity;
+import com.ncs503.Babybook.models.response.SubjectResponse;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -51,7 +52,7 @@ public class UpdateUserRequest {
     private String photo;
 
     private Set<RoleEntity> rol_id;
-    private List<SubjectEntity> subjects;
+    private List<SubjectRequest> subjects;
     private List<GuestRequest> guests;
 
 }

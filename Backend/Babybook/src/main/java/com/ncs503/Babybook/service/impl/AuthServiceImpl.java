@@ -21,6 +21,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 import java.util.Set;
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -57,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public UserResponse saveUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException {
+    public UserResponse saveUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException, IOException {
         if (userRepo.findByEmail(userReq.getEmail()).isPresent())
             throw new UserProfileAlreadyExistsException("E-mail already used");
         if(userRepo.findByUsername(userReq.getUsername()).isPresent())
@@ -88,7 +90,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public UserResponse saveAdminUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException {
+    public UserResponse saveAdminUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException, IOException {
         if (userRepo.findByEmail(userReq.getEmail()).isPresent())
             throw new UserProfileAlreadyExistsException("E-mail already used");
         if(userRepo.findByUsername(userReq.getUsername()).isPresent())
@@ -111,4 +113,28 @@ public class AuthServiceImpl implements AuthService {
         return userMapper.toUserResponse(userWithId);
     }
 
+    @Override
+    public UserResponse saveGuestUser(UserRequest userReq, Boolean wantsToBeUserToo) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, IOException, GuestNotFoundException {
+        if(userRepo.findByEmail(userReq.getEmail()).isPresent())
+            throw new UserProfileAlreadyExistsException("E-mail already taken!");
+        if(userRepo.findByEmail(userReq.getUsername()).isPresent())
+            throw new UserProfileAlreadyExistsException("Username is already taken, choose a new one");
+        String pass = userReq.getPassword();
+        userReq.setPassword(passEnc.encode(pass));
+
+        Set<RoleEntity> roles = roleRepo.findByName(RoleEnum.GUEST.getSimpleRoleName());
+        if(roles.isEmpty()) {
+            RoleEntity rol = new RoleEntity();
+            rol.setName((RoleEnum.GUEST.getSimpleRoleName()));
+            rol = roleRepo.save(rol);
+            roles.add(rol);
+        }
+        if(wantsToBeUserToo){
+            roles.add((RoleEntity) roleRepo.findByName(RoleEnum.USER.getSimpleRoleName()));
+        }
+        UserEntity user = userMapper.toUserEntityWithRoles(userReq, roles);
+        userRepo.save(user);
+        UserEntity userWithId = userRepo.findByEmail(userReq.getEmail()).orElse(null);
+        return userMapper.toUserResponse(userWithId);
+    }
 }

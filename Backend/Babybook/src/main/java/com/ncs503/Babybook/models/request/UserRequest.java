@@ -70,7 +70,7 @@ public class UserRequest {
     private String photo;
 
     private Set<RoleEntity> rol_id;
-    private List<SubjectEntity> subjects;
+    private List<SubjectRequest> subjects;
     private List<GuestRequest> guests;
     
 }

@@ -1,11 +1,13 @@
 package com.ncs503.Babybook.utils;
 
+import com.ncs503.Babybook.models.entity.UserEntity;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 @Setter
 public class PaginationUtils {
@@ -40,6 +42,8 @@ public class PaginationUtils {
         }
         this.pageObject = repository.findAll(getPageWithSizeElements);
     }
+
+
 
     public Page<?> getPage() {
         return pageObject;

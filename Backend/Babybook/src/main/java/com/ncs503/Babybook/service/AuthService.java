@@ -9,6 +9,7 @@ import com.ncs503.Babybook.models.request.UserRequest;
 import com.ncs503.Babybook.models.response.LoginResponse;
 import com.ncs503.Babybook.models.response.UserResponse;
 
+import java.io.IOException;
 
 
 //@Service
@@ -16,9 +17,11 @@ public interface AuthService {
 
 
     LoginResponse login(LoginRequest request);
-    public UserResponse saveUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException;
+    public UserResponse saveUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException, IOException;
 
-    public UserResponse saveAdminUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException;
+    public UserResponse saveAdminUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException, IOException;
+
+    public UserResponse saveGuestUser(UserRequest userReq, Boolean wantsToBeUserToo) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, IOException, GuestNotFoundException;
 
 }
 

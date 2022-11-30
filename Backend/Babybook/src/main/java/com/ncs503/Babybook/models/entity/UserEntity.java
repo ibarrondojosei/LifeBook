@@ -71,10 +71,10 @@ public class UserEntity {
     private String password;
     
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "subjects",
-    joinColumns = {@JoinColumn(name ="user_id")},
-    inverseJoinColumns = {@JoinColumn(name = "subject_id")})
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+ //   @JoinTable(name = "subjects",
+//    joinColumns = {@JoinColumn(name ="user_id")},
+//    inverseJoinColumns = {@JoinColumn(name = "subject_id")})
     private List<SubjectEntity> subjects;
 
 

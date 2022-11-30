@@ -6,9 +6,11 @@ import com.ncs503.Babybook.exception.InvalidUserException;
 import com.ncs503.Babybook.exception.UserNotFoundException;
 import com.ncs503.Babybook.models.request.GuestRequest;
 import com.ncs503.Babybook.models.response.GuestResponse;
+import com.ncs503.Babybook.models.response.PaginationResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Leonardo Terlizzi
@@ -19,7 +21,11 @@ public interface GuestService {
 
     public List<GuestResponse> getGuests() throws GuestNotFoundException;
 
+    public PaginationResponse getAllGuestByPage(Optional<Integer> page, Optional<Integer>size) throws GuestNotFoundException;
+
     public List<GuestResponse> getGuestsByUser(String token, Long user_id) throws GuestNotFoundException, InvalidUserException, UserNotFoundException;
+
+    public PaginationResponse getGuestByUserPagination(String token, Long user_id, Optional<Integer> page, Optional<Integer> size) throws GuestNotFoundException, InvalidUserException, UserNotFoundException;
 
     public GuestResponse getGuest(Long id, String token, Long user_id) throws GuestNotFoundException, InvalidUserException, UserNotFoundException, InvalidGuestException;
 

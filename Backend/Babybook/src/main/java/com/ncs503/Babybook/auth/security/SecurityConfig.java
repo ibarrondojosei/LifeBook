@@ -83,9 +83,11 @@ public class SecurityConfig {
 
                         //ADMIN
                         .antMatchers(HttpMethod.GET, "/user/all").hasAuthority(RoleEnum.ADMIN.getFullRoleName())
+                        .antMatchers(HttpMethod.GET, "/user/getPagination/**").hasAuthority(RoleEnum.ADMIN.getFullRoleName())
                         .antMatchers(HttpMethod.DELETE, "/user/su/delete/**").hasAuthority(RoleEnum.ADMIN.getFullRoleName())
                         .antMatchers(HttpMethod.PATCH, "/user/su/update/**").hasAuthority(RoleEnum.ADMIN.getFullRoleName())
                         .antMatchers(HttpMethod.GET, "/guest/all").hasAuthority(RoleEnum.ADMIN.getFullRoleName())
+                        .antMatchers(HttpMethod.GET, "/guest/getPagination/**").hasAuthority(RoleEnum.ADMIN.getFullRoleName())
                         .antMatchers(HttpMethod.DELETE, "/guest/su/delete/**").hasAuthority(RoleEnum.ADMIN.getFullRoleName())
                         .antMatchers(HttpMethod.PATCH, "/guest/su/update/**").hasAuthority((RoleEnum.ADMIN.getFullRoleName()))
 
