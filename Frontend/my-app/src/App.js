@@ -7,7 +7,9 @@ import CicloLectivo from './View/CicloLectivo/CicloLectivo';
 function App() {
   return (
     <div className="App">
-      <CicloLectivo/>
+      {/* <CicloLectivo/> */}
+      {/* <LoginView/> */}
+      <ClinicalHistory/>
      
       {/* <RegisterView/> */}
       
