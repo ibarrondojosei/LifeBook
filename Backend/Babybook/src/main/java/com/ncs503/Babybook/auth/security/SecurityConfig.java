@@ -71,7 +71,7 @@ public class SecurityConfig {
                         // Auth
 
                         // TODO borrar endpoint de admin
-                        .antMatchers(HttpMethod.POST, "/auth/register", "/auth/login", "/auth/su/register").permitAll()
+                        .antMatchers(HttpMethod.POST, "/auth/register", "/auth/login", "/auth/su/register", "/auth/guestRegister/**").permitAll()
                         .antMatchers(HttpMethod.POST, "/auth/testing").hasAuthority(RoleEnum.USER.getFullRoleName())
 
 

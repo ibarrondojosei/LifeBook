@@ -61,8 +61,8 @@ public class GuestServiceImpl implements GuestService {
 
     @Override
     public PaginationResponse getAllGuestByPage(Optional<Integer> pageNum, Optional<Integer> size) throws GuestNotFoundException {
-        PaginationUtils pagination = new PaginationUtils(guestRepo, pageNum, size, "/guest/getPagination/page%d&size%d" );
-        Page page =  pagination.getPage();
+        PaginationUtils pagination = new PaginationUtils(guestRepo, pageNum, size, "/guest/getPagination/page%d&size%d");
+        Page page = pagination.getPage();
         List<GuestResponse> guests = guestMapper.guestsToGuestResponseList(page.getContent());
         return PaginationResponse.builder()
                 .entities(guests)
@@ -76,50 +76,45 @@ public class GuestServiceImpl implements GuestService {
 
         UserEntity user = this.getUserByToken(token);
         assert user != null;
-        if(user.getId().equals(user_id)) {
+        if (user.getId().equals(user_id)) {
             List<GuestEntity> guests = user.getGuests();
             return guestMapper.guestsToGuestResponseList(guests);
-        }
-        else throw new InvalidUserException("Invalid User");
+        } else throw new InvalidUserException("Invalid User");
 
     }
 
     @Override
-    public PaginationResponse getGuestByUserPagination(String order, String token, Long user_id,
+    public PaginationResponse getGuestByUserPagination(String order, String token,
                                                        Optional<Integer> pageNum, Optional<Integer> size) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
         UserEntity user = this.getUserByToken(token);
-        assert  user != null;
-        if(user.getId().equals(user_id)) {
-            GuestsByUserRequest filterReq = new GuestsByUserRequest(user.getId(), order);
-            Specification<GuestEntity> specification = guestByUserSpecification.getByUsers(filterReq);
 
-            PaginationByFiltersUtil pagination = new PaginationByFiltersUtil(specification,  guestRepo, pageNum, size,
-                    "/guest/getPaginationByUser/page=%d&size=%d");
-            Page page = pagination.getPage();
-            List<GuestResponse> guests = guestMapper.guestsToGuestResponseList(page.getContent());
-            return PaginationResponse.builder()
-                    .entities(guests)
-                    .nextPageURI(pagination.getNext())
-                    .prevPageURI(pagination.getPrevious())
-                    .build();
+        GuestsByUserRequest filterReq = new GuestsByUserRequest(user.getId(), order);
+        Specification<GuestEntity> specification = guestByUserSpecification.getByUsers(filterReq);
 
-        }
-        else throw  new InvalidUserException("Invalid user");
+        PaginationByFiltersUtil pagination = new PaginationByFiltersUtil(specification, guestRepo, pageNum, size,
+                "/guest/getPaginationByUser?page=%d&size=%d");
+        //?order="ASC"&page=1&size=1&user_id=1
+        Page page = pagination.getPage();
+        List<GuestResponse> guests = guestMapper.guestsToGuestResponseList(page.getContent());
+        return PaginationResponse.builder()
+                .entities(guests)
+                .nextPageURI(pagination.getNext())
+                .prevPageURI(pagination.getPrevious())
+                .build();
+
     }
 
     @Override
     public GuestResponse getGuest(Long id, String token, Long user_id) throws GuestNotFoundException, InvalidUserException, UserNotFoundException, InvalidGuestException {
         UserEntity user = this.getUserByToken(token);
         assert user != null;
-        if(user.getId().equals(user_id)){
+        if (user.getId().equals(user_id)) {
             GuestEntity guest = guestRepo.findById(id).orElse(null);
             List<GuestEntity> guests = user.getGuests();
             if (guests.contains(guest)) {
                 return guestMapper.toGuestResponse(guest);
-            }
-            else throw new InvalidGuestException("Guest do not exist");
-        }
-        else throw new InvalidUserException("Invalid user");
+            } else throw new InvalidGuestException("Guest do not exist");
+        } else throw new InvalidUserException("Invalid user");
 
     }
 
@@ -127,13 +122,12 @@ public class GuestServiceImpl implements GuestService {
     public GuestResponse saveGuest(GuestRequest guestReq, String token, Long user_id) throws InvalidGuestException, GuestNotFoundException, UserNotFoundException, InvalidUserException {
         UserEntity user = this.getUserByToken(token);
         assert user != null;
-        if(user.getId().equals(user_id)){
+        if (user.getId().equals(user_id)) {
             GuestEntity guest = guestMapper.toGuestEntity(guestReq);
             guest.setUser_id(user);
             guestRepo.save(guest);
             return guestMapper.toGuestResponse(guest);
-        }
-        else throw new InvalidUserException("Invalid user");
+        } else throw new InvalidUserException("Invalid user");
 
 
     }
@@ -142,30 +136,30 @@ public class GuestServiceImpl implements GuestService {
     public void deleteGuest(Long id, String token, Long user_id) throws GuestNotFoundException, UserNotFoundException, InvalidUserException {
         UserEntity user = this.getUserByToken(token);
         assert user != null;
-        if(user.getId().equals(user_id)){
+        if (user.getId().equals(user_id)) {
             GuestEntity guest = guestRepo.findById(id).orElse(null);
             List<GuestEntity> guests = user.getGuests();
             if (guests.contains(guest)) {
 //                System.out.println("borrando guests");
                 guestRepo.deleteById(id);
+                user.getGuests().remove(guest);
+                userRepo.save(user);
             } else throw new GuestNotFoundException("Guest not found");
-        }
-        else throw new InvalidUserException("Invalid user");
+        } else throw new InvalidUserException("Invalid user");
 
     }
 
     @Override
     public void adminDeleteGuest(Long id) throws GuestNotFoundException, InvalidUserException {
-       guestRepo.deleteById(id);
+        guestRepo.deleteById(id);
     }
-
 
 
     @Override
     public GuestResponse updateGuest(GuestRequest guestReq, Long id, String token, Long user_id) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
         UserEntity user = this.getUserByToken(token);
         assert user != null;
-        if(user.getId().equals(user_id)){
+        if (user.getId().equals(user_id)) {
             GuestEntity updatedGuest = guestMapper.toGuestEntity(guestReq);
             GuestEntity updatableGuest = guestRepo.findById(id).orElse(null);
             List<GuestEntity> guests = user.getGuests();
@@ -176,17 +170,16 @@ public class GuestServiceImpl implements GuestService {
                 guestRepo.save(updatedGuest);
                 return guestMapper.toGuestResponse(updatedGuest);
             } else throw new GuestNotFoundException("Guest not found");
-        }
-        else throw new InvalidUserException("Invalid User");
+        } else throw new InvalidUserException("Invalid User");
 
     }
 
     @Override
     public GuestResponse adminUpdateGuest(GuestRequest guestReq, Long id) throws InvalidGuestException, GuestNotFoundException {
-       GuestEntity guest = guestMapper.toGuestEntity(guestReq);
-       guest.setId(id);
-       guestRepo.save(guest);
-       return guestMapper.toGuestResponse(guest);
+        GuestEntity guest = guestMapper.toGuestEntity(guestReq);
+        guest.setId(id);
+        guestRepo.save(guest);
+        return guestMapper.toGuestResponse(guest);
     }
 
     public String getToken(String token) {
@@ -196,7 +189,7 @@ public class GuestServiceImpl implements GuestService {
 
     }
 
-    public UserEntity getUserByToken(String token){
+    public UserEntity getUserByToken(String token) {
         String token2 = this.getToken(token);
         return userRepo.findByEmail(jwtUtils.extractUsername(token2)).orElse(null);
     }

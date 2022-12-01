@@ -106,13 +106,13 @@ public class GuestEntityController {
                                                                 @ApiParam(name = "size", type = "int", example = "5",
                                                                 value = "number of items per page")
                                                                 @RequestParam Optional<Integer> size,
-                                                                @ApiParam(name = "user_id", type = "Long", example = "1351",
-                                                                value = "User's id number")
-                                                                @RequestParam Long user_id,
+//                                                                @ApiParam(name = "user_id", type = "Long", example = "1351",
+//                                                                value = "User's id number")
+//                                                                @RequestParam Long user_id,
                                                                 @RequestHeader(name = "Authorization") String token
 
     ) throws UserNotFoundException, InvalidUserException, GuestNotFoundException {
-        return new ResponseEntity<>(guestServ.getGuestByUserPagination(order, token, user_id, page, size), HttpStatus.OK);
+        return new ResponseEntity<>(guestServ.getGuestByUserPagination(order, token, page, size), HttpStatus.OK);
     }
 
     @PostMapping("/new")

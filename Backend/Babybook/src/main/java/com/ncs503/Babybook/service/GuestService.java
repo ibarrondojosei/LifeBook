@@ -25,7 +25,7 @@ public interface GuestService {
 
     public List<GuestResponse> getGuestsByUser(String token, Long user_id) throws GuestNotFoundException, InvalidUserException, UserNotFoundException;
 
-    public PaginationResponse getGuestByUserPagination(String order, String token, Long user_id, Optional<Integer> page, Optional<Integer> size) throws GuestNotFoundException, InvalidUserException, UserNotFoundException;
+    public PaginationResponse getGuestByUserPagination(String order, String token, Optional<Integer> page, Optional<Integer> size) throws GuestNotFoundException, InvalidUserException, UserNotFoundException;
 
     public GuestResponse getGuest(Long id, String token, Long user_id) throws GuestNotFoundException, InvalidUserException, UserNotFoundException, InvalidGuestException;
 
