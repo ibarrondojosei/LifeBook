@@ -2,10 +2,7 @@ package com.ncs503.Babybook.service.impl;
 
 import com.ncs503.Babybook.auth.filter.JwtUtils;
 import com.ncs503.Babybook.auth.utility.RoleEnum;
-import com.ncs503.Babybook.exception.GuestNotFoundException;
-import com.ncs503.Babybook.exception.InvalidUserException;
-import com.ncs503.Babybook.exception.UserNotFoundException;
-import com.ncs503.Babybook.exception.UserProfileAlreadyExistsException;
+import com.ncs503.Babybook.exception.*;
 import com.ncs503.Babybook.models.entity.RoleEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.mapper.UserMapper;
@@ -45,6 +42,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     public LoginResponse login (LoginRequest request){
+
         try{
             String token = jwtUtils.generateToken(authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())), request.getEmail());
             return LoginResponse.builder()
@@ -130,7 +128,7 @@ public class AuthServiceImpl implements AuthService {
             roles.add(rol);
         }
         if(wantsToBeUserToo){
-            roles.add((RoleEntity) roleRepo.findByName(RoleEnum.USER.getSimpleRoleName()));
+            roles.addAll(roleRepo.findByName(RoleEnum.USER.getSimpleRoleName()));
         }
         UserEntity user = userMapper.toUserEntityWithRoles(userReq, roles);
         userRepo.save(user);

@@ -16,7 +16,7 @@ import java.io.IOException;
 public interface AuthService {
 
 
-    LoginResponse login(LoginRequest request);
+    LoginResponse login(LoginRequest request) throws UserNotFoundException;
     public UserResponse saveUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException, IOException;
 
     public UserResponse saveAdminUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException, IOException;

@@ -40,7 +40,7 @@ public class AuthController {
     @ApiOperation(value = "Login an user",
             response = LoginResponse.class)
     @ApiResponse(code = 200, message = "OK")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) throws UserNotFoundException {
         return ResponseEntity.ok(authServ.login(request));
     }
 
