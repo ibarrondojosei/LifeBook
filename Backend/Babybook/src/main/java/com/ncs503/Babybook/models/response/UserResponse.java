@@ -27,7 +27,7 @@ public class UserResponse {
     private String photo;
 
 
-    private Set<RoleEntity> rol_id;
+   // private Set<RoleEntity> rol_id;
     private List<SubjectGuestResponse> subjects;
     private List<GuestResponse> guests;
     
