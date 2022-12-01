@@ -25,14 +25,14 @@ public class GuestByUserSpecification {
             List<Predicate> predicates = new ArrayList<>();
 
             if(filterRequest.getIdUser() != null) {
-                Join< GuestEntity, UserEntity> join = root.join("users", JoinType.INNER);
+                Join< GuestEntity, UserEntity> join = root.join("user_id", JoinType.INNER);
                 Expression<String> user_id = join.get("id");
                 predicates.add(user_id.in(filterRequest.getIdUser()));
             }
 
             query.distinct(true);
 
-            String orderByField = "timestamp";
+            String orderByField = "createdAt";
             query.orderBy(
                             filterRequest.isASC() ?
                             criteriaBuilder.asc(root.get(orderByField)):

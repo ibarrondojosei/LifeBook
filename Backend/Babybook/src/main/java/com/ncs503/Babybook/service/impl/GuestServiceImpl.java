@@ -93,7 +93,7 @@ public class GuestServiceImpl implements GuestService {
             GuestsByUserRequest filterReq = new GuestsByUserRequest(user.getId(), order);
             Specification<GuestEntity> specification = guestByUserSpecification.getByUsers(filterReq);
 
-            PaginationByFiltersUtil pagination = new PaginationByFiltersUtil(specification, (JpaSpecificationExecutor) guestRepo, pageNum, size,
+            PaginationByFiltersUtil pagination = new PaginationByFiltersUtil(specification,  guestRepo, pageNum, size,
                     "/guest/getPaginationByUser/page=%d&size=%d");
             Page page = pagination.getPage();
             List<GuestResponse> guests = guestMapper.guestsToGuestResponseList(page.getContent());
