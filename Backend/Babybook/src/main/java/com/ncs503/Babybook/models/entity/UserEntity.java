@@ -12,6 +12,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -71,10 +73,12 @@ public class UserEntity {
     private String password;
     
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "subjects",
-    joinColumns = {@JoinColumn(name ="user_id")},
-    inverseJoinColumns = {@JoinColumn(name = "subject_id")})
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "subjects",
+//    joinColumns = {@JoinColumn(name ="user_id")},
+//    inverseJoinColumns = {@JoinColumn(name = "subject_id")})
+    @JsonIgnore
+    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<SubjectEntity> subjects;
 
 
@@ -94,6 +98,7 @@ public class UserEntity {
     @Column(name = "soft_delete")
     private Boolean soft_delete = Boolean.FALSE;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "user_role",
     joinColumns = {@JoinColumn(name= "user_id")},

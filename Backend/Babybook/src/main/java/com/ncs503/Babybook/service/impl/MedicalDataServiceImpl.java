@@ -49,10 +49,17 @@ public class MedicalDataServiceImpl implements MedicalDataService {
 
         Optional<SubjectEntity> subjectEntity = subjectRepository.findById(request.getSubject());
 
+        Optional<MedicalDataEntity> medicalDataEntity = medicalDataRepository.findBySubjectId(subjectEntity.get().getId());
 
        if (!userEntity.getId().equals(subjectEntity.get().getUsers().getId())){
            throw new RuntimeExceptionCustom("409 ::the subject id does not belong to the user");
        }
+
+       if (medicalDataEntity.isPresent()){
+
+           throw new RuntimeExceptionCustom("409 ::the subject already has a medical data");
+       }
+
        MedicalDataEntity entity = this.medicalDataMapper.Request2Entity(request);
        MedicalDataEntity entitySave = this.medicalDataRepository.save(entity);
        MedicalDataResponse responseCreated = this.medicalDataMapper.Entity2Response(entitySave);
