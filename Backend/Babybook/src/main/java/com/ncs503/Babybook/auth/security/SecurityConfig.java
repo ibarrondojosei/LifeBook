@@ -116,6 +116,7 @@ public class SecurityConfig {
 
                         //Guests
                         .antMatchers(HttpMethod.GET, "/guest/getByUser/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.GET, "/guest/getPaginationByUser/**").hasAuthority(RoleEnum.USER.getFullRoleName())
                         .antMatchers(HttpMethod.GET, "/guest/getById/**").hasAuthority(RoleEnum.USER.getFullRoleName())
                         .antMatchers(HttpMethod.POST, "/guest/new/**").hasAuthority(RoleEnum.USER.getFullRoleName())
                         .antMatchers(HttpMethod.DELETE, "/guest/delete/**").hasAuthority(RoleEnum.USER.getFullRoleName())
