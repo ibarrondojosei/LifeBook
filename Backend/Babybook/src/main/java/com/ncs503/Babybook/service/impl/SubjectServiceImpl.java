@@ -59,10 +59,10 @@ public class SubjectServiceImpl implements SubjectService {
 
         UserEntity userEntity = userRepository.findByEmail(username).get();
 
-        Optional<SubjectEntity> subjectEntity = subjectRepository.findByName(request.getFirstName());
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findByName(request.getFirstName(), userEntity.getId());
 
 
-        if (subjectEntity.isPresent()) {
+        if (subjectEntity.isPresent()&&userEntity.getId().equals(subjectEntity.get().getUsers().getId())) {
 
             throw new RuntimeExceptionCustom("409 ::the subject already exists");
 
