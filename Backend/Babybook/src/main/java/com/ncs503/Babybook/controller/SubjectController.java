@@ -35,7 +35,7 @@ public class SubjectController {
     @PostMapping(consumes = {"*/*"})
     @ApiOperation(value = "Create subjects", notes = "Allows User to insert subjects")
     @ApiResponses({@ApiResponse(code = 201, message = "Subject created!")})
-    public ResponseEntity<SubjectResponse> createSubject ( @RequestPart(required = false) MultipartFile image,
+    public ResponseEntity<SubjectResponse> createSubject ( @RequestPart MultipartFile image,
                                                            @ApiParam( name = "firstName", type = "String", example = "José" )
                                                            @RequestParam (required = false) String firstName,
                                                            @ApiParam( name = "lastName", type = "String",example = "Ibarrondo " )

@@ -27,7 +27,7 @@ public class SubjectRequest {
 
     @ApiModelProperty(notes = "Subject Profile Image",
             example = "imagen.jpg",
-            required = true)
+            required = false)
     private MultipartFile image;
 
     @NonNull

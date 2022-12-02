@@ -29,8 +29,7 @@ public class SubjectResponse {
 
 
     @ApiModelProperty(notes = "Subject Profile Image",
-            example = "imagen.jpg",
-            required = true)
+            example = "imagen.jpg")
     private String image;
 
 

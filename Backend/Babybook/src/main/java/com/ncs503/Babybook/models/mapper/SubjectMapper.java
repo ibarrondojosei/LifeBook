@@ -32,6 +32,7 @@ public class SubjectMapper {
 
     public SubjectEntity Request2Entity (SubjectRequest request, Long userID) throws IOException {
 
+
         SubjectEntity entity = SubjectEntity.builder().firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .image(awsService.uploadFile(request.getImage()))
