@@ -2,17 +2,20 @@ package com.ncs503.Babybook.controller;
 
 import com.ncs503.Babybook.models.response.MedicalRecordResponse;
 import com.ncs503.Babybook.models.response.medicalRecordFilterByMedicalDataResponse;
+
 import com.ncs503.Babybook.models.utility.TagsMedicalRecordEnum;
 import com.ncs503.Babybook.service.MedicalRecordService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -131,6 +134,7 @@ public class MedicalRecordController {
     ) throws Exception {
 
         List<medicalRecordFilterByMedicalDataResponse> response = medicalRecordService.findAllByTags(token, medicalDataId, medicalRecordEnum);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }

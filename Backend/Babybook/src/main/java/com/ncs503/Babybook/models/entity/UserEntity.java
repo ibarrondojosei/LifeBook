@@ -4,10 +4,10 @@ package com.ncs503.Babybook.models.entity;
 
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
-import javax.security.auth.Subject;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -30,8 +30,8 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @Entity
 @Table ( name = "users")
-@SQLDelete(sql = "UPDATE users SET deleted = true Where id=?")
-@Where(clause="deleted=false")
+@SQLDelete(sql = "UPDATE users SET soft_delete = true Where id=?")
+@Where(clause="soft_delete=false")
 public class UserEntity {
     
     @Id
@@ -49,8 +49,7 @@ public class UserEntity {
     @NotBlank(message = "The last name can't be blank")
     @Column( name = "last_name", nullable = false)
     private String lastName;
-    
-    
+
     @NotNull(message = "The username can't be null")
     @NotEmpty(message = "The username can't be empty")
     @NotBlank(message = "The username can't be blank")
@@ -59,7 +58,7 @@ public class UserEntity {
     
     @Column( name = "photo", nullable = true)
     private String photo;
-    
+
     @NotNull(message = "The e-mail address can't be null")
     @Email(message ="Please use a valid e-mail address")
     @NotEmpty(message = "The e-mail address can't be empty")
@@ -71,14 +70,12 @@ public class UserEntity {
     @Column( name = "password", nullable = false)
     private String password;
 
-
     @JsonIgnore
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<SubjectEntity> subjects;
 
-//    @OneToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "guests")
-//    private List<Guest> guests;
+    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GuestEntity> guests = new ArrayList<>();
     
     @CreationTimestamp
     @Column(updatable = false)
@@ -86,9 +83,11 @@ public class UserEntity {
     
     @UpdateTimestamp
     private Timestamp updateAt;
-    
-    private Boolean deleted = false;
 
+    @Column(name = "soft_delete")
+    private Boolean soft_delete = Boolean.FALSE;
+
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "user_role",
     joinColumns = {@JoinColumn(name= "user_id")},

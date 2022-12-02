@@ -7,6 +7,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -33,6 +34,7 @@ public class SubjectEntity {
     @Column(name = "subject_id")
     private Long id;
 
+    @Nullable
     private String image;
 
     @NotNull
@@ -57,6 +59,7 @@ public class SubjectEntity {
     @Column(name = "soft_delete")
     private boolean deleted = Boolean.FALSE;
 
+
     //TODO Ver relaciones con Events
 //     relacion bidireccional
     @JsonIgnore
@@ -72,6 +75,7 @@ public class SubjectEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private UserEntity users;
+
 
 
 }

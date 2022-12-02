@@ -69,10 +69,26 @@ public class SecurityConfig {
                 .authorizeRequests(auth -> auth
 
                         // Auth
-                        .antMatchers(HttpMethod.POST, "/auth/register", "/auth/login").permitAll()
+
+                        // TODO borrar endpoint de admin
+                        .antMatchers(HttpMethod.POST, "/auth/register", "/auth/login", "/auth/su/register", "/auth/guestRegister/**").permitAll()
+                        .antMatchers(HttpMethod.POST, "/auth/testing").hasAuthority(RoleEnum.USER.getFullRoleName())
+
+
                         //Users
+                        .antMatchers(HttpMethod.GET, "/user/getById/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.DELETE, "/user/delete/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.PATCH, "/user/update/**").hasAuthority(RoleEnum.USER.getFullRoleName())
 
                         //ADMIN
+                        .antMatchers(HttpMethod.GET, "/user/all").hasAuthority(RoleEnum.ADMIN.getFullRoleName())
+                        .antMatchers(HttpMethod.GET, "/user/getPagination/**").hasAuthority(RoleEnum.ADMIN.getFullRoleName())
+                        .antMatchers(HttpMethod.DELETE, "/user/su/delete/**").hasAuthority(RoleEnum.ADMIN.getFullRoleName())
+                        .antMatchers(HttpMethod.PATCH, "/user/su/update/**").hasAuthority(RoleEnum.ADMIN.getFullRoleName())
+                        .antMatchers(HttpMethod.GET, "/guest/all").hasAuthority(RoleEnum.ADMIN.getFullRoleName())
+                        .antMatchers(HttpMethod.GET, "/guest/getPagination/**").hasAuthority(RoleEnum.ADMIN.getFullRoleName())
+                        .antMatchers(HttpMethod.DELETE, "/guest/su/delete/**").hasAuthority(RoleEnum.ADMIN.getFullRoleName())
+                        .antMatchers(HttpMethod.PATCH, "/guest/su/update/**").hasAuthority((RoleEnum.ADMIN.getFullRoleName()))
 
                         //Subject
                         .antMatchers(HttpMethod.GET,"/subjects/getByUser/**").hasAuthority(RoleEnum.USER.getFullRoleName())
@@ -98,6 +114,12 @@ public class SecurityConfig {
 
 
                         //Guests
+                        .antMatchers(HttpMethod.GET, "/guest/getByUser/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.GET, "/guest/getPaginationByUser/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.GET, "/guest/getById/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.POST, "/guest/new/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.DELETE, "/guest/delete/**").hasAuthority(RoleEnum.USER.getFullRoleName())
+                        .antMatchers(HttpMethod.PATCH, "/guest/update/**").hasAuthority(RoleEnum.USER.getFullRoleName())
 
                         .anyRequest().authenticated()
                 )

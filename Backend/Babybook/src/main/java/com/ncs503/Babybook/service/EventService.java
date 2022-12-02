@@ -1,15 +1,14 @@
 package com.ncs503.Babybook.service;
 
+
 import com.ncs503.Babybook.models.response.EventFilterBySubjectResponse;
 import com.ncs503.Babybook.models.response.EventResponse;
-import com.ncs503.Babybook.models.response.PaginationResponse;
 import com.ncs503.Babybook.models.utility.TagsEventEnum;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
+
 
 public interface EventService {
 
@@ -30,3 +29,4 @@ public interface EventService {
 //    public List<EventFilterBySubjectResponse> findAllByDate(String token, Long subjectId, LocalDate date) throws Exception;
 //    public PaginationResponse findAllByTagsPage(String token, Long subjectId, TagsEventEnum eventEnum, Optional<Integer> pageNumber, Optional<Integer> size) throws Exception;
 //    public PaginationResponse findAllPage( String token, TagsEventEnum eventEnum, Long subjectId, Optional<Integer> pageNumber, Optional<Integer> size, String order) throws Exception ;
+

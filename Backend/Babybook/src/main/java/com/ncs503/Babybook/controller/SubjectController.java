@@ -1,6 +1,8 @@
 package com.ncs503.Babybook.controller;
 import com.ncs503.Babybook.models.request.SubjectRequest;
+import com.ncs503.Babybook.models.request.SubjectUpDateRequest;
 import com.ncs503.Babybook.models.response.PaginationResponse;
+import com.ncs503.Babybook.models.response.SubjectImageResponse;
 import com.ncs503.Babybook.models.response.SubjectResponse;
 import com.ncs503.Babybook.service.SubjectService;
 import io.swagger.annotations.*;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +18,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,15 +33,29 @@ public class SubjectController {
 
 
 //    @PostMapping //FUNCIONA
-    @PostMapping//(consumes = {"*/*"})
+
+    @PostMapping(consumes = {"*/*"})
     @ApiOperation(value = "Create subjects", notes = "Allows User to insert subjects")
     @ApiResponses({@ApiResponse(code = 201, message = "Subject created!")})
-    public ResponseEntity<SubjectResponse> createSubject (@Valid @RequestBody SubjectRequest request,
-                                                          @RequestHeader(name="Authorization") String token) throws IOException {
+    public ResponseEntity<SubjectResponse> createSubject ( @RequestPart @Nullable MultipartFile image,
 
-        SubjectResponse responseCreate = this.subjectService.create(request, token);
+                                                           @ApiParam( name = "firstName", type = "String", example = "José" )
+                                                           @RequestParam (required = false) String firstName,
+                                                           @ApiParam( name = "lastName", type = "String",example = "Ibarrondo " )
+                                                           @RequestParam (required = false) String lastName,
+                                                           @ApiParam( name = "birthDate", type = "String", example = "2022-10-23" )
+                                                           @RequestParam (required = false) String birthDate,
+                                                           @ApiParam( name = "dni", type = "String", example = "23546789" )
+                                                           @RequestParam (required = false) String dni,
+                                                           @RequestHeader(name="Authorization") String token) throws IOException {
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseCreate);
+
+    SubjectRequest request = SubjectRequest.builder().image(image).firstName(firstName)
+            .lastName(lastName).birthDate(LocalDate.parse(birthDate)).dni(dni).build();
+    SubjectResponse responseCreate = this.subjectService.create(request, token);
+    return ResponseEntity.status(HttpStatus.CREATED).body(responseCreate);
+
+
     }
 
 
@@ -61,26 +79,57 @@ public class SubjectController {
 
     }
 
-    @PutMapping("{id}")//FUNCIONA
-    @ApiOperation(value = "Update Subject By ID", notes = "Allows User to update an existing Subject by ID")
+    @PutMapping(value = "{id}", consumes = {"*/*"})//FUNCIONA
+    @ApiOperation(value = "Update Data Subject By ID", notes = "Allows User to update data an existing Subject by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Subject updated!"),
             @ApiResponse(code = 404, message = "The inserted ID does not belong to a subject")})
-    public ResponseEntity<SubjectResponse> updateSubject (@PathVariable @Valid @NotNull @NotBlank  @ApiParam(
+    public ResponseEntity<SubjectResponse> updateSubjectData (@PathVariable @Valid @NotNull @NotBlank  @ApiParam(
                                                             name = "id",
                                                             type = "Long",
                                                             value = "ID of the subject requested",
                                                             example = "1",
                                                             required = true) Long id,
-                                                            @Valid @RequestBody @ApiParam(
-                                                                    name = "New Business",
-                                                                    value = "Business to save",
-                                                                    required = true) SubjectRequest request,
-                                                            @RequestHeader(name="Authorization") String token) throws IOException {
+                                                          @ApiParam( name = "firstName", type = "String", example = "José" )
+                                                              @RequestParam (required = false) String firstName,
+                                                          @ApiParam( name = "lastName", type = "String",example = "Ibarrondo " )
+                                                              @RequestParam (required = false) String lastName,
+                                                          @ApiParam( name = "birthDate", type = "String", example = "2022-10-23" )
+                                                              @RequestParam (required = false) String birthDate,
+                                                          @ApiParam( name = "dni", type = "String", example = "23546789" )
+                                                              @RequestParam (required = false) String dni,
+                                                          @RequestHeader(name="Authorization") String token) throws IOException {
+
+
+       SubjectUpDateRequest request = SubjectUpDateRequest.builder().firstName(firstName)
+                .lastName(lastName).dni(dni).birthDate(LocalDate.parse(birthDate)).build();
+
+
 
         SubjectResponse response = this.subjectService.update(id, request, token);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
+
+    }
+    @PatchMapping(value = "{id}", consumes = {"*/*"})
+    @ApiOperation(value = "Update Data Subject By ID", notes = "Allows User to update data an existing Subject by ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Subject updated!"),
+            @ApiResponse(code = 404, message = "The inserted ID does not belong to a subject")})
+    public ResponseEntity<SubjectImageResponse> updateSubjectImage(@PathVariable @Valid @NotNull @NotBlank  @ApiParam(
+                                                                    name = "id",
+                                                                    type = "Long",
+                                                                    value = "ID of the subject requested",
+                                                                    example = "1",
+                                                                    required = true) Long id,
+                                                                    @RequestPart(required = false) MultipartFile image,
+                                                                    @RequestHeader(name="Authorization") String token) throws IOException{
+
+
+        SubjectImageResponse response = this.subjectService.updateImage(id,image, token);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+
 
     }
 

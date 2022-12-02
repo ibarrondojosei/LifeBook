@@ -6,9 +6,11 @@ import com.ncs503.Babybook.models.entity.SubjectEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.mapper.SubjectMapper;
 import com.ncs503.Babybook.models.request.SubjectRequest;
+import com.ncs503.Babybook.models.request.SubjectUpDateRequest;
 import com.ncs503.Babybook.models.request.specification.SubjectByNameRequest;
 import com.ncs503.Babybook.models.request.specification.SubjectByUserRequest;
 import com.ncs503.Babybook.models.response.PaginationResponse;
+import com.ncs503.Babybook.models.response.SubjectImageResponse;
 import com.ncs503.Babybook.models.response.SubjectResponse;
 import com.ncs503.Babybook.repository.SubjectRepository;
 import com.ncs503.Babybook.repository.UserRepository;
@@ -20,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -56,10 +59,10 @@ public class SubjectServiceImpl implements SubjectService {
 
         UserEntity userEntity = userRepository.findByEmail(username).get();
 
-        Optional<SubjectEntity> subjectEntity = subjectRepository.findByName(request.getFirstName());
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findByName(request.getFirstName(), userEntity.getId());
 
 
-        if (subjectEntity.isPresent()) {
+        if (subjectEntity.isPresent()&&userEntity.getId().equals(subjectEntity.get().getUsers().getId())) {
 
             throw new RuntimeExceptionCustom("409 ::the subject already exists");
 
@@ -99,7 +102,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public SubjectResponse update(Long id, SubjectRequest request, String token) throws IOException {
+    public SubjectResponse update(Long id, SubjectUpDateRequest request, String token) throws IOException {
 
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
@@ -116,7 +119,7 @@ public class SubjectServiceImpl implements SubjectService {
 
         if (userEntity.getId().equals(entity1.getUsers().getId())){
 
-            SubjectEntity entityUpdate = this.subjectMapper.EntityRefreshValues(entity.get(), request);
+            SubjectEntity entityUpdate = this.subjectMapper.EntityRefreshDataValues(entity.get(), request);
 
             SubjectEntity entitySave = this.subjectRepository.save(entityUpdate);
 
@@ -128,6 +131,36 @@ public class SubjectServiceImpl implements SubjectService {
             throw new RuntimeExceptionCustom("404 ::the subject id does not belong to the user");
         }
 
+    }
+
+    @Override
+    public SubjectImageResponse updateImage(Long id, MultipartFile image, String token) throws IOException {
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+        UserEntity userEntity = userRepository.findByEmail(username).get();
+
+
+        Optional<SubjectEntity> entity = this.subjectRepository.findById(id);
+        SubjectEntity entity1= entity.get();
+
+        if (!entity.isPresent()) {
+
+            throw new RuntimeExceptionCustom("404 ::the id  does not belong to a subject");
+        }
+
+        if (userEntity.getId().equals(entity1.getUsers().getId())){
+
+            SubjectEntity entityUpdate = this.subjectMapper.EntityRefreshImageValue(entity.get(), image);
+
+            SubjectEntity entitySave = this.subjectRepository.save(entityUpdate);
+
+            SubjectImageResponse response = this.subjectMapper.Entity2ImageResponse(entitySave);
+
+            return response;
+
+        }else {
+            throw new RuntimeExceptionCustom("404 ::the subject id does not belong to the user");
+        }
     }
 
     @Override
@@ -162,7 +195,7 @@ public class SubjectServiceImpl implements SubjectService {
             Specification<SubjectEntity> specification = subjectByNameSpecification.getByName(filtersRequest);
 
             PaginationByFiltersUtil pagination = new PaginationByFiltersUtil(specification, subjectRepository, pageNumber, size,
-                    "/business/getByName/page=%d&size=%d");
+                    "/subjects/getByName?page=%d&size=%d");
             Page page = pagination.getPage();
 
             List<SubjectResponse> responses = page.getContent();
@@ -198,7 +231,7 @@ public class SubjectServiceImpl implements SubjectService {
 
 
         PaginationByFiltersUtil pagination = new PaginationByFiltersUtil(specification, subjectRepository, pageNumber, size,
-                "/business/getByUser/page=%d&size=%d");
+                "/subjects/getByUser?page=%d&size=%d");
         Page page = pagination.getPage();
 
         List<SubjectResponse> responses = page.getContent();

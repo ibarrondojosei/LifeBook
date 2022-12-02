@@ -7,10 +7,9 @@ import com.ncs503.Babybook.models.entity.SubjectEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.mapper.EventMapper;
 import com.ncs503.Babybook.models.request.EventRequest;
-import com.ncs503.Babybook.models.request.specification.EventByUserAndSubjectRequest;
 import com.ncs503.Babybook.models.response.EventFilterBySubjectResponse;
 import com.ncs503.Babybook.models.response.EventResponse;
-import com.ncs503.Babybook.models.response.PaginationResponse;
+
 import com.ncs503.Babybook.models.utility.TagsEventEnum;
 import com.ncs503.Babybook.repository.EventRepository;
 import com.ncs503.Babybook.repository.SubjectRepository;
@@ -19,21 +18,13 @@ import com.ncs503.Babybook.repository.specification.EventByUserAndSubjectSpecifi
 import com.ncs503.Babybook.service.AwsService;
 import com.ncs503.Babybook.service.EventService;
 
-import com.ncs503.Babybook.utils.PaginationByEvent;
-import com.ncs503.Babybook.utils.PaginationByFiltersUtil;
-import com.ncs503.Babybook.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -50,6 +41,7 @@ public class EventServiceImpl implements EventService {
     private UserRepository userRepository;
     @Autowired
     private SubjectRepository subjectRepository;
+
     @Autowired
     private EventByUserAndSubjectSpecification eventByUserAndSubjectSpecification;
 
@@ -81,6 +73,7 @@ public class EventServiceImpl implements EventService {
             request.setHighlightMoment(highlightMoment);
 
             if (media != null) {
+
                 List<String> medias = new ArrayList<>();
                 for (MultipartFile aux : media) {
                     String file = awsService.uploadFile(aux);
@@ -109,6 +102,7 @@ public class EventServiceImpl implements EventService {
 
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
+
 
         UserEntity userEntity = userRepository.findByEmail(username).get();
         RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
@@ -190,6 +184,7 @@ public class EventServiceImpl implements EventService {
             }
 
         } else {
+
             throw new Exception("el Token del USER no coincide con el token del User del Subject ");
         }
     }
@@ -199,6 +194,7 @@ public class EventServiceImpl implements EventService {
 
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
+
 
         UserEntity userEntity = userRepository.findByEmail(username).get();
         RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
@@ -210,6 +206,7 @@ public class EventServiceImpl implements EventService {
             List<EventFilterBySubjectResponse> responses = eventMapper.EntityList2ResponsePage(eventEntities);
 
             if (responses.isEmpty()) {
+
                 throw new Exception("No Existen Eventos para " + subjectEntity.getFirstName() + " " + subjectEntity.getLastName());
             }
             return responses;
@@ -225,6 +222,7 @@ public class EventServiceImpl implements EventService {
 
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
+
         UserEntity userEntity = userRepository.findByEmail(username).get();
         RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
         SubjectEntity subjectEntity = subjectRepository.findById(subjectId).orElse(null);
@@ -253,6 +251,7 @@ public class EventServiceImpl implements EventService {
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
 
+
         UserEntity userEntity = userRepository.findByEmail(username).get();
         RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
         SubjectEntity subjectEntity = subjectRepository.findById(subjectId).orElse(null);
@@ -279,6 +278,7 @@ public class EventServiceImpl implements EventService {
     }
 
 }
+
 
 
 

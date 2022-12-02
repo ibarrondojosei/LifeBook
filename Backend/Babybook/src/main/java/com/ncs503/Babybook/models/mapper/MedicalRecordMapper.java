@@ -4,6 +4,7 @@ import com.ncs503.Babybook.models.entity.MedicalRecordEntity;
 import com.ncs503.Babybook.models.request.MedicalRecordRequest;
 import com.ncs503.Babybook.models.response.MedicalRecordResponse;
 import com.ncs503.Babybook.models.response.medicalRecordFilterByMedicalDataResponse;
+
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -64,8 +65,6 @@ public class MedicalRecordMapper {
                 .build();
 
     }
-
-
 
     public List<MedicalRecordResponse> EntityList2Response(List<MedicalRecordEntity> MedicalRecordList){
 

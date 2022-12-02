@@ -7,6 +7,8 @@ import com.ncs503.Babybook.models.utility.TagsEventEnum;
 import com.ncs503.Babybook.service.EventService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.time.LocalDate;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -51,9 +54,8 @@ public class EventController {
 
         LocalDate date1 = LocalDate.parse(date);
 
-        System.out.println("\n media controller : " + media);
-
         EventResponse response = eventService.create(token, title, bodie, date1, media, highlightMoment, subjectId, eventEnum);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }
@@ -84,6 +86,7 @@ public class EventController {
         LocalDate date1 = LocalDate.parse(date);
 
         EventResponse response = eventService.update(token, eventId, title, bodie, date1, media, highlightMoment, subjectId, eventEnum);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }
@@ -100,6 +103,7 @@ public class EventController {
                                                     @RequestParam(required = false) Long eventId
     ) throws Exception {
 
+
         eventService.delete(token, subjectId, eventId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
@@ -115,6 +119,7 @@ public class EventController {
     ) throws Exception {
 
         List<EventFilterBySubjectResponse> responses = eventService.findByIdSubject(token, subjectId);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(responses);
 
     }
@@ -219,4 +224,3 @@ public class EventController {
 
 
 //
-

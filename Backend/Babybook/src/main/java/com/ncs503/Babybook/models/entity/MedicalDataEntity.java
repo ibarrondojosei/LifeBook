@@ -46,6 +46,7 @@ public class MedicalDataEntity {
 
     @JsonIgnore
     @OneToOne
+
     private SubjectEntity subject;
 
 

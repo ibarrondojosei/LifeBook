@@ -38,6 +38,7 @@ public class MedicalRecordEntity implements Serializable {
     @ElementCollection
     private List<String> media;
 
+
     private Boolean highlightMoment = Boolean.FALSE;
 
     @CreationTimestamp

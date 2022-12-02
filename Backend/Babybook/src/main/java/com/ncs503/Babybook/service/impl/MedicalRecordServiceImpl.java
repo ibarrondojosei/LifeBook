@@ -42,6 +42,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     public MedicalRecordResponse create(String token, String title, String body, LocalDate date,
                                 List<MultipartFile> media, Boolean highlightMoment, Long medicalDataId, TagsMedicalRecordEnum medicalRecordEnum) throws Exception {
 
+
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
 
@@ -49,10 +50,10 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
         RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
         MedicalDataEntity medicalDataEntity = medicalDataRepository.findById(medicalDataId).orElse(null);
 
-        System.out.println("\nId del User: " + userEntity.getId());
-        System.out.println("rol del User : " + roleEntity.getName());
-        System.out.println("ID de User del subject : " + medicalDataEntity.getSubject().getUsers().getId());
-        System.out.println("media : " + media);
+//        System.out.println("\nId del User: " + userEntity.getId());
+//        System.out.println("rol del User : " + roleEntity.getName());
+//        System.out.println("ID de User del subject : " + medicalDataEntity.getSubject().getUsers().getId());
+//        System.out.println("media : " + media);
 
         if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getSubject().getUsers().getId()) {
 
@@ -90,6 +91,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     @Override
     public MedicalRecordResponse update(String token, Long medicalRecordId, String title, String body, LocalDate date,
                                 List<MultipartFile> media, Boolean highlightMoment, Long medicalDataId, TagsMedicalRecordEnum medicalRecordEnum) throws Exception {
+
 
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
@@ -250,6 +252,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     }
 
 }
+
 
 
 
