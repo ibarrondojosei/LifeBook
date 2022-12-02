@@ -195,7 +195,7 @@ public class SubjectServiceImpl implements SubjectService {
             Specification<SubjectEntity> specification = subjectByNameSpecification.getByName(filtersRequest);
 
             PaginationByFiltersUtil pagination = new PaginationByFiltersUtil(specification, subjectRepository, pageNumber, size,
-                    "/business/getByName/page=%d&size=%d");
+                    "/subjects/getByName?page=%d&size=%d");
             Page page = pagination.getPage();
 
             List<SubjectResponse> responses = page.getContent();
@@ -231,7 +231,7 @@ public class SubjectServiceImpl implements SubjectService {
 
 
         PaginationByFiltersUtil pagination = new PaginationByFiltersUtil(specification, subjectRepository, pageNumber, size,
-                "/business/getByUser/page=%d&size=%d");
+                "/subjects/getByUser?page=%d&size=%d");
         Page page = pagination.getPage();
 
         List<SubjectResponse> responses = page.getContent();
