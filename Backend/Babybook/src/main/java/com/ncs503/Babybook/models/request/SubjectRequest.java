@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -26,8 +27,8 @@ public class SubjectRequest {
 
 
     @ApiModelProperty(notes = "Subject Profile Image",
-            example = "imagen.jpg",
-            required = false)
+            example = "imagen.jpg" )
+    @Nullable
     private MultipartFile image;
 
     @NonNull

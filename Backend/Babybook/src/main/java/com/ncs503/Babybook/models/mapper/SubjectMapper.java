@@ -32,17 +32,22 @@ public class SubjectMapper {
 
     public SubjectEntity Request2Entity (SubjectRequest request, Long userID) throws IOException {
 
+        SubjectEntity entity = new SubjectEntity();
 
-        SubjectEntity entity = SubjectEntity.builder().firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .image(awsService.uploadFile(request.getImage()))
-                .birthDate(request.getBirthDate())
-                .dni(request.getDni())
-                .users(userRepository.findById(userID).get())
-                .build();
+        if (request.getImage()!=null){
+
+            entity.setImage(awsService.uploadFile(request.getImage()));
+        }
+        entity.setFirstName(request.getFirstName());
+        entity.setLastName(request.getLastName());
+        entity.setBirthDate(request.getBirthDate());
+        entity.setDni(request.getDni());
+        entity.setUsers(userRepository.findById(userID).get());
+
 
 
         return entity;
+
 
     }
 

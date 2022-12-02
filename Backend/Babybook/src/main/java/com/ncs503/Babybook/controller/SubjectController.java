@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,7 +36,8 @@ public class SubjectController {
     @PostMapping(consumes = {"*/*"})
     @ApiOperation(value = "Create subjects", notes = "Allows User to insert subjects")
     @ApiResponses({@ApiResponse(code = 201, message = "Subject created!")})
-    public ResponseEntity<SubjectResponse> createSubject ( @RequestPart MultipartFile image,
+    public ResponseEntity<SubjectResponse> createSubject ( @RequestPart @Nullable MultipartFile image,
+
                                                            @ApiParam( name = "firstName", type = "String", example = "José" )
                                                            @RequestParam (required = false) String firstName,
                                                            @ApiParam( name = "lastName", type = "String",example = "Ibarrondo " )
@@ -46,16 +48,13 @@ public class SubjectController {
                                                            @RequestParam (required = false) String dni,
                                                            @RequestHeader(name="Authorization") String token) throws IOException {
 
-        System.out.println("FIRSTNAME= "+firstName);
 
-        SubjectRequest request = SubjectRequest.builder().image(image).firstName(firstName)
-                                .lastName(lastName).birthDate(LocalDate.parse(birthDate)).dni(dni).build();
+    SubjectRequest request = SubjectRequest.builder().image(image).firstName(firstName)
+            .lastName(lastName).birthDate(LocalDate.parse(birthDate)).dni(dni).build();
+    SubjectResponse responseCreate = this.subjectService.create(request, token);
+    return ResponseEntity.status(HttpStatus.CREATED).body(responseCreate);
 
-        System.out.println("REQUEST= "+request.toString());
 
-        SubjectResponse responseCreate = this.subjectService.create(request, token);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseCreate);
     }
 
 
@@ -99,12 +98,12 @@ public class SubjectController {
                                                           @ApiParam( name = "dni", type = "String", example = "23546789" )
                                                               @RequestParam (required = false) String dni,
                                                           @RequestHeader(name="Authorization") String token) throws IOException {
-        System.out.println("DNI= "+dni);
+
 
        SubjectUpDateRequest request = SubjectUpDateRequest.builder().firstName(firstName)
                 .lastName(lastName).dni(dni).birthDate(LocalDate.parse(birthDate)).build();
 
-        System.out.println("REQUEST= "+request.toString());
+
 
         SubjectResponse response = this.subjectService.update(id, request, token);
 
