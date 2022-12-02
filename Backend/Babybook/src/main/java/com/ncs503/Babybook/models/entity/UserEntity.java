@@ -73,19 +73,14 @@ public class UserEntity {
     private String password;
     
 
-//    @OneToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "subjects",
-//    joinColumns = {@JoinColumn(name ="user_id")},
-//    inverseJoinColumns = {@JoinColumn(name = "subject_id")})
+
+
     @JsonIgnore
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<SubjectEntity> subjects;
 
 
     @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL, orphanRemoval = true)
-  //  @JoinTable(name = "guests")
-    //joinColumns = {@JoinColumn(name = "user_id")})
-//    inverseJoinColumns = {@JoinColumn(name = "guest_id")})
     private List<GuestEntity> guests = new ArrayList<>();
     
     @CreationTimestamp

@@ -8,18 +8,18 @@ import com.ncs503.Babybook.models.entity.GuestEntity;
 import com.ncs503.Babybook.models.mapper.GuestMapper;
 import com.ncs503.Babybook.models.request.GuestRequest;
 import com.ncs503.Babybook.models.response.GuestResponse;
+import com.ncs503.Babybook.models.response.PaginationResponse;
 import com.ncs503.Babybook.repository.GuestRepository;
 import com.ncs503.Babybook.service.GuestService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 /**
  * @author Leonardo Terlizzi
@@ -49,6 +49,17 @@ public class GuestEntityController {
         return new ResponseEntity<>(guests, HttpStatus.OK);
     }
 
+    @GetMapping("/getPagination")
+    @ApiOperation(value="List all the guests using pagination", notes = "Endpoint that return a list of all the guests by page")
+    @ApiResponses(value ={
+            @ApiResponse(code=200, message = "Guest's List"),
+            @ApiResponse(code=403, message = "Forbidden action")
+    })
+    public ResponseEntity<?> getGuestPagination(@RequestParam Optional<Integer> page,
+                                                @RequestParam Optional<Integer> size) throws GuestNotFoundException {
+        return new ResponseEntity<>(guestServ.getAllGuestByPage(page, size), HttpStatus.OK);
+    }
+
     @GetMapping("/getByUser")
     @ApiOperation(value="List the user's guests list", notes = "Endpoint that return the list of user's guests")
     @ApiResponses(value= {
@@ -56,6 +67,8 @@ public class GuestEntityController {
             @ApiResponse(code=403, message = "Forbidden action")
     })
     public ResponseEntity<List<GuestResponse>> getGuestsByUser(@RequestHeader(name="Authorization") String token,
+                                                               @ApiParam(name= "user_id",type = "Long",example = "1325",
+                                                                       value = "Id of the user")
                                                                @RequestParam Long user_id) throws UserNotFoundException, InvalidUserException, GuestNotFoundException {
         return new ResponseEntity<>(guestServ.getGuestsByUser(token, user_id), HttpStatus.OK);
     }
@@ -66,11 +79,40 @@ public class GuestEntityController {
             @ApiResponse(code= 200, message = "Guest response"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
-    public ResponseEntity<GuestResponse> getGuest(@RequestParam Long id,
+    public ResponseEntity<GuestResponse> getGuest(@ApiParam(name= "guest_id",type = "Long",example = "1325",
+                                                    value = "Id of the guest")
+                                                    @RequestParam Long guest_id,
                                                     @RequestHeader(name="Authorization") String token,
-                                                  @RequestParam Long user_id)
+                                                     @ApiParam(name= "user_id",type = "Long",example = "1325",
+                                                          value = "Id of the user")
+                                                    @RequestParam Long user_id)
             throws GuestNotFoundException, InvalidUserException, UserNotFoundException, InvalidGuestException {
-        return new ResponseEntity<>(guestServ.getGuest(id, token,user_id), HttpStatus.OK);
+        return new ResponseEntity<>(guestServ.getGuest(guest_id, token,user_id), HttpStatus.OK);
+    }
+
+    @GetMapping("/getPaginationByUser")
+    @ApiOperation(value = "User's guests list", notes ="Endpoint that return a guest list by its user")
+    @ApiResponses(value ={
+            @ApiResponse(code=200, message = "Guest's list response"),
+            @ApiResponse(code=403, message = "Forbidden action")
+    })
+    public ResponseEntity<PaginationResponse> getGuestPaginationByUser(
+                                                                @ApiParam(name = "order", type ="string", example = "ASC",
+                                                                value = "asc or desc order")
+                                                                @RequestParam String order,
+                                                                @ApiParam(name = "page", type = "int", example = "1",
+                                                                value = "page number")
+                                                                @RequestParam Optional<Integer> page,
+                                                                @ApiParam(name = "size", type = "int", example = "5",
+                                                                value = "number of items per page")
+                                                                @RequestParam Optional<Integer> size,
+//                                                                @ApiParam(name = "user_id", type = "Long", example = "1351",
+//                                                                value = "User's id number")
+//                                                                @RequestParam Long user_id,
+                                                                @RequestHeader(name = "Authorization") String token
+
+    ) throws UserNotFoundException, InvalidUserException, GuestNotFoundException {
+        return new ResponseEntity<>(guestServ.getGuestByUserPagination(order, token, page, size), HttpStatus.OK);
     }
 
     @PostMapping("/new")
@@ -81,6 +123,8 @@ public class GuestEntityController {
     })
     public ResponseEntity<GuestResponse> saveGuest(@RequestBody GuestRequest guestReq,
                                                    @RequestHeader(name="Authorization")String token,
+                                                   @ApiParam(name= "user_id",type = "Long",example = "1325",
+                                                           value = "Id of the user")
                                                    @RequestParam Long user_id
                                                 ) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
 
@@ -94,10 +138,14 @@ public class GuestEntityController {
             @ApiResponse(code= 200, message = "Guest deleted!"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
-    public ResponseEntity<Void> deleteGuest(@RequestParam Long id,
+    public ResponseEntity<Void> deleteGuest(@ApiParam(name= "guest_id",type = "Long",example = "1325",
+                                            value = "Id of the guest")
+                                            @RequestParam Long guest_id,
                                             @RequestHeader(name="Authorization")String token,
+                                            @ApiParam(name= "user_id",type = "Long",example = "1325",
+                                                    value = "Id of the user")
                                             @RequestParam Long user_id) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
-        guestServ.deleteGuest(id, token, user_id);
+        guestServ.deleteGuest(guest_id, token, user_id);
         return ResponseEntity.status(HttpStatus.OK).build();
 
     }
@@ -108,9 +156,11 @@ public class GuestEntityController {
             @ApiResponse(code= 200, message = "Guest deleted!"),
             @ApiResponse(code=403, message = "Forbidden action")
     })
-    public ResponseEntity<Void> adminDeleteGuest(@RequestParam Long id,
-                                                 @RequestHeader(name="Authorization")String token) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
-        guestServ.adminDeleteGuest(id);
+    public ResponseEntity<Void> adminDeleteGuest(@ApiParam(name= "guest_id",type = "Long",example = "1325",
+                                                    value = "Id of the guest")
+                                                    @RequestParam Long guest_id,
+                                                    @RequestHeader(name="Authorization")String token) throws GuestNotFoundException, InvalidUserException, UserNotFoundException {
+        guestServ.adminDeleteGuest(guest_id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -121,8 +171,12 @@ public class GuestEntityController {
             @ApiResponse(code=403, message = "Forbidden action")
     })
     public ResponseEntity<GuestResponse> updateGuest(@RequestBody GuestRequest guestReq,
+                                                     @ApiParam(name= "guest_id",type = "Long",example = "1325",
+                                                             value = "Id of the guest")
                                                      @RequestParam Long guest_id,
                                                      @RequestHeader(name="Authorization")String token,
+                                                     @ApiParam(name= "user_id",type = "Long",example = "1325",
+                                                             value = "Id of the user")
                                                      @RequestParam Long user_id) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
 
         return new ResponseEntity<>(guestServ.updateGuest(guestReq, guest_id, token, user_id), HttpStatus.OK);
@@ -135,10 +189,14 @@ public class GuestEntityController {
             @ApiResponse(code=403, message = "Forbidden action")
     })
     public ResponseEntity<GuestResponse> adminUpdateGuest(@RequestBody GuestRequest guestReq,
-                                                          @RequestParam Long id,
+                                                          @ApiParam(name= "guest_id",type = "Long",example = "1325",
+                                                                  value = "Id of the user")
+                                                          @RequestParam Long guest_id,
                                                           @RequestHeader(name="Authorization")String token,
+                                                          @ApiParam(name= "user_id",type = "Long",example = "1325",
+                                                                  value = "Id of the user")
                                                           @RequestParam Long user_id) throws InvalidGuestException, GuestNotFoundException, InvalidUserException, UserNotFoundException {
 
-        return new ResponseEntity<>(guestServ.adminUpdateGuest(guestReq, id), HttpStatus.OK);
+        return new ResponseEntity<>(guestServ.adminUpdateGuest(guestReq, guest_id), HttpStatus.OK);
     }
 }

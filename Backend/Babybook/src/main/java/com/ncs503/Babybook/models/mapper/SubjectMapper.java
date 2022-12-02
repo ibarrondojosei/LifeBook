@@ -45,6 +45,7 @@ public class SubjectMapper {
         entity.setUsers(userRepository.findById(userID).get());
 
 
+
         return entity;
 
 
@@ -99,6 +100,18 @@ public class SubjectMapper {
             responses.add(Entity2ResponseGuest(subject));
         }
 
+        return responses;
+    }
+
+    public List<SubjectEntity> subjectRequestList2Entity(List<SubjectRequest> subjectRequestList, Long user_id) throws  IOException {
+        List<SubjectEntity> responses = new ArrayList<>();
+        subjectRequestList.forEach(subReq -> {
+            try {
+                responses.add(Request2Entity(subReq, user_id));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
         return responses;
     }
 

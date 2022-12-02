@@ -8,12 +8,11 @@ import com.ncs503.Babybook.models.request.UpdateUserRequest;
 import com.ncs503.Babybook.models.request.UserRequest;
 import com.ncs503.Babybook.models.response.UserResponse;
 import com.ncs503.Babybook.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping(path = "/user")
-//@Api(description = "User CRUD" , tags = "Users")
+@Api(description = "User CRUD" , tags = "Users")
 public class UserEntityController {
 
     @Autowired
@@ -35,12 +34,23 @@ public class UserEntityController {
     @GetMapping("/all")
     @ApiOperation(value = "List all the users", notes = "Endpoint that return a list of users")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Users's list"),
+            @ApiResponse(code = 200, message = "Users's list"),
             @ApiResponse(code = 403, message = "Forbidden action")
     })
     public ResponseEntity<List<UserResponse>> getUsers() throws UserNotFoundException {
         List<UserResponse> users = userServ.getUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping("/getPagination")
+    @ApiOperation(value = "List users by page",notes ="Endpoint that returns a list of users using pagination" )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "User's list by page"),
+            @ApiResponse(code = 403, message = "Forbidden action")
+    })
+    public ResponseEntity<?> getUsersPagination(@RequestParam Optional<Integer> page,
+                                                @RequestParam Optional<Integer> size) throws UserNotFoundException{
+        return new ResponseEntity<>(userServ.getUsersByPage(page, size), HttpStatus.OK);
     }
 
     @GetMapping("/getById")
@@ -50,8 +60,14 @@ public class UserEntityController {
             @ApiResponse(code = 403, message = "Forbidden action")
     })
     public ResponseEntity<UserResponse> getUser(@RequestHeader(name="Authorization") String token,
+                                                @ApiParam(
+                                                        name= "id",
+                                                        type = "Long",
+                                                        example = "1325",
+                                                        value = "Id of the user"
+                                                )
                                                 @RequestParam Long id
-                                                ) throws UserNotFoundException, InvalidUserException, GuestNotFoundException {
+                                                ) throws UserNotFoundException, InvalidUserException, GuestNotFoundException, IOException {
         return new ResponseEntity<>(userServ.getUser(token, id), HttpStatus.OK);
 
     }
@@ -65,8 +81,10 @@ public class UserEntityController {
             @ApiResponse(code = 200, message = "User deleted"),
             @ApiResponse(code = 403, message = "Forbbiden action")
     })
-    public ResponseEntity<Void> deleteUser(@RequestParam Long id,
-                                           @RequestHeader(name="Authorization") String token)
+    public ResponseEntity<Void> deleteUser(@ApiParam(name= "id",type = "Long",example = "1325",
+                                                        value = "Id of the user")
+                                                @RequestParam Long id,
+                                                @RequestHeader(name="Authorization") String token)
             throws UserNotFoundException, InvalidUserException {
         userServ.deleteUser(id, token);
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -79,6 +97,8 @@ public class UserEntityController {
             @ApiResponse( code = 403, message = "Forbbiden action")
     })
     public ResponseEntity<Void> adminDeleteUser(@RequestHeader(name="Authorizaation") String token,
+                                                @ApiParam(name= "id",type = "Long",example = "1325",
+                                                        value = "Id of the user")
                                                 @RequestParam Long id)
             throws UserNotFoundException, InvalidUserException {
         userServ.deleteUser(id, token);
@@ -94,8 +114,10 @@ public class UserEntityController {
     })
     public ResponseEntity<UserResponse> editUser(@RequestHeader(name="Authorization") String token,
                                                     @RequestBody UpdateUserRequest userReq,
+                                                    @ApiParam(name= "id",type = "Long",example = "1325",
+                                                         value = "Id of the user")
                                                     @RequestParam Long id)
-            throws InvalidUserException, UserNotFoundException, GuestNotFoundException {
+            throws InvalidUserException, UserNotFoundException, GuestNotFoundException, IOException {
 
         return new ResponseEntity<>(userServ.updateUser(userReq, id, token), HttpStatus.OK);
 
@@ -109,8 +131,10 @@ public class UserEntityController {
     })
     public ResponseEntity<UserResponse> adminEditUser(@RequestBody UpdateUserRequest userReq,
                                                       @RequestHeader(name="Authorization") String token,
+                                                      @ApiParam(name= "id",type = "Long",example = "1325",
+                                                              value = "Id of the user")
                                                       @RequestParam Long id)
-            throws InvalidUserException, UserNotFoundException, GuestNotFoundException {
+            throws InvalidUserException, UserNotFoundException, GuestNotFoundException, IOException {
         return new ResponseEntity<>(userServ.updateUser(userReq, id, token), HttpStatus.OK);
 
     }
