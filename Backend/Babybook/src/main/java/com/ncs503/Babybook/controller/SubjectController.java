@@ -29,7 +29,7 @@ public class SubjectController {
 
 
 //    @PostMapping //FUNCIONA
-    @PostMapping(consumes = {"*/*"})
+    @PostMapping//(consumes = {"*/*"})
     @ApiOperation(value = "Create subjects", notes = "Allows User to insert subjects")
     @ApiResponses({@ApiResponse(code = 201, message = "Subject created!")})
     public ResponseEntity<SubjectResponse> createSubject (@Valid @RequestBody SubjectRequest request,

@@ -5,6 +5,7 @@ import com.ncs503.Babybook.models.entity.*;
 import com.ncs503.Babybook.models.mapper.MedicalRecordMapper;
 import com.ncs503.Babybook.models.request.MedicalRecordRequest;
 import com.ncs503.Babybook.models.response.MedicalRecordResponse;
+import com.ncs503.Babybook.models.response.medicalRecordFilterByMedicalDataResponse;
 import com.ncs503.Babybook.models.utility.TagsMedicalRecordEnum;
 import com.ncs503.Babybook.repository.MedicalDataRepository;
 import com.ncs503.Babybook.repository.MedicalRecordRepository;
@@ -39,7 +40,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 
     @Override
     public MedicalRecordResponse create(String token, String title, String body, LocalDate date,
-                                List<MultipartFile> media, Long medicalDataId, TagsMedicalRecordEnum medicalRecordEnum) throws Exception {
+                                List<MultipartFile> media, Boolean highlightMoment, Long medicalDataId, TagsMedicalRecordEnum medicalRecordEnum) throws Exception {
 
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
@@ -50,10 +51,10 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 
         System.out.println("\nId del User: " + userEntity.getId());
         System.out.println("rol del User : " + roleEntity.getName());
-        System.out.println("ID de User del subject : " + medicalDataEntity.getId());
+        System.out.println("ID de User del subject : " + medicalDataEntity.getSubject().getUsers().getId());
         System.out.println("media : " + media);
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getSubject().getUsers().getId()) {
 
             MedicalRecordRequest request = new MedicalRecordRequest();
             request.setUserId(userEntity);
@@ -61,6 +62,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
             request.setDate(date);
             request.setMedicalRecordEnum(medicalRecordEnum);
             request.setTitle(title);
+            request.setHighlightMoment(highlightMoment);
 
             if(media != null ) {
                 List<String> medias = new ArrayList<>();
@@ -87,7 +89,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 
     @Override
     public MedicalRecordResponse update(String token, Long medicalRecordId, String title, String body, LocalDate date,
-                                List<MultipartFile> media, Long medicalDataId, TagsMedicalRecordEnum medicalRecordEnum) throws Exception {
+                                List<MultipartFile> media, Boolean highlightMoment, Long medicalDataId, TagsMedicalRecordEnum medicalRecordEnum) throws Exception {
 
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
@@ -96,12 +98,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
         RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
         MedicalDataEntity medicalDataEntity = medicalDataRepository.findById(medicalDataId).orElse(null);
 
-        System.out.println("\nId del User: " + userEntity.getId());
-        System.out.println("rol del User : " + roleEntity.getName());
-        System.out.println("ID de User del subject : " + medicalDataEntity.getId());
-        System.out.println("media : " + media);
-
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getSubject().getUsers().getId()) {
 
             MedicalRecordEntity medicalRecordEntity = medicalRecordRepository.getById(medicalRecordId);
             MedicalRecordRequest request = new MedicalRecordRequest();
@@ -115,6 +112,8 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
             request.setTitle(titleAux);
             TagsMedicalRecordEnum medicalRecordEnumAux = ( medicalRecordEnum == null) ? medicalRecordEntity.getMedicalRecordEnums() : medicalRecordEnum;
             request.setMedicalRecordEnum(medicalRecordEnumAux);
+            Boolean highlightMomentAux = (highlightMoment == null) ? medicalRecordEntity.getHighlightMoment() : highlightMoment;
+            request.setHighlightMoment(highlightMomentAux);
 
             if(media != null) {
                 List<String> mediasAux = new ArrayList<>();
@@ -144,7 +143,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     }
 
     @Override
-    public void delete(String token, Long medicalDataId, Long eventId) throws IOException {
+    public void delete(String token, Long medicalDataId, Long eventId) throws Exception {
 
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
@@ -153,113 +152,134 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
         RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
         MedicalDataEntity medicalDataEntity = medicalDataRepository.findById(medicalDataId).orElse(null);
 
-        System.out.println("\nId del User: " + userEntity.getId());
-        System.out.println("rol del User : " + roleEntity.getName());
-        System.out.println("ID de User del subject : " + medicalDataEntity.getId());
-
-
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getSubject().getUsers().getId()) {
 
             MedicalRecordEntity medicalRecordEntity = medicalRecordRepository.findById(eventId).orElse(null);
             medicalRecordRepository.delete(medicalRecordEntity);
 
         }
 
+        throw new Exception("el Token del USER no coincide con el token del User del MedicalData ");
+
     }
 
     @Override
-    public MedicalRecordResponse findById(String token, Long medicalDataId, Long eventId) throws Exception {
+    public List<medicalRecordFilterByMedicalDataResponse> findBySubject(String token, Long subjectId) throws Exception {
 
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
 
         UserEntity userEntity = userRepository.findByEmail(username).get();
         RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
-        MedicalDataEntity medicalDataEntity = medicalDataRepository.findById(medicalDataId).orElse(null);
+        MedicalDataEntity medicalDataEntity = medicalDataRepository.findById(subjectId).orElse(null);
+
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getSubject().getUsers().getId()) {
+
+            List<MedicalRecordEntity> medicalRecordEntityList = medicalRecordRepository.findBySubject(subjectId);
+
+            if(!medicalRecordEntityList.isEmpty()) {
+                List<medicalRecordFilterByMedicalDataResponse> response = medicalRecordMapper.EntityList2ResponsePage1(medicalRecordEntityList);
+                return response;
+            }
+        }
+
+        throw new Exception("el Token del USER no coincide con el token del User del MedicalData ");
+
+    }
+
+    @Override
+    public List<medicalRecordFilterByMedicalDataResponse> findAllByTags(String token, Long subjectId, TagsMedicalRecordEnum medicalRecordEnum) throws Exception {
+
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+
+        UserEntity userEntity = userRepository.findByEmail(username).get();
+        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
+        MedicalDataEntity medicalDataEntity = medicalDataRepository.findById(subjectId).orElse(null);
 
         System.out.println("\nId del User: " + userEntity.getId());
         System.out.println("rol del User : " + roleEntity.getName());
-        System.out.println("ID de User del subject : " + medicalDataEntity.getId());
+        System.out.println("ID de User del subject : " + medicalDataEntity.getSubject().getUsers().getId());
 
-        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getId()) {
+        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getSubject().getUsers().getId()) {
 
-            MedicalRecordEntity medicalRecordEntity = medicalRecordRepository.findById(eventId).orElse(null);
+            List<MedicalRecordEntity> medicalRecordEntityList = medicalRecordRepository.findAllByTags(subjectId, medicalRecordEnum.ordinal());
 
-            if(medicalDataId == medicalRecordEntity.getId()) {
-                MedicalRecordResponse response = medicalRecordMapper.Entity2Response(medicalRecordEntity);
+            if(!medicalRecordEntityList.isEmpty()) {
+                List<medicalRecordFilterByMedicalDataResponse> response = medicalRecordMapper.EntityList2ResponsePage1(medicalRecordEntityList);
                 return response;
             }
 
-            throw new Exception("No coinciden el sujeto ingresado con el sujeto del evento : " + medicalDataId);
+            MedicalRecordEntity medicalRecord = medicalRecordRepository.findById(subjectId).orElse(null);
+
+            throw new Exception("No Existen Registros Medicos de tipo " + medicalRecordEnum );
 
         }
 
-        throw new Exception("el Token del USER no coincide con el token del User del Subject ");
+        throw new Exception("el Token del USER no coincide con el token del User del MedicalData ");
 
     }
 
     @Override
-    public List<MedicalRecordResponse> findAllByDate(String token, Long medicalDataId, LocalDate date) throws Exception {
+    public List<medicalRecordFilterByMedicalDataResponse> findAllByHighlightMoment(String token, Long subjectId) throws Exception {
 
-//        token = token.substring(7);
-//        String username = jwtUtils.extractUsername(token);
-//        UserEntity userEntity = userRepository.findByEmail(username).get();
-//        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
-//        EventEntity event = eventRepository.getById(eventId)
-//
-//
-//        System.out.println("\nid del user token : " + userEntity.getId());
-//        System.out.println("roleEntity del token : " + roleEntity.getName());
-//        System.out.println("user event.getId() : " + event.getUsers().getId());
-//
-//        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == event.getUsers().getId()) {
+            token = token.substring(7);
+            String username = jwtUtils.extractUsername(token);
 
-        System.out.println("\nmedicalDataId : " + medicalDataId);
-        System.out.println("date : " + date);
-        List<MedicalRecordEntity> medicalRecordEntityList = medicalRecordRepository.findAllByDate(medicalDataId, date);
-        System.out.println("medicalRecordEntityList : " + medicalRecordEntityList);
+            UserEntity userEntity = userRepository.findByEmail(username).get();
+            RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
+            MedicalDataEntity medicalDataEntity = medicalDataRepository.findById(subjectId).orElse(null);
 
-        if(!medicalRecordEntityList.isEmpty()) {
-            List<MedicalRecordResponse> response = medicalRecordMapper.EntityList2ResponsePage(medicalRecordEntityList);
-            return response;
-        }
+            if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getSubject().getUsers().getId() ) {
 
-        MedicalRecordEntity medicalRecord = medicalRecordRepository.findById(medicalDataId).orElse(null);
-        throw new Exception("No Existen Registros Medicos en la fecha : " + date +  " para " + medicalRecord.getTitle());
-//        }
+                Boolean highlightMoment = true;
 
-    }
+                List<MedicalRecordEntity> medicalRecordEntityList = medicalRecordRepository.findAllByHighlightMoment(subjectId, highlightMoment);
 
-    @Override
-    public List<MedicalRecordResponse> findAllByTags(String token, Long medicalDataId, TagsMedicalRecordEnum medicalRecordEnum) throws Exception {
+                if (!medicalRecordEntityList.isEmpty()) {
+                    List<medicalRecordFilterByMedicalDataResponse> response = medicalRecordMapper.EntityList2ResponsePage1(medicalRecordEntityList);
+                    return response;
+                }else {
+                    throw new Exception("No Existen Registros Medicos DESTACADOS ");
+                }
 
-//        token = token.substring(7);
-//        String username = jwtUtils.extractUsername(token);
-//        UserEntity userEntity = userRepository.findByEmail(username).get();
-//        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
-//        EventEntity event = eventRepository.getById(eventId)
-//
-//
-//        System.out.println("\nid del user token : " + userEntity.getId());
-//        System.out.println("roleEntity del token : " + roleEntity.getName());
-//        System.out.println("user event.getId() : " + event.getUsers().getId());
-//
-//        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == event.getUsers().getId()) {
+            }
 
-        System.out.println("\nmedicalDataId : " + medicalDataId);
-        System.out.println("eventEnum : " + medicalRecordEnum.ordinal());
-
-        List<MedicalRecordEntity> medicalRecordEntityList = medicalRecordRepository.findAllByTags(medicalDataId, medicalRecordEnum.ordinal());
-        System.out.println("medicalRecordEntityList : " + medicalRecordEntityList);
-
-        if(!medicalRecordEntityList.isEmpty()) {
-            List<MedicalRecordResponse> response = medicalRecordMapper.EntityList2ResponsePage(medicalRecordEntityList);
-            return response;
-        }
-        MedicalRecordEntity medicalRecord = medicalRecordRepository.findById(medicalDataId).orElse(null);
-        throw new Exception("No Existen Registros Medicos de tipo " + medicalRecordEnum +  " para " + medicalRecord.getTitle());
-//        }
+            throw new Exception("el Token del USER no coincide con el token del User del MedicalData ");
 
     }
 
 }
+
+
+
+
+
+
+//    @Override
+//    public MedicalRecordResponse findById(String token, Long medicalDataId, Long eventId) throws Exception {
+//
+//        token = token.substring(7);
+//        String username = jwtUtils.extractUsername(token);
+//
+//        UserEntity userEntity = userRepository.findByEmail(username).get();
+//        RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
+//        MedicalDataEntity medicalDataEntity = medicalDataRepository.findById(medicalDataId).orElse(null);
+//
+//        if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getSubject().getUsers().getId()) {
+//
+//            MedicalRecordEntity medicalRecordEntity = medicalRecordRepository.findById(eventId).orElse(null);
+//
+//            if(medicalDataId == medicalRecordEntity.getId()) {
+//                MedicalRecordResponse response = medicalRecordMapper.Entity2Response(medicalRecordEntity);
+//                return response;
+//            }
+//
+//            throw new Exception("No coinciden el sujeto ingresado con el sujeto del evento : " + medicalDataId);
+//
+//        }
+//
+//        throw new Exception("el Token del USER no coincide con el token del User del MedicalData ");
+//
+//    }
+

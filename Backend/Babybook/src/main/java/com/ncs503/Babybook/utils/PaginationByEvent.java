@@ -1,17 +1,20 @@
 package com.ncs503.Babybook.utils;
 
+import com.ncs503.Babybook.models.entity.EventEntity;
 import lombok.Setter;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.util.List;
 import java.util.Optional;
 
 @Setter
-public class PaginationByFiltersUtil {
-
+public class PaginationByEvent {
 
     private Integer page;
     private static final Integer PAGE_NUMBER = 0;
@@ -20,7 +23,7 @@ public class PaginationByFiltersUtil {
     private String path;
     private Page<?> pageObject;
 
-    public PaginationByFiltersUtil(Specification<?> specification, JpaSpecificationExecutor repository, Optional<Integer> page, Optional<Integer> size, String path) {
+    public PaginationByEvent(List<?> lista, JpaRepository repository, Optional<Integer> page, Optional<Integer> size, String path) {
         Pageable getPageWithSizeElements = PageRequest.of(PAGE_NUMBER, PAGE_SIZE);
         this.path = path;
         if (page.isPresent() && size.isPresent()) {
@@ -41,12 +44,10 @@ public class PaginationByFiltersUtil {
             this.size = PAGE_SIZE;
             this.page = PAGE_NUMBER+1;
         }
-        this.pageObject = repository.findAll(specification,getPageWithSizeElements);
-
+        this.pageObject = repository.findAll((Example) lista, getPageWithSizeElements);
     }
 
     public Page<?> getPage() {
-
         return pageObject;
     }
 

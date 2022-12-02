@@ -12,6 +12,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -68,14 +70,11 @@ public class UserEntity {
     @NotEmpty(message = "The password can't be empty")
     @Column( name = "password", nullable = false)
     private String password;
-    
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "subjects",
-    joinColumns = {@JoinColumn(name ="user_id")},
-    inverseJoinColumns = {@JoinColumn(name = "subject_id")})
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<SubjectEntity> subjects;
-
 
 //    @OneToMany(fetch = FetchType.LAZY)
 //    @JoinTable(name = "guests")
