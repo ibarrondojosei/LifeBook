@@ -6,18 +6,17 @@ export default function Destacados() {
     return (
         <>
             <h2 className='h2Home'>Momentos destacados</h2>
-            <h4 className='h4Home'> No hay momentos destacados cargados</h4>
-            <div className='one'>
-                <div className="cardMomentos" style={{ width: '18rem' }}>
-                    <img src="/assets/Globos.svg" className="cardImg" alt="Carga un momentos destacado" />
-                    <div className="cardBlack">
-                        <Modals/>                    
-                        <p >Agrega tu momento <br/> destacado</p>
+                <div className='one'>
+                    <div className="cardMomentos" style={{ width: '18rem' }}>
+                        <img src="/assets/Globos.svg" className="cardImg" alt="Carga un momentos destacado" />
+                        <div className="cardBlack">
+                            <Modals/>                    
+                            <p >Agrega tu momento <br/> destacado</p>
+                            
+                        </div>
                         
                     </div>
-                    
                 </div>
-            </div>
 
 
         </>
