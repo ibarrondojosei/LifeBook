@@ -1,11 +1,39 @@
-import React from "react";
+import React, {useState} from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/Context/AuthContext";
 import "./RegisterView.css"
 
 export const RegisterView = () => {
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+})
+
+const {signUp} = useAuth();
+const navigate = useNavigate();
+const [error, setError] = useState()
+
+
+
+const handleChange = ({target: {name, value}}) => {
+    setUser({...user,[name]: value})
+};
+
+const handleSubmit = async e => {
+    e.preventDefault()
+    try{
+        await signUp(user.email, user.password)
+        navigate('/')
+    }catch(error){
+        setError(error.message)
+    }
+
+}
+
   return (
     <div className="register">
       <div className="  w-full max-w-xs float-right mr-36 mt-12   ">
-        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96  ">
+        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96  " onSubmit={handleSubmit}>
           <h1 className="text-gray-800 text-center font-bold p-4 pb-8">
            Registrar
           </h1>
@@ -21,6 +49,7 @@ export const RegisterView = () => {
               id="username"
               type="text"
               placeholder="Nombre"
+              
             />
           </div>
 
@@ -36,6 +65,7 @@ export const RegisterView = () => {
               id="username"
               type="text"
               placeholder="Apellido"
+              
             />
           </div>
           <div className="mb-6">
@@ -64,6 +94,7 @@ export const RegisterView = () => {
               id="password"
               type="password"
               placeholder="Mail"
+              onChange={handleChange}
             />
           </div>
           <div className="mb-6">
@@ -78,6 +109,7 @@ export const RegisterView = () => {
               id="password"
               type="password"
               placeholder="Contraseña"
+              onChange={handleChange}
             />
           </div>
 
