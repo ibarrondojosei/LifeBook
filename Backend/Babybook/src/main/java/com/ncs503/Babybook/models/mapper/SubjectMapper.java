@@ -44,8 +44,6 @@ public class SubjectMapper {
         entity.setDni(request.getDni());
         entity.setUsers(userRepository.findById(userID).get());
 
-
-
         return entity;
 
 

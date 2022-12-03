@@ -47,6 +47,8 @@ public class EventEntity  {
     @ElementCollection
     private List<String> media;
 
+    private Boolean highlightMoment = Boolean.FALSE;
+
     @CreationTimestamp
     private Timestamp timestamp;
 
@@ -54,14 +56,13 @@ public class EventEntity  {
     private Boolean sofdelete = Boolean.FALSE;
 
     @JsonIgnore
-
     @ManyToOne
     @JoinColumn(name = "subject_id")
     @JoinTable(name = "subject_event")
     private SubjectEntity subjectEntity;
 
+    @Enumerated(value = EnumType.STRING)
     private TagsEventEnum eventEnum;
-
 
     @OneToOne
     @JoinColumn(name = "user_id")

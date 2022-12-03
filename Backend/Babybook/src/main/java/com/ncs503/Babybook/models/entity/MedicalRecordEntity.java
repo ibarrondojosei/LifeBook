@@ -38,6 +38,9 @@ public class MedicalRecordEntity implements Serializable {
     @ElementCollection
     private List<String> media;
 
+
+    private Boolean highlightMoment = Boolean.FALSE;
+
     @CreationTimestamp
     private Timestamp timestamp;
 
@@ -49,7 +52,8 @@ public class MedicalRecordEntity implements Serializable {
     @JoinColumn(name = "medical_data_id")
     private MedicalDataEntity medicalDataEntity;
 
-    private TagsMedicalRecordEnum medicalRecordEnums;
+    @Enumerated(value = EnumType.STRING)
+    private TagsMedicalRecordEnum medicalRecordEnum;
 
     @OneToOne
     @JoinColumn(name = "user_id")
