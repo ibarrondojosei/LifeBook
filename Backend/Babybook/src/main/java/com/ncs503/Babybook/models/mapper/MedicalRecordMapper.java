@@ -24,7 +24,7 @@ public class MedicalRecordMapper {
                 .date(request.getDate())
                 .media(request.getMedia())
                 .highlightMoment(request.getHighlightMoment())
-                .medicalRecordEnums(request.getMedicalRecordEnum())
+                .medicalRecordEnum(request.getMedicalRecordEnum())
                 .medicalDataEntity(request.getMedicalData())
                 .userId(request.getUserId())
                 .timestamp(new Timestamp(System.currentTimeMillis()))
@@ -40,10 +40,10 @@ public class MedicalRecordMapper {
                 .body(entity.getBody())
                 .date(entity.getDate())
                 .media(entity.getMedia())
-                .highlightMoment(entity.getHighlightMoment())
-                .medicalRecordEnum(entity.getMedicalRecordEnums())
-                .medicalDataEntity(entity.getMedicalDataEntity())
-                .userId(entity.getUserId())
+//                .highlightMoment(entity.getHighlightMoment())
+                .medicalRecordEnum(entity.getMedicalRecordEnum())
+//                .medicalDataEntity(entity.getMedicalDataEntity())
+//                .userId(entity.getUserId())
                 .timestamp(entity.getTimestamp())
                 .build();
     }
@@ -57,7 +57,7 @@ public class MedicalRecordMapper {
                 .date(request.getDate())
                 .media(request.getMedia())
                 .highlightMoment(request.getHighlightMoment())
-                .medicalRecordEnums(request.getMedicalRecordEnum())
+                .medicalRecordEnum(request.getMedicalRecordEnum())
                 .medicalDataEntity(request.getMedicalData())
                 .userId(request.getUserId())
                 .timestamp(new Timestamp(System.currentTimeMillis()))
@@ -86,7 +86,7 @@ public class MedicalRecordMapper {
                 .date(entity.getDate())
                 .media(entity.getMedia())
                 .highlightMoment(entity.getHighlightMoment())
-                .medicalRecordEnum(entity.getMedicalRecordEnums())
+                .medicalRecordEnum(entity.getMedicalRecordEnum())
                 .build();
     }
 

@@ -19,7 +19,7 @@ public interface EventRepository extends JpaRepository<EventEntity, Long>, JpaSp
     @Query(value = "SELECT * FROM events e INNER JOIN subject_event se \n" +
                     "ON e.event_id = se.event_id WHERE se.subject_id = ? " +
                     "AND e.event_enum = ? ORDER BY e.date DESC" , nativeQuery = true)
-    List<EventEntity> findAllByTags(Long subject_id, int eventEnum);
+    List<EventEntity> findAllByTags(Long subject_id, String eventEnum);
 
     @Query(value = "SELECT * FROM events e INNER JOIN subject_event se \n" +
                     "ON e.event_id = se.event_id WHERE se.subject_id = ? " +

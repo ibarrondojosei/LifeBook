@@ -75,7 +75,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
             }
 
             request.setMedicalData(medicalDataRepository.findById(medicalDataId).orElse(null));
-
+            System.out.println("request.getMedicalRecordEnum() : " + request.getMedicalRecordEnum());
             MedicalRecordEntity entity = medicalRecordMapper.Request2Entity(request);
             MedicalRecordEntity medicalRecordLoad = medicalRecordRepository.save(entity);
             MedicalRecordResponse response = medicalRecordMapper.Entity2Response(medicalRecordLoad);
@@ -112,7 +112,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
             request.setDate(dateAux);
             String titleAux = (title == null) ? medicalRecordEntity.getTitle() :  title;
             request.setTitle(titleAux);
-            TagsMedicalRecordEnum medicalRecordEnumAux = ( medicalRecordEnum == null) ? medicalRecordEntity.getMedicalRecordEnums() : medicalRecordEnum;
+            TagsMedicalRecordEnum medicalRecordEnumAux = ( medicalRecordEnum == null) ? medicalRecordEntity.getMedicalRecordEnum() : medicalRecordEnum;
             request.setMedicalRecordEnum(medicalRecordEnumAux);
             Boolean highlightMomentAux = (highlightMoment == null) ? medicalRecordEntity.getHighlightMoment() : highlightMoment;
             request.setHighlightMoment(highlightMomentAux);
@@ -199,13 +199,9 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
         RoleEntity roleEntity = userEntity.getRoleId().iterator().next();
         MedicalDataEntity medicalDataEntity = medicalDataRepository.findById(subjectId).orElse(null);
 
-        System.out.println("\nId del User: " + userEntity.getId());
-        System.out.println("rol del User : " + roleEntity.getName());
-        System.out.println("ID de User del subject : " + medicalDataEntity.getSubject().getUsers().getId());
-
         if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == medicalDataEntity.getSubject().getUsers().getId()) {
 
-            List<MedicalRecordEntity> medicalRecordEntityList = medicalRecordRepository.findAllByTags(subjectId, medicalRecordEnum.ordinal());
+            List<MedicalRecordEntity> medicalRecordEntityList = medicalRecordRepository.findAllByTags(subjectId, medicalRecordEnum.name());
 
             if(!medicalRecordEntityList.isEmpty()) {
                 List<medicalRecordFilterByMedicalDataResponse> response = medicalRecordMapper.EntityList2ResponsePage1(medicalRecordEntityList);

@@ -19,7 +19,7 @@ public class EventFilterBySubjectResponse {
     private String body;
     private LocalDate date;
     private List<String> media;
-    private Boolean highlightMoment;
+//    private Boolean highlightMoment;
 //    private Timestamp timestamp;
 //    private SubjectEntity subjectId;
 //    private TagsEventEnum eventEnum;

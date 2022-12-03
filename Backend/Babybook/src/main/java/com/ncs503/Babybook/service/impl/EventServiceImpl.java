@@ -229,7 +229,7 @@ public class EventServiceImpl implements EventService {
 
         if (roleEntity.getName().equalsIgnoreCase("USER") && userEntity.getId() == subjectEntity.getUsers().getId()) {
 
-            List<EventEntity> eventEntityList = eventRepository.findAllByTags(subjectId, eventEnum.ordinal());
+            List<EventEntity> eventEntityList = eventRepository.findAllByTags(subjectId, eventEnum.name());
 
             if (!eventEntityList.isEmpty()) {
                 List<EventFilterBySubjectResponse> responses = eventMapper.EntityList2ResponsePage(eventEntityList);

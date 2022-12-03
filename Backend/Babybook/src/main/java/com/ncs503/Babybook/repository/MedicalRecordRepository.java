@@ -21,8 +21,8 @@ public interface MedicalRecordRepository extends JpaRepository<MedicalRecordEnti
 
     @Query(value =  "SELECT * FROM medicalrecords mr INNER JOIN medical_data md \n" +
                     "ON mr.medical_data_id = md.id WHERE md.subject_subject_id = ? " +
-                    "AND mr.medical_record_enums = ? ORDER BY mr.date DESC", nativeQuery = true)
-    List<MedicalRecordEntity> findAllByTags(Long subject_id, int medicalRecordEnum);
+                    "AND mr.medical_record_enum = ? ORDER BY mr.date DESC", nativeQuery = true)
+    List<MedicalRecordEntity> findAllByTags(Long subject_id, String medicalRecordEnum);
 
     @Query(value =  "SELECT * FROM medicalrecords mr INNER JOIN medical_data md \n" +
                     "ON mr.medical_data_id = md.id WHERE mr.medical_data_id = ? " +

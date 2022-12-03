@@ -52,7 +52,8 @@ public class MedicalRecordEntity implements Serializable {
     @JoinColumn(name = "medical_data_id")
     private MedicalDataEntity medicalDataEntity;
 
-    private TagsMedicalRecordEnum medicalRecordEnums;
+    @Enumerated(value = EnumType.STRING)
+    private TagsMedicalRecordEnum medicalRecordEnum;
 
     @OneToOne
     @JoinColumn(name = "user_id")

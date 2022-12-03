@@ -48,8 +48,8 @@ public class EventMapper {
                 .media(entity.getMedia())
                 .highlightMoment(entity.getHighlightMoment())
                 .eventEnum(entity.getEventEnum())
-                .subjectId(entity.getSubjectEntity())
-                .userId(entity.getUserId())
+//                .subjectId(entity.getSubjectEntity())
+//                .userId(entity.getUserId())
                 .timestamp(entity.getTimestamp())
                 .build();
     }
@@ -92,7 +92,7 @@ public class EventMapper {
                 .body(entity.getBody())
                 .date(entity.getDate())
                 .media(entity.getMedia())
-                .highlightMoment(entity.getHighlightMoment())
+//                .highlightMoment(entity.getHighlightMoment())
                 .build();
     }
 
