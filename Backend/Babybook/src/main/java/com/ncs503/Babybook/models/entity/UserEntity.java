@@ -49,8 +49,7 @@ public class UserEntity {
     @NotBlank(message = "The last name can't be blank")
     @Column( name = "last_name", nullable = false)
     private String lastName;
-    
-    
+
     @NotNull(message = "The username can't be null")
     @NotEmpty(message = "The username can't be empty")
     @NotBlank(message = "The username can't be blank")
@@ -59,7 +58,6 @@ public class UserEntity {
     
     @Column( name = "photo", nullable = true)
     private String photo;
-    
 
     @NotNull(message = "The e-mail address can't be null")
     @Email(message ="Please use a valid e-mail address")
@@ -71,14 +69,10 @@ public class UserEntity {
     @NotEmpty(message = "The password can't be empty")
     @Column( name = "password", nullable = false)
     private String password;
-    
-
-
 
     @JsonIgnore
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<SubjectEntity> subjects;
-
 
     @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GuestEntity> guests = new ArrayList<>();

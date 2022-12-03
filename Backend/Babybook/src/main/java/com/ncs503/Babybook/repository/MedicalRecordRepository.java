@@ -10,10 +10,24 @@ import java.util.List;
 
 public interface MedicalRecordRepository extends JpaRepository<MedicalRecordEntity, Long> {
 
-    @Query(value =  "SELECT * FROM medicalrecords m WHERE m.subject_id = ? AND m.date = ?", nativeQuery = true)
-    List<MedicalRecordEntity> findAllByDate(Long subject_id, LocalDate date);
-    @Query(value =  "SELECT * FROM medicalrecords m WHERE m.subject_id = ? AND m.medical_record_enums = ?", nativeQuery = true)
-    List<MedicalRecordEntity> findAllByTags(Long subject_id, int medicalRecordEnum);
+//    @Query(value = "SELECT * FROM medicalrecords mr INNER JOIN medical_data md \n" +
+//            "ON mr.medical_data_id = md.id WHERE md.subject_subject_id = ? AND mr.date = ? ORDER BY mr.date DESC" , nativeQuery = true)
+//    List<MedicalRecordEntity> findAllByDate(Long subject_id, LocalDate date);
+
+    @Query(value =  "SELECT * FROM medicalrecords mr INNER JOIN medical_data md \n" +
+                    "ON mr.medical_data_id = md.id WHERE md.subject_subject_id = ? " +
+                    "ORDER BY mr.date DESC", nativeQuery = true)
+    List<MedicalRecordEntity> findBySubject(Long subject);
+
+    @Query(value =  "SELECT * FROM medicalrecords mr INNER JOIN medical_data md \n" +
+                    "ON mr.medical_data_id = md.id WHERE md.subject_subject_id = ? " +
+                    "AND mr.medical_record_enum = ? ORDER BY mr.date DESC", nativeQuery = true)
+    List<MedicalRecordEntity> findAllByTags(Long subject_id, String medicalRecordEnum);
+
+    @Query(value =  "SELECT * FROM medicalrecords mr INNER JOIN medical_data md \n" +
+                    "ON mr.medical_data_id = md.id WHERE mr.medical_data_id = ? " +
+                    "AND mr.highlight_moment = ? ORDER BY mr.date DESC", nativeQuery = true)
+    List<MedicalRecordEntity> findAllByHighlightMoment(Long subject_id, Boolean highlightMoment);
 
 
 }

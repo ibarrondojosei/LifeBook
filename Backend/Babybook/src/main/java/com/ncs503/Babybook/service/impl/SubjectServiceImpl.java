@@ -190,7 +190,7 @@ public class SubjectServiceImpl implements SubjectService {
 
         if (userEntity.getId()!=null){
 
-            SubjectByNameRequest filtersRequest = new SubjectByNameRequest(name, order,userId);
+            SubjectByNameRequest filtersRequest = new SubjectByNameRequest(name, order, userId);
 
             Specification<SubjectEntity> specification = subjectByNameSpecification.getByName(filtersRequest);
 
