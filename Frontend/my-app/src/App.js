@@ -10,17 +10,15 @@ import Home from "./components/Home/Home";
 function App() {
   return (
     <BrowserRouter className="App">
+      <NavBar />
       <Routes>
-        {/* <NavBar /> */}
-
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginView />} />
         <Route path="/register" element={<RegisterView />} />
         <Route path="/clinicalHistory" element={<ClinicalHistory />} />
         <Route path="/cicloLectivo" element={<CicloLectivo />} />
-
-        {/* <Footer/> */}
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
