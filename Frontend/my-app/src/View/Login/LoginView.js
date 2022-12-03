@@ -1,8 +1,8 @@
 import React from "react";
 import "./LoginView.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faKey } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faUser, faKey } from "@fortawesome/free-solid-svg-icons";
 
 export const LoginView = () => {
   return (
@@ -23,7 +23,7 @@ export const LoginView = () => {
 
           <div className="mb-4">
             <div className=" absolute ml-4 m-2">
-              <FontAwesomeIcon icon={  faUser} />
+              {/* <FontAwesomeIcon icon={  faUser} /> */}
             </div>
 
             <input
@@ -35,7 +35,7 @@ export const LoginView = () => {
           </div>
           <div className="mb-6">
          <div className="absolute ml-4 m-2">
-         <FontAwesomeIcon icon={faKey} />
+         {/* <FontAwesomeIcon icon={faKey} /> */}
          </div>
             <input
               className="shadow appearance-none border b rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"

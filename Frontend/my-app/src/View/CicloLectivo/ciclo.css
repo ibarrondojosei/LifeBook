@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
+
+body{
+    background-image: url('../CicloLectivo/Assets/Background.png');
+}
+
+.content{
+    padding-top: 20px;
+    margin-left: 40px;
+}
+
+.barra{
+    display: flex;
+    justify-content: space-between;
+}
+
+.barraNavegacion{
+    display: flex;
+    justify-content: space-between;
+}
+
+.opciones:link{
+    color: red;
+}
+
+.ciclo{
+    font-size: 60px;
+    font-family: 'Montserrat', sans-serif;
+    padding-top: 15px;
+}
+
+.años{
+    font-size: 32px;
+    margin-top: 50px;
+    color: grey;
+}
+.años:hover{
+    font-size: 60px;
+    color: black;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.compas{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+}
+
+.cuadrito{
+    width: 100px;
+    height: 100px;
+    background-color: rgb(237, 225, 225);
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 400px) {
+    .content{
+        padding-top: 20px;
+        margin-left: 0px;
+    }
+    .ciclo{
+        font-size: 40px;
+        font-family: 'Montserrat', sans-serif;
+        padding-top: 15px;
+    }
+    .años{
+        font-size: 20px;
+        margin-top: 50px;
+        color: grey;
+    }
+    .años:hover{
+        font-size: 40px;
+        color: black;
+        cursor: pointer;
+    }
+}
+    
