@@ -1,3 +1,5 @@
+import React from 'react';
+import './App.css';
 import { LoginView } from "./View/Login/LoginView";
 import { RegisterView } from "./View/Register/RegisterView";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -6,6 +8,8 @@ import CicloLectivo from "./View/CicloLectivo/CicloLectivo";
 import Footer from "./components/Footer/Footer.jsx";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import Home from "./components/Home/Home";
+
+import {Carousel} from "./Views/Carousel/Carousel.jsx"
 
 function App() {
   return (
