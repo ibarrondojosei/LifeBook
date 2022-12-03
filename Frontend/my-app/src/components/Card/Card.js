@@ -24,11 +24,11 @@ function Card({info, index}) {
               <button className='font-bold invisible  md:visible'>Ver</button>
               <button className="py-2 px-4 text-base flex flex-row md:bg-celeste rounded-full items-center">
               <p className='font-semibold  pr-2  invisible md:visible	'>Compartir</p>
-              {/* <span >
-                <IconContext.Provider  value={{  className: "1.4rem" }}>
+              <span >
+                {/* <IconContext.Provider  value={{  className: "1.4rem" }}>
                   <BiShareAlt />
-                </IconContext.Provider>
-              </span> */}
+                </IconContext.Provider> */}
+              </span>
               </button>
           </div>
           </div>
