@@ -8,6 +8,7 @@ import CicloLectivo from "./View/CicloLectivo/CicloLectivo";
 import Footer from "./components/Footer/Footer.jsx";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import Home from "./components/Home/Home";
+import { AuthProvider } from "./hooks/Context/AuthContext";
 
 import {Carousel} from "./Views/Carousel/Carousel.jsx"
 
