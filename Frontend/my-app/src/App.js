@@ -14,6 +14,7 @@ import {Carousel} from "./Views/Carousel/Carousel.jsx"
 
 function App() {
   return (
+    <AuthProvider>
     <BrowserRouter className="App">
       <NavBar />
       
@@ -27,6 +28,7 @@ function App() {
     
       <Footer />
     </BrowserRouter>
+    </AuthProvider>
   );
 }
 
