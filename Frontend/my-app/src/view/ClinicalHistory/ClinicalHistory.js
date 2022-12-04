@@ -1,24 +1,20 @@
 import React from "react";
+import "./ClinicalHistory.css";
 
 export default function ClinicalHistory() {
   return (
     <div className="w-screen h-screen">
-        <h1 className="fixed top-20 left-20 text-black-800 text-5xl font-bold">
+        <h1 className="relative top-20 left-20 text-black-800 text-5xl font-bold">
           Historia Clínica
         </h1>
-      <div class="fixed pointer-events-auto space-y-10 top-40 left-20 text-black-400 text-2xl">
-        <h3>2021</h3>
-        <h3>2020</h3>
-
-        <h3>2019</h3>
-
-        <h3>2018</h3>
-
-        <h3>2017</h3>
-
-        <h3>2016</h3>
-
-        <h3>2015</h3>
+      <div className="relative pointer-events-auto space-y-10 top-20 left-20 text-black-400 text-2xl">
+        <h3 className="años">2021</h3>
+        <h3 className="años">2020</h3>
+        <h3 className="años">2019</h3>
+        <h3 className="años">2018</h3>
+        <h3 className="años">2017</h3>
+        <h3 className="años">2016</h3>
+        <h3 className="años">2015</h3>
       </div>
       <div className="fixed justify-items-center top-25 left-60 bottom-20">
         <h6 className="text-sm font-normal">DATOS IMPORTANTES</h6>
