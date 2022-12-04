@@ -37,8 +37,8 @@ export const LoginView = () => {
 
   return (
     <div className="login">
-      <div className="  w-full max-w-xs float-right m-36  ">
-        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96  " onSubmit={handleSubmit}>
+      <div className="  w-full max-w-xs   ">
+        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96 float-right mx-56 mt-20  " onSubmit={handleSubmit}>
           <h1 className="text-gray-800 text-center font-bold p-4 pb-8">
             Inicio de sesion
           </h1>
