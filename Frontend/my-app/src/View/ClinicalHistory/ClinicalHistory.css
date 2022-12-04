@@ -1,3 +1,6 @@
+.container {
+width: 100%;
+}
 .años{
     font-size: 32px;
     margin-top: 50px;
@@ -13,11 +16,12 @@
 .video {
 position: relative;
 left: 15rem;
-bottom: 24rem;
+bottom: 26rem;
 }
 
 .fotos {
+width: auto;
 position: relative;
 bottom: 50rem;
-left: 30rem;
+left: 40rem;
 }
