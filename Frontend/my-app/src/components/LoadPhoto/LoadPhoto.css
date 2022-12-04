@@ -1,0 +1,104 @@
+.bgGral{
+    width: 1440px;
+    overflow: hidden;
+    margin: 0px auto; 
+    background-image: url("../../../public/assets/Background.svg");
+    margin-bottom:50% ;
+}
+
+.titleLoad{
+    font-size: 64px;
+    font-weight: bold;
+    margin: 20px 0px 50px 55px  ;
+}
+
+.divMomentos{
+    display: grid;
+    justify-content: center;
+}
+
+.divCarga{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 1080px;
+    height: 88px;
+    background-image: url("../../../public/assets/momentos.png");
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.vistaPrevia{
+    padding-left: 50%;
+    
+}
+
+.borderInput{
+   
+    border: 1px solid black;
+    width: 60%;
+
+}
+.heightImg{
+    position: absolute;
+width: 640px;
+height: 450px;
+left: 620px;
+top: 468px;
+}
+
+.inlineBlock{
+    display: flex;
+    flex-direction: column;
+
+}
+.columnDivMoment{
+
+    column-count: 2;
+    column-gap: 20px;
+    
+}
+
+.contornos{
+    padding-top: 10%;
+    padding-left: 30%;
+    
+    
+}
+
+.contornosImg{
+    padding-top: 13.5%;
+    padding-left: 30%;
+    
+    
+}
+
+.widthTitle{
+    width: 150%;
+}
+
+.padButton{
+    padding-top: 5%;
+    padding-left: 25%;
+    
+}
+.marButtonCancel{
+    margin-right: 20px;
+    background-color: #e8edf1;
+    border-radius: 3px;
+    width: 92px;
+    height: 44px;
+}
+
+.marButtonPublic{
+    margin-right: 20px;
+    background-color: #2ec5ce;
+    border-radius: 3px;
+    width: 92px;
+    height: 44px;
+}
+/*height: 150px;
+    padding-top: 50px ;
+    padding-left: 55px;
+    width: 80%;*/
