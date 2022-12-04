@@ -6,20 +6,23 @@ import CicloLectivo from "./View/CicloLectivo/CicloLectivo";
 import Footer from "./components/Footer/Footer.jsx";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import Home from "./components/Home/Home";
+import { AuthProvider } from "./hooks/Context/AuthContext";
 
 function App() {
   return (
-    <BrowserRouter className="App">
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginView />} />
-        <Route path="/register" element={<RegisterView />} />
-        <Route path="/clinicalHistory" element={<ClinicalHistory />} />
-        <Route path="/cicloLectivo" element={<CicloLectivo />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter className="App">
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LoginView />} />
+          <Route path="/register" element={<RegisterView />} />
+          <Route path="/clinicalHistory" element={<ClinicalHistory />} />
+          <Route path="/cicloLectivo" element={<CicloLectivo />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    
   );
 }
 
