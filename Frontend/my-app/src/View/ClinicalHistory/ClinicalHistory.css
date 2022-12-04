@@ -9,3 +9,15 @@
     cursor: pointer;
     transition: 1s;
 }
+
+.video {
+position: relative;
+left: 15rem;
+bottom: 24rem;
+}
+
+.fotos {
+position: relative;
+bottom: 50rem;
+left: 30rem;
+}
