@@ -43,8 +43,8 @@ export const LoginView = () => {
             Inicio de sesion
           </h1>
           <div className="mb-8">
-            <div class="flex justify-center items-center">
-              <label className="mr-2">¿Eres nuevo usuario?</label>
+            <div class="flex justify-center items-center text-sm ">
+              <label className="mr-2  ">¿Eres nuevo usuario?</label>
               <Link to="/register"><a className=" cursor-pointer text-blue-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
                 Crear una cuenta
               </a></Link>
