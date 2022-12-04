@@ -15,6 +15,7 @@ function App() {
   return (
     <BrowserRouter className="App">
       <NavBar />
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginView />} />
@@ -22,6 +23,7 @@ function App() {
         <Route path="/clinicalHistory" element={<ClinicalHistory />} />
         <Route path="/cicloLectivo" element={<CicloLectivo />} />
       </Routes>
+    
       <Footer />
     </BrowserRouter>
   );

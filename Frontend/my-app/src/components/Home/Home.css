@@ -1,10 +1,12 @@
 .bgImg{
-    width: 1440px;
+    
     height:722px ;
     overflow: hidden;
     position: relative;
     margin: 0px auto; 
     background-image: url("../../../public/assets/Rectangle\ 40.svg");
+    
+    
 }
   
 .bgImg h1{
