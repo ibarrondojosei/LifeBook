@@ -8,6 +8,7 @@ import CicloLectivo from "./View/CicloLectivo/CicloLectivo";
 import Footer from "./components/Footer/Footer.jsx";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import Home from "./components/Home/Home";
+import LoadPhoto from "./components/LoadPhoto/LoadPhoto.jsx";
 import { AuthProvider } from "./hooks/Context/AuthContext";
 
 import {Carousel} from "./Views/Carousel/Carousel.jsx"
@@ -15,20 +16,20 @@ import {Carousel} from "./Views/Carousel/Carousel.jsx"
 function App() {
   return (
     <AuthProvider>
-    <BrowserRouter className="App">
-      <NavBar />
-      
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginView />} />
-        <Route path="/register" element={<RegisterView />} />
-        <Route path="/clinicalHistory" element={<ClinicalHistory />} />
-        <Route path="/cicloLectivo" element={<CicloLectivo />} />
-      </Routes>
-    
-      <Footer />
-    </BrowserRouter>
+      <BrowserRouter className="App">
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/destacados" element={<LoadPhoto />} />
+          <Route path="/login" element={<LoginView />} />
+          <Route path="/register" element={<RegisterView />} />
+          <Route path="/clinicalHistory" element={<ClinicalHistory />} />
+          <Route path="/cicloLectivo" element={<CicloLectivo />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
     </AuthProvider>
+    
   );
 }
 
