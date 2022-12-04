@@ -1,0 +1,65 @@
+{
+   "defaultList": [
+    {
+        "id": 1,
+        "title": "Familia",
+        "image": "/images/foto1.png",
+        "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit."
+    },
+    {
+        "id": 2,
+        "title": "Primer dia de Clases",
+        "image": "/images/foto2.png",
+        "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit."   
+    },
+    {
+        "id": 3,
+        "title": "Visita medica",
+        "image": "/images/foto3.png",
+        "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit."   
+    },
+    {
+        "id": 4,
+        "title": "Nuestro dia",
+        "image": "/images/foto5.png",
+        "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit."   
+    },
+    {
+        "id": 5,
+        "title": "Nuestro dia",
+        "image": "/images/foto1.png",
+        "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit."   
+    },
+    {
+        "id": 6,
+        "title": "Familia",
+        "image": "/images/foto1.png",
+        "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit."
+    },
+    {
+        "id": 7,
+        "title": "Primer dia de Clases",
+        "image": "/images/foto2.png",
+        "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit."   
+    },
+    {
+        "id": 8,
+        "title": "Visita medica",
+        "image": "/images/foto3.png",
+        "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit."   
+    },
+    {
+        "id": 9,
+        "title": "Nuestro dia",
+        "image": "/images/foto5.png",
+        "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit."   
+    },
+    {
+        "id": 10,
+        "title": "Nuestro dia",
+        "image": "/images/foto1.png",
+        "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit."   
+    }
+
+    ]
+}
