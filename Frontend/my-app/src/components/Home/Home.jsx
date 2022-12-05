@@ -5,8 +5,8 @@ import Destacados from './Destacados'
 import { Link } from 'react-router-dom';
 export default function Home() {
   return (
-    <div className='container mx-auto '>
-        <header>
+    <div className='container jCCenter'>
+        <header >
           
             <div className='bgImg divHomeMobile'>
                 <h1 >LifeBook</h1>
