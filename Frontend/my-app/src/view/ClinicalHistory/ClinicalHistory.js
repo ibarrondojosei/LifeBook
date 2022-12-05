@@ -8,7 +8,7 @@ export default function ClinicalHistory() {
         Historia Clínica
       </h1>
 	  <div className="grid grid-cols-3 gap-3">
-        <div className="content">
+        <div className="containerAños">
           <h3 className="años">2020</h3>
           <h3 className="años">2019</h3>
           <h3 className="años">2018</h3>
