@@ -1,5 +1,6 @@
-.container {
-width: 100%;
+.content {
+padding-top: 80px;
+margin-left: 80px;
 }
 .años{
     font-size: 32px;
@@ -14,14 +15,10 @@ width: 100%;
 }
 
 .video {
-position: relative;
-left: 15rem;
-bottom: 26rem;
+margin-top: 8rem;
 }
 
 .fotos {
-width: auto;
-position: relative;
-bottom: 50rem;
-left: 40rem;
+
+padding-top: 70px;
 }
