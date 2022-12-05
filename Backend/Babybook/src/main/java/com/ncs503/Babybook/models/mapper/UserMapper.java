@@ -70,7 +70,7 @@ public class UserMapper {
         user.setUsername(userReq.getUsername());
         user.setPassword(userReq.getPassword());
         user.setFirstName(userReq.getFirstName());
-        user.setLastName(user.getLastName());
+        user.setLastName(userReq.getLastName());
         return user;
     }
 
