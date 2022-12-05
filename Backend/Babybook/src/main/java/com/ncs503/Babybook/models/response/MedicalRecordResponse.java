@@ -23,9 +23,12 @@ public class MedicalRecordResponse {
     private String body;
     private LocalDate date;
     private List<String> media;
+//    private Boolean highlightMoment;
     private Timestamp timestamp;
-    private MedicalDataEntity medicalDataEntity;
+//    private MedicalDataEntity medicalDataEntity;
+    private Long medicalDataEntity;
     private TagsMedicalRecordEnum medicalRecordEnum;
-    private UserEntity userId;
+//    private UserEntity userId;
+    private Long userId;
 
 }

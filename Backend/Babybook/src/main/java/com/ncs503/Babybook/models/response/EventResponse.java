@@ -21,9 +21,12 @@ public class EventResponse {
     private String body;
     private LocalDate date;
     private List<String> media;
+    private Boolean highlightMoment;
     private Timestamp timestamp;
-    private SubjectEntity subjectId;
+//    private SubjectEntity subjectId;
+    private Long subjectId;
     private TagsEventEnum eventEnum;
-    private UserEntity userId;
+//    private UserEntity userId;
+    private Long userId;
 
 }

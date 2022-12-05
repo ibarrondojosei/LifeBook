@@ -34,6 +34,8 @@ public class MedicalRecordRequest {
 
     private List<String> media;
 
+    private Boolean highlightMoment = Boolean.FALSE;
+
     @CreationTimestamp
     private Timestamp timestamp;
 
