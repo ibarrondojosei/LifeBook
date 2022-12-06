@@ -14,7 +14,7 @@ export default function Home() {
                   <button className='btnHome'>Crear Publicación</button>
                 </Link>
                 <p className=''>Tu nueva forma de guardar recuerdos</p>
-                <NavBar/>
+                {/* <NavBar/> */}
             </div>
             <Destacados/>
 

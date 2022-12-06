@@ -1,29 +1,28 @@
-import Footer from './components/Footer/Footer';
-import Home from './components/Home/Home'
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import LoadPhoto from './components/LoadPhoto/LoadPhoto';
-
+import { LoginView } from "./View/Login/LoginView";
+import { RegisterView } from "./View/Register/RegisterView";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ClinicalHistory from "./View/ClinicalHistory/ClinicalHistory";
+import CicloLectivo from "./View/CicloLectivo/CicloLectivo";
+import Footer from "./components/Footer/Footer.jsx";
+import NavBar from "./components/NavBar/NavBar.jsx";
+import Home from "./components/Home/Home";
+import { AuthProvider } from "./hooks/Context/AuthContext";
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-      
-      <Routes>
-        <Route path='/' element={<Home/>}></Route>
-        <Route path='/load' element={<LoadPhoto/>}></Route>
-        
-      </Routes>
-      
-      <Footer/>
+    <AuthProvider>
+      <BrowserRouter className="App">
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LoginView />} />
+          <Route path="/register" element={<RegisterView />} />
+          <Route path="/clinicalHistory" element={<ClinicalHistory />} />
+          <Route path="/cicloLectivo" element={<CicloLectivo />} />
+        </Routes>
+        <Footer />
       </BrowserRouter>
-      
-      
-      
-    
-    
-    
-    </>
+    </AuthProvider>
     
  
     
