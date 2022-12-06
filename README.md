@@ -8,42 +8,42 @@ Es una plataforma que te permite guardar tu historia clinicas, subir recuerdos, 
 ## Built With
 
 ### Design
-**Figma**
-**Canva**
-**Illustrator**
+- **Figma**
+- **Canva**
+- **Illustrator**
 
 ### Frontend
-**Javascript**
-**React**
-**React Router**
-**Css**
+- **Javascript**
+- **React**
+- **React Router**
+- **Css**
 
 ### Backend
-**Java**
-**MySql**
-**Spring**
-**Swagger**
-**JWT**
-**AWS**
+- **Java**
+- **MySql**
+- **Spring**
+- **Swagger**
+- **JWT**
+- **AWS**
 
 ## Team
 
 ### UX/UI
-· [Natali Leones Aguiar](https://www.linkedin.com/in/na-leones-aguiar/)
-· [Andrea Abdala](https://www.linkedin.com/in/andruabdala)
+- [Natali Leones Aguiar](https://www.linkedin.com/in/na-leones-aguiar/)
+- [Andrea Abdala](https://www.linkedin.com/in/andruabdala)
 
 ### Frontend
-· [Leandro Martini](https://www.linkedin.com/in/leandro-martini-developer/)
-· [Manuel Martinez](https://www.linkedin.com/in/manuelmartinez92/)
-· [Eduardo Arevalo](https://www.linkedin.com/in/eduardo-arevalo-/)
-· [Micaela Andrés](https://www.linkedin.com/in/micaelaandres)
-· [Isabelle De Souza](https://www.linkedin.com/in/isabelledesouza )
+- [Leandro Martini](https://www.linkedin.com/in/leandro-martini-developer/)
+- [Manuel Martinez](https://www.linkedin.com/in/manuelmartinez92/)
+- [Eduardo Arevalo](https://www.linkedin.com/in/eduardo-arevalo-/)
+- [Micaela Andrés](https://www.linkedin.com/in/micaelaandres)
+- [Isabelle De Souza](https://www.linkedin.com/in/isabelledesouza )
 
 ### Backend
-· [Alejandro Moll](https://www.linkedin.com/in/alejandro-moll-5955645a/)
-· [Larry Aguilera](https://www.linkedin.com/in/larry-aguilera-081340b1/)
-· [Jose Ignacio Ibarrondo Pelaez](https://www.linkedin.com/in/jos%C3%A9ignacioibarrondopelaez)
-· [Leonardo Terlizzi](https://www.linkedin.com/in/lterlizzi/)
+- [Alejandro Moll](https://www.linkedin.com/in/alejandro-moll-5955645a/)
+- [Larry Aguilera](https://www.linkedin.com/in/larry-aguilera-081340b1/)
+- [Jose Ignacio Ibarrondo Pelaez](https://www.linkedin.com/in/jos%C3%A9ignacioibarrondopelaez)
+- [Leonardo Terlizzi](https://www.linkedin.com/in/lterlizzi/)
 
 ### Instalación
 
