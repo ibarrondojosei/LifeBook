@@ -1,4 +1,49 @@
-# Getting Started with Create React App
+# LifeBook
+    
+### About The Proyect
+Es una plataforma que te permite guardar tu historia clinicas, subir recuerdos, videos e imágenes para no olvidar y destacar.
+
+## Built With
+
+### Design
+· Figma
+· Canva
+· Illustrator
+
+### Frontend
+· Javascript
+· React
+· React Router
+· Css
+
+### Backend
+· Java
+· MySql
+· Spring
+· Swagger
+· JWT
+· AWS
+
+## Team
+
+### UX/UI
+· Natali Leones Aguiar [Natali Leones Aguiar](https://www.linkedin.com/in/na-leones-aguiar/)
+· Andrea Abdala [Andrea Abdala](https://www.linkedin.com/in/andruabdala)
+
+### Frontend
+· Leandro Martini [Leandro Martini](https://www.linkedin.com/in/leandro-martini-developer/)
+· Manuel Martinez [Manuel Martinez](https://www.linkedin.com/in/manuelmartinez92/)
+· Eduardo Arevalo [Eduardo Arevalo](https://www.linkedin.com/in/eduardo-arevalo-/)
+· Micaela Andrés [Micaela Andrés](https://www.linkedin.com/in/micaelaandres)
+· Isabelle De Souza [Isabelle De Souza](https://www.linkedin.com/in/isabelledesouza )
+
+### Backend
+· Alejandro Moll [Alejandro Moll](https://www.linkedin.com/in/alejandro-moll-5955645a/)
+· Larry Aguilera [Larry Aguilera]()
+· Jose Ignacio Ibarrondo Pelaez [Jose Ignacio Ibarrondo Pelaez](https://www.linkedin.com/in/jos%C3%A9ignacioibarrondopelaez)
+· Leonardo Terlizzi [Leonardo Terlizzi](https://www.linkedin.com/in/lterlizzi/)
+
+### Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
