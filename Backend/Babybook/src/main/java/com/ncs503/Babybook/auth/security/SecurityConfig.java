@@ -134,6 +134,7 @@ public class SecurityConfig {
 
     }
 
+
 //    @Bean
 //    CorsConfigurationSource corsConfigurationSource() {
 //        CorsConfiguration configuration = new CorsConfiguration();
@@ -145,6 +146,7 @@ public class SecurityConfig {
 //        source.registerCorsConfiguration("/**", configuration);
 //        return source;
 //    }
+
 
     @Bean
     JwtDecoder jwtDecoder() {

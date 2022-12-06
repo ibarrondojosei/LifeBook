@@ -7,6 +7,7 @@ import com.ncs503.Babybook.models.entity.RoleEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.mapper.UserMapper;
 import com.ncs503.Babybook.models.request.LoginRequest;
+import com.ncs503.Babybook.models.request.RegisterUserRequest;
 import com.ncs503.Babybook.models.request.UserRequest;
 import com.ncs503.Babybook.models.response.LoginResponse;
 import com.ncs503.Babybook.models.response.UserResponse;
@@ -57,7 +58,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public UserResponse saveUser(UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException, IOException {
+    public UserResponse saveUser(RegisterUserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException, IOException {
         if (userRepo.findByEmail(userReq.getEmail()).isPresent())
             throw new UserProfileAlreadyExistsException("E-mail already used");
         if(userRepo.findByUsername(userReq.getUsername()).isPresent())
@@ -80,7 +81,8 @@ public class AuthServiceImpl implements AuthService {
             rol = roleRepo.save(rol);
             roles.add(rol);
         }
-        UserEntity user = userMapper.toUserEntityWithRoles(userReq, roles);
+        UserEntity user = userMapper.RegisterUser2UserEntity(userReq);
+        user.setRoleId(roles);
         userRepo.save(user);
         UserEntity userWithId = userRepo.findByEmail(userReq.getEmail()).orElse(null);
         return userMapper.toUserResponse(userWithId);

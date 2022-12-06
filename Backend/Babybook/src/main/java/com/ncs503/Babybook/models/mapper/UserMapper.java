@@ -9,6 +9,7 @@ import com.ncs503.Babybook.models.entity.GuestEntity;
 import com.ncs503.Babybook.models.entity.RoleEntity;
 import com.ncs503.Babybook.models.entity.SubjectEntity;
 import com.ncs503.Babybook.models.entity.UserEntity;
+import com.ncs503.Babybook.models.request.RegisterUserRequest;
 import com.ncs503.Babybook.models.request.UpdateUserRequest;
 import com.ncs503.Babybook.models.request.UserRequest;
 import com.ncs503.Babybook.models.response.UserResponse;
@@ -21,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ncs503.Babybook.repository.UserRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -60,6 +62,16 @@ public class UserMapper {
         }
         return user;
 
+    }
+
+    public UserEntity RegisterUser2UserEntity(RegisterUserRequest userReq) throws InvalidUserException {
+        UserEntity user = new UserEntity();
+        user.setEmail(userReq.getEmail());
+        user.setUsername(userReq.getUsername());
+        user.setPassword(userReq.getPassword());
+        user.setFirstName(userReq.getFirstName());
+        user.setLastName(userReq.getLastName());
+        return user;
     }
 
     //sobrecarga de método tomando otro tipo de request para las updates de entidades user

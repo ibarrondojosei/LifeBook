@@ -7,6 +7,7 @@ import com.ncs503.Babybook.exception.UserProfileAlreadyExistsException;
 import com.ncs503.Babybook.models.entity.UserEntity;
 import com.ncs503.Babybook.models.mapper.UserMapper;
 import com.ncs503.Babybook.models.request.LoginRequest;
+import com.ncs503.Babybook.models.request.RegisterUserRequest;
 import com.ncs503.Babybook.models.request.UserRequest;
 import com.ncs503.Babybook.models.response.LoginResponse;
 import com.ncs503.Babybook.models.response.UserResponse;
@@ -53,7 +54,7 @@ public class AuthController {
             @ApiResponse(code = 403, message = "Something went wrong")
 
     })
-    public ResponseEntity<UserResponse> registerUser(@RequestBody UserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException, IOException {
+    public ResponseEntity<UserResponse> registerUser(@RequestBody RegisterUserRequest userReq) throws InvalidUserException, UserProfileAlreadyExistsException, UserNotFoundException, GuestNotFoundException, IOException {
 
         return new ResponseEntity<>(authServ.saveUser(userReq), HttpStatus.OK);
 
