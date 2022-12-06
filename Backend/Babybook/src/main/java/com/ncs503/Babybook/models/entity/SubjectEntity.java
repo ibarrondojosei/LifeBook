@@ -66,7 +66,6 @@ public class SubjectEntity {
     @OneToMany(mappedBy = "subjectEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<EventEntity> eventEntities;
 
-
     @JsonIgnore
     @OneToOne(mappedBy = "subject", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "medicalData_id")

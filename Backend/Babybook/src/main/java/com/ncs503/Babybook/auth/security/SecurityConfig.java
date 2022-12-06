@@ -75,7 +75,6 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.POST, "/auth/testing").hasAuthority(RoleEnum.USER.getFullRoleName())
 
 
-
                         //Users
                         .antMatchers(HttpMethod.GET, "/user/getById/**").hasAuthority(RoleEnum.USER.getFullRoleName())
                         .antMatchers(HttpMethod.DELETE, "/user/delete/**").hasAuthority(RoleEnum.USER.getFullRoleName())
