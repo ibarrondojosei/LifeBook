@@ -14,6 +14,7 @@ import com.ncs503.Babybook.models.response.UserResponse;
 import com.ncs503.Babybook.repository.RoleRepository;
 import com.ncs503.Babybook.repository.UserRepository;
 import com.ncs503.Babybook.service.AuthService;
+import com.ncs503.Babybook.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,6 +40,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private PasswordEncoder passEnc;
+
+    @Autowired
+    EmailService emailService;
 
 
 
@@ -85,6 +89,7 @@ public class AuthServiceImpl implements AuthService {
         user.setRoleId(roles);
         userRepo.save(user);
         UserEntity userWithId = userRepo.findByEmail(userReq.getEmail()).orElse(null);
+        emailService.checkFromRequest(user.getEmail(), "userRegistered");
         return userMapper.toUserResponse(userWithId);
 
     }
