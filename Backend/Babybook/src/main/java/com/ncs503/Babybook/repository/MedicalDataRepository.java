@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface MedicalDataRepository extends JpaRepository<MedicalDataEntity, Long> {
 
     @Query(value = "SELECT * " +
-            "from medical_Data c " +
+            "from medical_data c " +
             "WHERE subject_subject_id = :id " +
             "AND soft_delete = false", nativeQuery = true)
     Optional<MedicalDataEntity> findBySubjectId(Long id);

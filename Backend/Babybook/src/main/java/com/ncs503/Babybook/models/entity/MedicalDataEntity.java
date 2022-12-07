@@ -20,7 +20,7 @@ import java.util.Set;
 @Entity
 @SQLDelete(sql = "UPDATE medicalData SET soft_delete = true Where id=?")
 @Where(clause = "soft_delete=false")
-@Table( name= "medicalData")
+@Table( name= "medical_data")
 public class MedicalDataEntity {
 
     @Id
