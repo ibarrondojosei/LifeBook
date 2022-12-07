@@ -25,6 +25,7 @@ export const LoginView = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    console.log(user)
     try{
       await login(user.username, user.password)
       navigate('/registro');
@@ -43,11 +44,11 @@ export const LoginView = () => {
             Inicio de sesion
           </h1>
           <div className="mb-8">
-            <div class="flex justify-center items-center text-sm ">
+            <div className="flex justify-center items-center text-sm ">
               <label className="mr-2  ">¿Eres nuevo usuario?</label>
-              <Link to="/register"><a className=" cursor-pointer text-blue-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+              <Link to="/register"><span className="cursor-pointer text-blue-500 transition duration-500 ease-in-out transform hover:-translate-x hover:scale-105">
                 Crear una cuenta
-              </a></Link>
+              </span></Link>
             </div>
           </div>
 
@@ -60,6 +61,7 @@ export const LoginView = () => {
               className=" shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="username"
               type="text"
+              name="username"
               placeholder="Email"
               onChange={handleChange}
             />
@@ -72,8 +74,9 @@ export const LoginView = () => {
               className="shadow appearance-none border b rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
+              name="password"
               placeholder="Password"
-              onchange={handleChange}
+              onChange={handleChange}
             />
           </div>
           <div className="flex items-center justify-between">
@@ -82,9 +85,9 @@ export const LoginView = () => {
                 id="recuerdame"
                 name="recuerdame"
                 type="checkbox"
-                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
               />
-              <label for="remember_me" class="ml-2 block text-sm text-gray-900">
+              <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900">
                 Recuerdame
               </label>
             </div>
@@ -98,19 +101,13 @@ export const LoginView = () => {
           <div>
             <button
               className="  block bg-teal-400 hover:bg-teal-600 font-bold text-black uppercase text-lg mx-auto p-2 rounded mt-4"
-              type="button"
+              type="submit"
             >
               Ingresar
             </button>
           </div>
         </form>
       </div>
-<<<<<<<<< Temporary merge branch 1
-      <img className="ml-16 pt-32" src="https://res.cloudinary.com/dytpump6i/image/upload/v1668705729/LifeBook2_2_1_kdgf1m.png" alt="" />
-    </div>
-  );
-};
-=========
       <img
         className="ml-16 pt-32"
         src="https://res.cloudinary.com/dytpump6i/image/upload/v1668705729/LifeBook2_2_1_kdgf1m.png"
