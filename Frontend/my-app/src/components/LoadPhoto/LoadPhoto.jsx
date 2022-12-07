@@ -15,7 +15,6 @@ export default function LoadPhoto() {
 
     return (
         <div className='bgGral'>
-            <NavBar />
             <h1 className='titleLoad'>Momento Destacado</h1>
             <div className='divMomentos'>
                 <div className='divCarga'>
