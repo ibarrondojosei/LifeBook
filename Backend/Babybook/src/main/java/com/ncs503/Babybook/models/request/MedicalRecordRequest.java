@@ -47,6 +47,7 @@ public class MedicalRecordRequest {
     @JoinColumn(name = "medicalData_Id")
     private MedicalDataEntity medicalData;
 
+    @Enumerated(value = EnumType.STRING)
     private TagsMedicalRecordEnum medicalRecordEnum;
 
     @OneToOne

@@ -52,6 +52,7 @@ public class EventRequest {
 //    @JoinColumn(name = "subject_id")
     private SubjectEntity subject;
 
+    @Enumerated(value = EnumType.STRING)
     private TagsEventEnum eventEnum;
 
 //    @OneToOne
