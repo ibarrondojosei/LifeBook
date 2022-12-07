@@ -42,8 +42,8 @@ public class MedicalRecordMapper {
                 .media(entity.getMedia())
 //                .highlightMoment(entity.getHighlightMoment())
                 .medicalRecordEnum(entity.getMedicalRecordEnum())
-//                .medicalDataEntity(entity.getMedicalDataEntity())
-//                .userId(entity.getUserId())
+                .medicalDataEntity(entity.getMedicalDataEntity().getId())
+                .userId(entity.getUserId().getId())
                 .timestamp(entity.getTimestamp())
                 .build();
     }
