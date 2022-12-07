@@ -40,13 +40,13 @@ const handleSubmit = async e => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              for="username"
+              for="name"
             >
               Nombre
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
+              id="name"
               type="text"
               placeholder="Nombre"
               
@@ -56,13 +56,13 @@ const handleSubmit = async e => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              for="username"
+              for="surname"
             >
               Apellido
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
+              id="surname"
               type="text"
               placeholder="Apellido"
               
@@ -71,28 +71,28 @@ const handleSubmit = async e => {
           <div className="mb-6">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              for="password"
+              for="username"
             >
               Nombre de usuario
             </label>
             <input
               className="shadow appearance-none border b rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              type="password"
+              id="username"
+              type="text"
               placeholder="Nombre de usuario"
             />
           </div>
           <div className="mb-6">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              for="password"
+              for="mail"
             >
               Mail
             </label>
             <input
               className="shadow appearance-none border b rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              type="password"
+              id="mail"
+              type="text"
               placeholder="Mail"
               onChange={handleChange}
             />
