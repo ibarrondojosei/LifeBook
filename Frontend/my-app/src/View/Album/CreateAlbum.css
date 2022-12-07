@@ -1,0 +1,115 @@
+.bgGralA{
+    width: 1440px;
+    overflow: hidden;
+    margin: 0px auto; 
+    background-image: url("../../../public/assets/Background.svg");
+    padding-bottom: 20%;
+    
+}
+
+.titleAlbum{
+    font-size: 64px;
+    font-weight: bold;
+    margin: 20px 0px 50px 55px  ;
+   
+}
+
+.divAlbum{
+    justify-content: center;
+}
+
+.divCargaAlbum{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1080px;
+    height: 88px;
+    background-image: url("../../../public/assets/momentos.png");
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 10%;
+   
+}
+
+.vistaPreviaAlbum{
+    padding-left: 50%;
+}
+
+.columnDivAlbum{
+    column-count: 2;
+    column-gap: 8%; 
+}
+
+.inlineBlockAlbum{
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;   
+}
+
+.borderInputOneA{
+    border: 1px solid black;
+    width: 369px;
+    height: 36px;
+}
+.tagify {
+    --tags-border-color: black;
+    /* --tag--min-width: 369px; */
+    width: 369px;
+    height: 36px;
+}
+.borderInputThreeA{
+    border: 1px solid black;
+    width: 369px;
+    height: 60%; 
+}
+
+.widthTitleA{
+    height: 400px;
+    margin-left: 40%;
+    margin-top: 8%;
+}
+
+.borderInputTwoA{
+    border: 1px solid black;
+    width: 340px;
+    height: 250px;
+}
+
+.contornosImgA{
+    padding-top: 8%;
+ 
+}
+
+.padButtonA{
+    padding-top: 5%;
+    padding-left: 25%;
+}
+
+.marButtonCancelA{
+    margin-right: 20px;
+    background-color: #e8edf1;
+    border-radius: 3px;
+    width: 92px;
+    height: 44px;
+}
+
+.marButtonPublicA{
+    margin-right: 20px;
+    background-color: #2ec5ce;
+    border-radius: 3px;
+    width: 92px;
+    height: 44px;
+    margin-top: 120px;
+}
+.fontStyleAlbum{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.fontStyleAlbumButton{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+}

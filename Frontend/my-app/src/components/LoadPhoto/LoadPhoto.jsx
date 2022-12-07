@@ -24,7 +24,7 @@ export default function LoadPhoto() {
                 <div className='columnDivMoment'>
                     <div className=' widthTitle'>
                         <div >
-                            <label className='fontStyleMomentos'>Título</label>
+                            <label className='fontStyleMomentos'>Nombre</label>
                             <input type="text" className='borderInputOne' />
                         </div>
                         <div >

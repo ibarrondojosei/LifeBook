@@ -10,8 +10,10 @@ import NavBar from "./components/NavBar/NavBar.jsx";
 import Home from "./components/Home/Home";
 import LoadPhoto from "./components/LoadPhoto/LoadPhoto.jsx";
 import { AuthProvider } from "./hooks/Context/AuthContext";
-
+import CreateAlbum from './View/Album/CreateAlbum';
 import {Carousel} from "./Views/Carousel/Carousel.jsx"
+
+
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
           <Route path="/register" element={<RegisterView />} />
           <Route path="/clinicalHistory" element={<ClinicalHistory />} />
           <Route path="/cicloLectivo" element={<CicloLectivo />} />
+          <Route path="/createAlbum" element={<CreateAlbum />} />
         </Routes>
         <Footer />
       </BrowserRouter>
