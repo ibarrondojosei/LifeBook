@@ -39,7 +39,7 @@ export default function Home() {
             </div>
             <Carousel/>
             <Destacados/>
-            <button className='btnHome' type='buton' placeholder='boton prueba' onClick={getUser}>LLamado</button>
+           {/* <b utton className='btnHome' type='buton' placeholder='boton prueba' onClick={getUser}>LLamado</button> */}
         </header>
         
     </div>
