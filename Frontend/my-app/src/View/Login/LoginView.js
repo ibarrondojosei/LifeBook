@@ -27,13 +27,7 @@ export const LoginView = () => {
     e.preventDefault();
     const url =
       "https://s5-03-java-react-production.up.railway.app/auth/login";
-    axios
-      .post(url, user)
-      .then((response) => {
-        console.log(response);
-        localStorage.setItem("token", response.data.token);
-        navigate(redirectPath);
-  })
+  }
 
   /*useEffect(() => {
     const login = async () => {

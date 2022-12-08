@@ -45,7 +45,7 @@ export default function NavBar() {
                   Mi Perfil
                 </li>
               </Link>
-              <Link to="/login" className='liNav'>
+              <Link to='/login' className='liNav'>
                   <li>
                     Login
                   </li>
