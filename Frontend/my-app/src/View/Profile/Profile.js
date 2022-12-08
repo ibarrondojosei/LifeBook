@@ -10,7 +10,7 @@ export function Profile () {
         <div><h1 className="relative flex  ml-24 w-2/4 mt-20  text-black-800 text-5xl font-bold">{auth.user}</h1></div>
 		<div className="absolute usuario ml-48 mt-20">
 			<img src="https://res.cloudinary.com/djllzjsij/image/upload/v1670371062/User-60_pxn9lz.svg" alt="foto-usuario"></img>
-			<textarea placeholder="  Sobre mí" type="text" className="texto ml-72 "></textarea>
+			
 		</div>
 
 	<div className=" mt-72 mr-12 mb-2  h-64  ml-52 ">
