@@ -4,39 +4,35 @@ import "./LoginView.css";
 import { json, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/Context/AuthContext";
-import axios from "axios"
+import axios from "axios";
 
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faUser, faKey } from "@fortawesome/free-solid-svg-icons";
 
 export const LoginView = () => {
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
 
-    const [user, setUser] = useState({
-      username:'',
-      password: '',
-    });
+  let registro = {
+    email: "coco123@gmail.com",
+    firstName: "Juan",
+    lastName: "Perez",
+    password: "coco123",
+    username: "coco84",
+  };
 
-    let registro = {
-      email: "coco123@gmail.com",
-      firstName: "Juan",
-      lastName: "Perez",
-      password: "coco123",
-      username: "coco84"
-    }
+  useEffect(() => {
+    const login = async () => {
+      const url =
+        "https://s5-03-java-react-production.up.railway.app/auth/register";
+      const result = await axios.post(url, registro);
 
-    useEffect(()=>{
-      const login = async ()=> {
-        const url = "https://s5-03-java-react-production.up.railway.app/auth/register"
-        const result = await axios.post(url,registro);
-       
-
-        console.log(result);
-
-    
-   
-    }
-    login()})
-    
+      console.log(result);
+    };
+    login();
+  });
 
   //   const {login} = useAuth();
   //   const navigate = useNavigate();
@@ -52,25 +48,27 @@ export const LoginView = () => {
   //     await login(user.username, user.password)
   //     navigate('/registro');
   //   }catch(error){
-      
+
   //     setError(error.message)
-      
+
   //   }
   // };
 
   return (
     <div className="login">
       <div className="  w-full max-w-xs   ">
-        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96 float-right mx-56 mt-20  " >
+        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96 float-right mx-56 mt-20  ">
           <h1 className="text-gray-800 text-center font-bold p-4 pb-8">
             Inicio de sesion
           </h1>
           <div className="mb-8">
             <div class="flex justify-center items-center text-sm ">
               <label className="mr-2  ">¿Eres nuevo usuario?</label>
-              <Link to="/register"><a className=" cursor-pointer text-blue-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
-                Crear una cuenta
-              </a></Link>
+              <Link to="/register">
+                <a className=" cursor-pointer text-blue-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+                  Crear una cuenta
+                </a>
+              </Link>
             </div>
           </div>
 
@@ -84,19 +82,17 @@ export const LoginView = () => {
               id="username"
               type="text"
               placeholder="Email"
-            
             />
           </div>
           <div className="mb-6">
-         <div className="absolute ml-4 m-2">
-         {/* <FontAwesomeIcon icon={faKey} /> */}
-         </div>
+            <div className="absolute ml-4 m-2">
+              {/* <FontAwesomeIcon icon={faKey} /> */}
+            </div>
             <input
               className="shadow appearance-none border b rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
               placeholder="Password"
-              
             />
           </div>
           <div className="flex items-center justify-between">
