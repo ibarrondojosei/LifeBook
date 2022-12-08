@@ -46,7 +46,9 @@ export default function NavBar() {
                 </li>
               </Link>
               <Link to="/login" className='liNav'>
-                  <li>Login</li>
+                  <li>
+                    Login
+                  </li>
               </Link>
               
             </ul>

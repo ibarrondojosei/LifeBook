@@ -1,4 +1,4 @@
-import { LoginView } from "./View/Login/LoginView";
+import {LoginView} from "./View/Login/LoginView";
 import { RegisterView } from "./View/Register/RegisterView";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ClinicalHistory from "./View/ClinicalHistory/ClinicalHistory";
@@ -19,14 +19,14 @@ function App() {
         <NavBar />
         <Routes>
         <Route path="/login" element={<LoginView />} />
-          {/* <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/destacados" element={<LoadPhoto />} />
           <Route path="/login" element={<LoginView />} />
           <Route path="/register" element={<RegisterView />} />
           <Route path="/clinicalHistory" element={<ClinicalHistory />} />
-          <Route path="/cicloLectivo" element={<CicloLectivo />} /> */}
+          <Route path="/cicloLectivo" element={<CicloLectivo />} />
           
-		  {/* <Route path="/miperfil" element={<Profile />} /> */}
+		  <Route path="/miperfil" element={<Profile />} />
         </Routes>
         <Footer />
       </BrowserRouter>
