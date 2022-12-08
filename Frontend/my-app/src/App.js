@@ -1,4 +1,3 @@
-
 import { LoginView } from "./View/Login/LoginView";
 import { RegisterView } from "./View/Register/RegisterView";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
