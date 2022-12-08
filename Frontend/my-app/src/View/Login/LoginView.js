@@ -10,6 +10,9 @@ import { useAuth } from "../../hooks/Context/AuthContext";
 
 export const LoginView = () => {
 
+
+  
+
     const [user, setUser] = useState({
       username:'',
       password: '',
@@ -27,7 +30,7 @@ export const LoginView = () => {
     e.preventDefault()
     try{
       await login(user.username, user.password)
-      navigate('/registro');
+      navigate('/home');
     }catch(error){
       
       setError(error.message)

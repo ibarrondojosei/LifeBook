@@ -4,38 +4,35 @@ import { useAuth } from "../../hooks/Context/AuthContext";
 import "./RegisterView.css"
 
 export const RegisterView = () => {
-  const [user, setUser] = useState({
-    email: '',
-    password: '',
-})
+    const [user, setUser] = useState({
+      nombre:'',
+      apellido:'',
+      userName:'',
+      email: '',
+      password: '',
+  })
 
-const {signUp} = useAuth();
-const navigate = useNavigate();
-const [error, setError] = useState()
+  /*const {signUp} = useAuth();
+  const navigate = useNavigate();
+  const [error, setError] = useState()*/
 
 
 
-const handleChange = ({target: {name, value}}) => {
-    setUser({...user,[name]: value})
-};
+  const handleChange = ({target: {name, value}}) => {
+      setUser({...user,[name]: value})
+  };
 
-const handleSubmit = async e => {
-    e.preventDefault()
-    try{
-        await signUp(user.email, user.password)
-        navigate('/')
-    }catch(error){
-        setError(error.message)
-    }
-
-}
+  const handleSubmit = async e => {
+      e.preventDefault()
+     console.log(user)
+  }
 
   return (
     <div className="register">
       <div className="  w-full max-w-xs    ">
-        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96 float-right mx-56 mt-20  " onSubmit={handleSubmit}>
+        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96 float-right mx-56 mt-20" onSubmit={handleSubmit}>
           <h1 className="text-gray-800 text-center font-bold p-4 pb-8">
-           Registrar
+           Registrar  
           </h1>
           <div className="mb-4">
             <label
@@ -109,7 +106,7 @@ const handleSubmit = async e => {
               id="password"
               type="password"
               placeholder="Contraseña"
-              onChange={handleChange}
+              onChange={handleChange} 
             />
           </div>
 
