@@ -72,6 +72,16 @@ public class UserEntityController {
 
     }
 
+    @GetMapping("/getByJWT")
+    @ApiOperation(value = "Get an User", notes ="Endpoint that return an user by the info inside the token")
+    @ApiResponses(value ={
+            @ApiResponse(code = 200, message = "User information"),
+            @ApiResponse(code = 403, message = "Forbidden action")
+    })
+    public ResponseEntity<UserResponse> getUserByJWT(@RequestHeader(name="Authorization") String token) throws UserNotFoundException, InvalidUserException, GuestNotFoundException, IOException {
+        return new ResponseEntity<>(userServ.getUserByJWT(token), HttpStatus.OK);
+    }
+
 
 
 

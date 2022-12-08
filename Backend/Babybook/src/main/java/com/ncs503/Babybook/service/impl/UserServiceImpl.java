@@ -56,12 +56,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getUser(String token, Long id) throws UserNotFoundException, InvalidUserException, GuestNotFoundException, IOException {
-        String userToken = this.getToken(token);
+
         UserEntity user = this.getUserByToken(token);
         if(user.getId().equals(id)){
             return mapper.toUserResponse(user);
         }
         else throw new InvalidUserException("Invalid user");
+    }
+
+    @Override
+    public UserResponse getUserByJWT(String token) throws UserNotFoundException, InvalidUserException, GuestNotFoundException, IOException {
+            UserEntity user = this.getUserByToken(token);
+        return mapper.toUserResponse(user);
     }
 
     @Override
