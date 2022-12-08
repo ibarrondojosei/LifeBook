@@ -4,6 +4,8 @@ import "./Profile.css";
 
 export function Profile () {
 
+	
+
 	const auth = useAuth()
 	return (
 	<div className="w-screen h-screen">
