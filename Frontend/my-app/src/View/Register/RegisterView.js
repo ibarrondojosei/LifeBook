@@ -12,6 +12,7 @@ export const RegisterView = () => {
       email: '',
       password: '',
   })
+  console.log(user)
 
   /*const {signUp} = useAuth();
   const navigate = useNavigate();

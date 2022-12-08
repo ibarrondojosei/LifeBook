@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./LoginView.css";
 import { Link, Navigate } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import axios, { Axios } from "axios";
 
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faUser, faKey } from "@fortawesome/free-solid-svg-icons";
@@ -16,12 +16,21 @@ export const LoginView = () => {
     userEmail: "",
     password: "",
   });
+ 
   
-  const navigate = useNavigate();
-  const location = useLocation();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.get('https://s5-03-java-react-production.up.railway.app/auth/login',{
+      email: user.userEmail,
+      password: user.password,
+    })
+    .then((res) => localStorage.setItem('token', res.data.token)) 
+    .then((err) => console.log(err))
+        
+  }
 
 
-  const redirectPath = location.state?.path || '/home';
+  // const redirectPath = location.state?.path || '/home';
   
   const handlelogin = (e) => {
     e.preventDefault();
@@ -63,7 +72,7 @@ export const LoginView = () => {
   return (
     <div className="login">
       <div className="  w-full max-w-xs   ">
-        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96 float-right mx-56 mt-20  ">
+        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96 float-right mx-56 mt-20  " onSubmit={handleSubmit}>
           <h1 className="text-gray-800 text-center font-bold p-4 pb-8">
             Inicio de sesion
           </h1>
