@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import "./LoginView.css";
-import { Link, Navigate } from "react-router-dom";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import axios, { Axios } from "axios";
 
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,20 +11,33 @@ import axios, { Axios } from "axios";
 export const LoginView = () => {
 
   
+  const navigate = useNavigate();
+  const [user, setUser] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const [user, setUser] = useState({
-    userEmail: "",
-    password: "",
-  });
+  const onChangeEmail = (e) => {
+    const email = e.target.value;
+    setEmail(email);
+  }
+
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  }
  
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.get('https://s5-03-java-react-production.up.railway.app/auth/login',{
-      email: user.userEmail,
-      password: user.password,
+    console.log(email, password)
+    axios.post('https://s5-03-java-react-production.up.railway.app/auth/login',{
+      email: email,
+      password:password,
     })
-    .then((res) => localStorage.setItem('token', res.data.token)) 
+    .then((res) => {
+      localStorage.setItem('token', res.data.token) 
+      navigate('/')
+    })
     .then((err) => console.log(err))
         
   }
@@ -32,11 +45,11 @@ export const LoginView = () => {
 
   // const redirectPath = location.state?.path || '/home';
   
-  const handlelogin = (e) => {
-    e.preventDefault();
-    const url =
-      "https://s5-03-java-react-production.up.railway.app/auth/login";
-  }
+  // const handlelogin = (e) => {
+  //   e.preventDefault();
+  //   const url =
+  //     "https://s5-03-java-react-production.up.railway.app/auth/login";
+  // }
 
   /*useEffect(() => {
     const login = async () => {
@@ -98,7 +111,7 @@ export const LoginView = () => {
               type="text"
               placeholder="Email"
               required
-              onChange={(e) => setUser({...user, userEmail: e.target.value})}
+              onChange={onChangeEmail}
 
             />
           </div>
@@ -112,7 +125,7 @@ export const LoginView = () => {
               type="password"
               placeholder="Password"
               required
-              onChange={e => setUser({...user, password: e.target.value})}/>
+              onChange={onChangePassword}/>
           </div>
             
           <div className="flex items-center justify-between">
@@ -138,7 +151,7 @@ export const LoginView = () => {
             <button
               className="  block bg-teal-400 hover:bg-teal-600 font-bold text-black uppercase text-lg mx-auto p-2 rounded mt-4"
               type="button"
-              onClick={handlelogin}
+              onClick={handleSubmit}
             >
               Ingresar
             </button>

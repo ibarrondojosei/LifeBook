@@ -5,35 +5,68 @@ import axios from "axios";
 import "./RegisterView.css"
 
 export const RegisterView = () => {
-    const [user, setUser] = useState({
-      nombre:'',
-      apellido:'',
-      userName:'',
-      email: '',
-      password: '',
-  })
-  console.log(user)
+    // const [user, setUser] = useState("")
+    const navigate = useNavigate();
+    const [firstName, setfirstName] = useState("")
+    const [lastName, setlastName] = useState("");
+    const [username, setusername] = useState("");
+    const [email, setemail] = useState("");
+    const [password, setpassword] = useState("");
 
+    const onChangeFirstName = (e) => {
+      const firstName = e.target.value;
+      setfirstName(firstName);
+    }
+
+    const onChangeLastName = (e) => {
+      const lastName = e.target.value;
+      setlastName(lastName);
+    }
+
+    const onChangeUsername = (e) => {
+      const username = e.target.value;
+      setusername(username);
+    }
+
+    const onChangeEmail = (e) => {
+      const email = e.target.value;
+      setemail(email);
+    }
+
+    const onChangePassword = (e) => {
+      const password = e.target.value;
+      setpassword(password);
+    }
+  // firstName:'',
+  // lastName:'',
+  // username:'',
+  // email: '',
+  // password: '',
   /*const {signUp} = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState()*/
 
 
 
-  const handleChange = ({target: {name, value}}) => {
-      setUser({...user,[name]: value})
-  };
+  // const handleChange = ({target: {name, value}}) => {
+  //     setUser({...user,[name]: value})
+  // };
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
       e.preventDefault()
+      console.log(firstName, lastName, username, email, password)
       axios.post('https://s5-03-java-react-production.up.railway.app/auth/register', {
-        email: user.email,
-        password: user.password,
-        nombre: user.nombre,
-        apellido: user.apellido,
-        userName: user.userName
+        email:email,
+        password:password,
+        firstName:firstName,
+        lastName:lastName,
+        username:username
       })
-      .then(res => localStorage.setItem('token', res.data.token))
+      .then(res => {
+        console.log(res)
+        navigate('/login')
+
+      })
 
   }
 
@@ -47,16 +80,18 @@ export const RegisterView = () => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              for="name"
+              for="firstName"
             >
               Nombre
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="name"
+              id="firstName"
               type="text"
               placeholder="Nombre"
               required
+              value={firstName}
+              onChange={onChangeFirstName}
               
             />
           </div>
@@ -64,16 +99,18 @@ export const RegisterView = () => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              for="surname"
+              for="lastName"
             >
               Apellido
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="surname"
+              id="lastName"
               type="text"
               placeholder="Apellido"
               required
+              value={lastName}
+              onChange={onChangeLastName}
               
             />
           </div>
@@ -90,22 +127,25 @@ export const RegisterView = () => {
               type="text"
               placeholder="Nombre de usuario"
               required
+              value={username}
+              onChange={onChangeUsername}
             />
           </div>
           <div className="mb-6">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              for="mail"
+              for="email"
             >
               Mail
             </label>
             <input
               className="shadow appearance-none border b rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              id="mail"
+              id="email"
               type="text"
               placeholder="Mail"
               required
-              onChange={handleChange}
+              value={email}
+              onChange={onChangeEmail}
             />
           </div>
           <div className="mb-6">
@@ -120,7 +160,8 @@ export const RegisterView = () => {
               id="password"
               type="password"
               placeholder="Contraseña"
-              onChange={handleChange} 
+              value={password}
+              onChange={onChangePassword} 
               required
             />
           </div>
@@ -129,6 +170,8 @@ export const RegisterView = () => {
             <button
               className="  block bg-teal-400 hover:bg-teal-600 font-bold text-black uppercase text-lg mx-auto p-2 rounded mt-4"
               type="button"
+              onClick={handleSubmit}
+
             >
               Registrar
             </button>
