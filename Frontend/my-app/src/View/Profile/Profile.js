@@ -33,12 +33,6 @@ export function Profile () {
 				placeholder-gray-400 outline-none" />
 				</div>
 
-<div className="div3 ml-60">
-<label for="name" className="inline-block w-20 mr-6 text-right font-bold text-gray-600">Dirección</label>
-  <input type="text" id="dirección" name="dirección" placeholder="" size="50" className="py-2 border-b-2 border-gray-400  
-				text-gray-600 placeholder-gray-400
-				outline-none" />
-</div>
 
 <div className="div4 ml-60">
   <label className="inline-block w-20 mr-6 text-right font-bold text-gray-600">Mail</label>
