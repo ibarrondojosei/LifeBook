@@ -1,38 +1,53 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import "./LoginView.css";
-import { json, Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/Context/AuthContext";
-import axios from "axios";
+import { Link, Navigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios, { Axios } from "axios";
 
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faUser, faKey } from "@fortawesome/free-solid-svg-icons";
 
 export const LoginView = () => {
+
+  
+
   const [user, setUser] = useState({
-    username: "",
+    userEmail: "",
     password: "",
   });
+ 
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.get('https://s5-03-java-react-production.up.railway.app/auth/login',{
+      email: user.userEmail,
+      password: user.password,
+    })
+    .then((res) => localStorage.setItem('token', res.data.token)) 
+    .then((err) => console.log(err))
+        
+  }
 
-  let registro = {
-    email: "coco123@gmail.com",
-    firstName: "Juan",
-    lastName: "Perez",
-    password: "coco123",
-    username: "coco84",
-  };
 
-  useEffect(() => {
+  // const redirectPath = location.state?.path || '/home';
+  
+  const handlelogin = (e) => {
+    e.preventDefault();
+    const url =
+      "https://s5-03-java-react-production.up.railway.app/auth/login";
+  }
+
+  /*useEffect(() => {
     const login = async () => {
       const url =
         "https://s5-03-java-react-production.up.railway.app/auth/register";
-      const result = await axios.post(url, registro);
+      const result = await axios.post(url);
 
       console.log(result);
     };
     login();
-  });
+  });*/
 
   //   const {login} = useAuth();
   //   const navigate = useNavigate();
@@ -57,7 +72,7 @@ export const LoginView = () => {
   return (
     <div className="login">
       <div className="  w-full max-w-xs   ">
-        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96 float-right mx-56 mt-20  ">
+        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96 float-right mx-56 mt-20  " onSubmit={handleSubmit}>
           <h1 className="text-gray-800 text-center font-bold p-4 pb-8">
             Inicio de sesion
           </h1>
@@ -82,6 +97,9 @@ export const LoginView = () => {
               id="username"
               type="text"
               placeholder="Email"
+              required
+              onChange={(e) => setUser({...user, userEmail: e.target.value})}
+
             />
           </div>
           <div className="mb-6">
@@ -93,8 +111,10 @@ export const LoginView = () => {
               id="password"
               type="password"
               placeholder="Password"
-            />
+              required
+              onChange={e => setUser({...user, password: e.target.value})}/>
           </div>
+            
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <input
@@ -118,6 +138,7 @@ export const LoginView = () => {
             <button
               className="  block bg-teal-400 hover:bg-teal-600 font-bold text-black uppercase text-lg mx-auto p-2 rounded mt-4"
               type="button"
+              onClick={handlelogin}
             >
               Ingresar
             </button>
@@ -131,4 +152,5 @@ export const LoginView = () => {
       />
     </div>
   );
+  
 };
