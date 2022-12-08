@@ -36,9 +36,11 @@ export const LoginView = () => {
     })
     .then((res) => {
       localStorage.setItem('token', res.data.token) 
+      console.log('pre home')
       navigate('/')
     })
     .then((err) => console.log(err))
+
         
   }
 

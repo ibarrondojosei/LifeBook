@@ -1,30 +1,42 @@
-import { createContext, useContext, useState} from "react";
-
+import { createContext, useContext, useEffect, useState} from "react";
+import {signInWithEmailAndPassword, onAuthStateChanged, signOut, createUserWithEmailAndPassword} from 'firebase/auth';
+import { auth } from "../../components/Firebase/firebase";
 
 
 
 export const authContext = createContext();
 
+export const useAuth = () => {
+    const context = useContext(authContext);
+    if(!context) throw new Error("there is no auth provider")
+    return context;
+}
+
 export function AuthProvider({children}){
 
     const [user, setuser] = useState(null);
-    
+    const [loading, setLoading] = useState(true)
   
   
-    const login = (user) => {
-      setuser(user)
-    }
-    
+    const login = async (email, password) => 
+      signInWithEmailAndPassword(auth, email, password);
+  
       
-    
-      
+    const signUp = (email, password) =>
+      createUserWithEmailAndPassword(auth, email, password)
     
       
   
-    const logout = () => {
-      setuser(null)
-    }
-
+    const logout = () => signOut(auth)
+      
+      useEffect(() => {
+       const unsubscribe =  onAuthStateChanged(auth, currentUser => {
+         setuser(currentUser)
+         setLoading(false)
+        });
+  
+        return () => unsubscribe();
+      }, [])
       
     
       
@@ -32,12 +44,8 @@ export function AuthProvider({children}){
   
   
     return(
-      <authContext.Provider value={{user, login, logout}}>
+      <authContext.Provider value={{signUp, login, logout, user, loading}}>
         {children}
       </authContext.Provider>
     )
-}
-
-export function useAuth(){
-    return useContext(authContext)
 }

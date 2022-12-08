@@ -1,8 +1,12 @@
-import React from "react";
+import React ,{ useState }from "react";
 import { useAuth } from "../../hooks/Context/AuthContext";
 import "./Profile.css";
 
 export function Profile () {
+
+	const [fisrtName, setFirstName] = useState("")
+	const [lastName, setLastName] = useState("")	
+	const [email, setEmail] = useState("")
 
 	
 
