@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/Context/AuthContext";
+import axios from "axios";
 import "./RegisterView.css"
 
 export const RegisterView = () => {
@@ -24,7 +25,15 @@ export const RegisterView = () => {
 
   const handleSubmit = async e => {
       e.preventDefault()
-     console.log(user)
+      axios.post('https://s5-03-java-react-production.up.railway.app/auth/register', {
+        email: user.email,
+        password: user.password,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        userName: user.userName
+      })
+      .then(res => localStorage.setItem('token', res.data.token))
+
   }
 
   return (
@@ -46,6 +55,7 @@ export const RegisterView = () => {
               id="name"
               type="text"
               placeholder="Nombre"
+              required
               
             />
           </div>
@@ -62,6 +72,7 @@ export const RegisterView = () => {
               id="surname"
               type="text"
               placeholder="Apellido"
+              required
               
             />
           </div>
@@ -77,6 +88,7 @@ export const RegisterView = () => {
               id="username"
               type="text"
               placeholder="Nombre de usuario"
+              required
             />
           </div>
           <div className="mb-6">
@@ -91,6 +103,7 @@ export const RegisterView = () => {
               id="mail"
               type="text"
               placeholder="Mail"
+              required
               onChange={handleChange}
             />
           </div>
@@ -107,6 +120,7 @@ export const RegisterView = () => {
               type="password"
               placeholder="Contraseña"
               onChange={handleChange} 
+              required
             />
           </div>
 

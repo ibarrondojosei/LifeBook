@@ -18,13 +18,15 @@ function App() {
       <BrowserRouter className="App">
         <NavBar />
         <Routes>
-          <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginView />} />
+          {/* <Route path="/" element={<Home />} />
           <Route path="/destacados" element={<LoadPhoto />} />
           <Route path="/login" element={<LoginView />} />
           <Route path="/register" element={<RegisterView />} />
           <Route path="/clinicalHistory" element={<ClinicalHistory />} />
-          <Route path="/cicloLectivo" element={<CicloLectivo />} />
-		  <Route path="/miperfil" element={<Profile />} />
+          <Route path="/cicloLectivo" element={<CicloLectivo />} /> */}
+          
+		  {/* <Route path="/miperfil" element={<Profile />} /> */}
         </Routes>
         <Footer />
       </BrowserRouter>
