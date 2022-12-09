@@ -5,6 +5,7 @@ import { RegisterView } from "./View/Register/RegisterView";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ClinicalHistory from "./View/ClinicalHistory/ClinicalHistory";
 import CicloLectivo from "./View/CicloLectivo/CicloLectivo";
+import { Profile } from "./View/Profile/Profile";
 import Footer from "./components/Footer/Footer.jsx";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import Home from "./components/Home/Home";
@@ -25,11 +26,14 @@ function App() {
           <Route path="/register" element={<RegisterView />} />
           <Route path="/clinicalHistory" element={<ClinicalHistory />} />
           <Route path="/cicloLectivo" element={<CicloLectivo />} />
+		  <Route path="/miperfil" element={<Profile />} />
         </Routes>
         <Footer />
       </BrowserRouter>
     </AuthProvider>
-    
+
+
+ 
   );
 }
 
