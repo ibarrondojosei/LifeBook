@@ -1,4 +1,15 @@
 import React from "react";
+<<<<<<<<< Temporary merge branch 1
+import "./LoginView.css";
+
+export const LoginView = () => {
+  return (
+    <div className="login">
+      
+      <div className="  w-full max-w-xs float-right m-36  ">
+        
+        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96  ">
+=========
 import { useState } from "react";
 import "./LoginView.css";
 import { Link } from "react-router-dom";
@@ -37,8 +48,9 @@ export const LoginView = () => {
 
   return (
     <div className="login">
-      <div className="  w-full max-w-xs   ">
-        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96 float-right mx-56 mt-20  " onSubmit={handleSubmit}>
+      <div className="  w-full max-w-xs float-right m-36  ">
+        <form className=" bg-white shadow-md rounded-lg px-12 pt-6 pb-8 w-96  " onSubmit={handleSubmit}>
+>>>>>>>>> Temporary merge branch 2
           <h1 className="text-gray-800 text-center font-bold p-4 pb-8">
             Inicio de sesion
           </h1>
@@ -48,6 +60,7 @@ export const LoginView = () => {
               <Link to="/register"><a className=" cursor-pointer text-blue-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
                 Crear una cuenta
               </a></Link>
+>>>>>>>>> Temporary merge branch 2
             </div>
           </div>
 
@@ -96,6 +109,7 @@ export const LoginView = () => {
             </div>
           </div>
           <div>
+>>>>>>>>> Temporary merge branch 2
             <button
               className="  block bg-teal-400 hover:bg-teal-600 font-bold text-black uppercase text-lg mx-auto p-2 rounded mt-4"
               type="button"
@@ -105,6 +119,12 @@ export const LoginView = () => {
           </div>
         </form>
       </div>
+<<<<<<<<< Temporary merge branch 1
+      <img className="ml-16 pt-32" src="https://res.cloudinary.com/dytpump6i/image/upload/v1668705729/LifeBook2_2_1_kdgf1m.png" alt="" />
+    </div>
+  );
+};
+=========
       <img
         className="ml-16 pt-32"
         src="https://res.cloudinary.com/dytpump6i/image/upload/v1668705729/LifeBook2_2_1_kdgf1m.png"

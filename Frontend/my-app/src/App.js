@@ -29,7 +29,9 @@ function App() {
         <Footer />
       </BrowserRouter>
     </AuthProvider>
-    
+
+
+ 
   );
 }
 
