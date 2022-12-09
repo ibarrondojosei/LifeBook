@@ -1,5 +1,4 @@
 import React from "react";
-<<<<<<<<< Temporary merge branch 1
 import "./LoginView.css";
 
 export const LoginView = () => {
