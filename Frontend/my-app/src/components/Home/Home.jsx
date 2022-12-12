@@ -26,8 +26,8 @@ export default function Home() {
  
 
   return (
-    <div className='container jCCenter'>
-        <header >
+    <div>
+        <header>
           
             <div className='bgImg divHomeMobile'>
                 <h1 >LifeBook</h1>

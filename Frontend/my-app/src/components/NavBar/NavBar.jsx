@@ -30,7 +30,11 @@ export default function NavBar() {
                   Destacados
                 </li>
               </Link>
+<<<<<<< HEAD
               <Link to='/cicloLectivo' className='liNav'>
+=======
+			  <Link to='/cicloLectivo' className='liNav'>
+>>>>>>> a7220f309e4a6c7350a6e56ac32664671a547a50
                 <li >
                   Educación
                 </li>

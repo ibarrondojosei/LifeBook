@@ -57,4 +57,7 @@ export function Profile () {
 	</div>
 	);
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> a7220f309e4a6c7350a6e56ac32664671a547a50

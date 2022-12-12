@@ -1,4 +1,5 @@
 .containerAños {
+<<<<<<< HEAD
 padding-top: 80px;
 margin-left: 90px;
 }
@@ -22,3 +23,28 @@ margin-top: 8rem;
 
 padding-top: 70px;
 }
+=======
+	padding-top: 80px;
+	margin-left: 90px;
+	}
+	.años{
+		font-size: 32px;
+		margin-top: 50px;
+		color: grey;
+	}
+	.años:hover{
+		font-size: 60px;
+		color: black;
+		cursor: pointer;
+		transition: 1s;
+	}
+	
+	.video {
+	margin-top: 8rem;
+	}
+	
+	.fotos {
+	
+	padding-top: 70px;
+	}
+>>>>>>> a7220f309e4a6c7350a6e56ac32664671a547a50
